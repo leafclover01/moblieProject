@@ -55,9 +55,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             navigationView.setCheckedItem(R.id.nav_home);
         }
 
-        // Ẩn thanh trạng thái
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        setContentView(R.layout.activity_dashboard);
+        // Tự động thêm khoảng trống bên dưới thanh trạng thái
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout.setFitsSystemWindows(true);
     }
 
     @Override

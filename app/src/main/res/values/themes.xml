@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.AppBooking" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/brandBlue30</item>
+        <item name="colorPrimaryVariant">@color/brandBlue30</item>
+        <item name="colorOnPrimary">@color/light</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/darkPrimary</item>
+        <item name="colorSecondaryVariant">@color/green60</item>
+        <item name="colorOnSecondary">@color/dark</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.AppBooking" parent="Base.Theme.AppBooking" />
+</resources>

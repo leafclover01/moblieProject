@@ -8,15 +8,19 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/drawer_home"
-            android:title="Home"/>
+            android:title="Trang chủ"/>
+        <item
+            android:id="@+id/nav_hotel"
+            android:icon="@drawable/drawer_hotel"
+            android:title="Đặt phòng"/>
+        <item
+            android:id="@+id/nav_account"
+            android:icon="@drawable/drawer_account"
+            android:title="Thông tin tài khoản"/>
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/drawer_setting"
-            android:title="Settings"/>
-        <item
-            android:id="@+id/nav_share"
-            android:icon="@drawable/drawer_share"
-            android:title="Share"/>
+            android:title="Cài đặt"/>
     </group>
 <!--    <item-->
 <!--        android:title="">-->

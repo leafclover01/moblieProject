@@ -1,3 +1,4 @@
+// Trang chủ
 package com.example.appbooking.page.customer;
 
 import android.os.Bundle;
@@ -15,15 +16,17 @@ import com.example.appbooking.R;
 
 public class HomeFragment extends Fragment {
 
+    //TODO:  Khởi tạo
     Button a;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Tạo một view bắt buộc các trang ()
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // Ánh xạ Button từ XML
+        // TODO:  CODE như bình thường .....
+        // Ánh xạ Button từ UI
         a = view.findViewById(R.id.button2);
 
         // Thêm sự kiện cho Button

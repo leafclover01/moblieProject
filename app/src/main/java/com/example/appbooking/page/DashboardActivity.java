@@ -16,7 +16,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.appbooking.R;
+import com.example.appbooking.page.customer.AccountFragment;
 import com.example.appbooking.page.customer.HomeFragment;
+import com.example.appbooking.page.customer.OrderHotelFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -60,6 +62,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         drawerLayout.setFitsSystemWindows(true);
     }
 
+    // Menu
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -74,10 +77,15 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                     .beginTransaction()
                     .replace(R.id.fragment_container, new HomeFragment())
                     .commit();
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_hotel) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, new HomeFragment())
+                    .replace(R.id.fragment_container, new OrderHotelFragment())
+                    .commit();
+        } else if (id == R.id.nav_account) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new AccountFragment())
                     .commit();
         }
 

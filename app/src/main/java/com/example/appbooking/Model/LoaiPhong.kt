@@ -29,3 +29,8 @@ class LoaiPhong : Serializable {
                 '}'
     }
 }
+//            ma_loai_phong INTEGER PRIMARY KEY AUTOINCREMENT,
+//            ten VARCHAR(255),
+//            gia INTEGER,
+//            so_nguoi_toi_da INTEGER,
+//            mo_ta VARCHAR(255)

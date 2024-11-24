@@ -24,18 +24,19 @@ class MySQLite(context: Context, dbName: String, cursorFactory: SQLiteDatabase.C
             hinh VARCHAR(255)
         """)
 
-        createTable("PHONG", """
-            ma_phong INTEGER PRIMARY KEY AUTOINCREMENT, 
-            vi_tri VARCHAR(255), ma_loai_phong INTEGER, 
-            FOREIGN KEY (ma_loai_phong) REFERENCES LOAI_PHONG(ma_loai_phong)
-        """)
-
         createTable("LOAI_PHONG", """
             ma_loai_phong INTEGER PRIMARY KEY AUTOINCREMENT, 
             ten VARCHAR(255), 
             gia INTEGER, 
             so_nguoi_toi_da INTEGER, 
-            mo_ta VARCHAR(255)
+            mo_ta text
+        """)
+
+        createTable("PHONG", """
+            ma_phong INTEGER PRIMARY KEY AUTOINCREMENT, 
+            vi_tri VARCHAR(255), ma_loai_phong INTEGER, 
+            ma_loai_phong integer,
+            FOREIGN KEY (ma_loai_phong) REFERENCES LOAI_PHONG(ma_loai_phong)
         """)
 
         createTable("CHI_TIET_LOAI_PHONG", """
@@ -136,8 +137,48 @@ class MySQLite(context: Context, dbName: String, cursorFactory: SQLiteDatabase.C
         """)
 
         // insert data
-        insertDataTaiKhoan("admin", "123456","Nguyễn Văn A", "quantri@gmail.com", "0123456789", "001204014888", "Hà Nội", "notfound")
-        insertDataTaiKhoan("user1", "123456","Trần Văn B", "nhanvien@gmail.com", "0123456989", "001204015888", "Hà Nội", "notfound")
+        insertDataTaiKhoan("admin", "123456","Nguyễn Văn A", "quantri@gmail.com", "0123456789", "001204014888", "Hà Nội", "baseline_person_24")
+        insertDataTaiKhoan("user1", "123456","Trần Văn B", "nhanvien@gmail.com", "0123456989", "001204015888", "Hà Nội", "baseline_person_24")
+        insertDataTaiKhoan("user2", "123456","Trần Văn C", "nhanvien1@gmail.com", "0123456988", "001204015488", "Hà Nội", "baseline_person_24")
+
+        insertDataLoaiPhong("Phòng Standard", 2000000, 3, """
+            Loại phòng Vip 1
+        """)
+        insertDataLoaiPhong("Phòng Superior", 2043000, 3, """
+            Loại phòng Vip 2
+        """)
+        insertDataLoaiPhong("Phòng Deluxe", 7043000, 3, """
+            Loại phòng Vip 3
+        """)
+        insertDataLoaiPhong("Phòng Suite", 10043000, 3, """
+            Loại phòng Vip 4
+        """)
+
+        insertDataPhong("P101", 1)
+        insertDataPhong("P102", 1)
+        insertDataPhong("P103", 1)
+        insertDataPhong("P201", 2)
+        insertDataPhong("P202", 2)
+        insertDataPhong("P203", 2)
+        insertDataPhong("P301", 3)
+        insertDataPhong("P302", 3)
+        insertDataPhong("P303", 3)
+        insertDataPhong("P401", 4)
+        insertDataPhong("P402", 4)
+        insertDataPhong("P403", 4)
+
+        insertDataChiTietLoaiPhong(1, "v1_1"); // v1 vip 1
+        insertDataChiTietLoaiPhong(1, "v1_2");
+        insertDataChiTietLoaiPhong(1, "v1_3");
+        insertDataChiTietLoaiPhong(2, "v2_1");
+        insertDataChiTietLoaiPhong(2, "v2_2");
+        insertDataChiTietLoaiPhong(2, "v2_3");
+        insertDataChiTietLoaiPhong(3, "v3_1");
+        insertDataChiTietLoaiPhong(3, "v3_2");
+        insertDataChiTietLoaiPhong(3, "v3_3");
+        insertDataChiTietLoaiPhong(4, "v4_1");
+        insertDataChiTietLoaiPhong(4, "v4_2");
+        insertDataChiTietLoaiPhong(4, "v4_3");
     }
 
     fun querySQL(sql: String) {
@@ -158,6 +199,39 @@ class MySQLite(context: Context, dbName: String, cursorFactory: SQLiteDatabase.C
             val sql = """
             INSERT INTO TAI_KHOAN 
             VALUES (NULL, '$username', '$password', '$name', '$email', '$sdt', '$cccd', '$address', 0, 'android.resource://${R::class.java.`package`.name}/$tenAnh');
+        """
+            querySQL(sql)
+        }
+    }
+
+    fun insertDataLoaiPhong(ten: String, gia: Int, soNguoiToiDa: Int, moTa: String) {
+        val cursor = getDataFromSQL("SELECT COUNT(*) FROM LOAI_PHONG WHERE ten = '$ten';")
+        if (cursor.moveToNext() && cursor.getInt(0) <= 0) {
+            val sql = """
+            INSERT INTO LOAI_PHONG 
+            VALUES (NULL, '$ten', $gia, $soNguoiToiDa, '$moTa');
+        """
+            querySQL(sql)
+        }
+    }
+
+    fun insertDataPhong(viTri: String, maLoaiPhong: Int) {
+        val cursor = getDataFromSQL("SELECT COUNT(*) FROM PHONG WHERE ten = '$viTri';")
+        if (cursor.moveToNext() && cursor.getInt(0) <= 0) {
+            val sql = """
+            INSERT INTO PHONG 
+            VALUES (NULL, '$viTri', $maLoaiPhong);
+        """
+            querySQL(sql)
+        }
+    }
+
+    fun insertDataChiTietLoaiPhong(maLoaiPhong: Int, hinh: String){
+        val cursor = getDataFromSQL("SELECT COUNT(*) FROM CHI_TIET_LOAI_PHONG WHERE ma_loai_phong = $maLoaiPhong and hinh = '$hinh';")
+        if (cursor.moveToNext() && cursor.getInt(0) <= 0) {
+            val sql = """
+            INSERT INTO CHI_TIET_LOAI_PHONG 
+            VALUES (NULL, $maLoaiPhong, 'android.resource://${R::class.java.`package`.name}/$hinh');
         """
             querySQL(sql)
         }

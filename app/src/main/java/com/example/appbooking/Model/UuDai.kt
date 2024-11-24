@@ -11,7 +11,6 @@ class UuDai : Serializable {
     var ngayHetHan: Date? = null
     var giam: Double = 0.0
     var dieuKienVeGia: Int = 0
-    var apDungCho: Int = 0
 
     constructor() {
         this.maNhanVien = -1
@@ -25,7 +24,6 @@ class UuDai : Serializable {
         ngayHetHan: Date?,
         giam: Double,
         dieuKienVeGia: Int,
-        apDungCho: Int
     ) {
         this.maNhanVien = maNhanVien
         this.maUuDai = maUuDai
@@ -33,7 +31,7 @@ class UuDai : Serializable {
         this.ngayHetHan = ngayHetHan
         this.giam = giam
         this.dieuKienVeGia = dieuKienVeGia
-        this.apDungCho = apDungCho
+
     }
 
     override fun toString(): String {
@@ -44,7 +42,7 @@ class UuDai : Serializable {
                 ", ngayHetHan=" + ngayHetHan +
                 ", giam=" + giam +
                 ", dieuKienVeGia=" + dieuKienVeGia +
-                ", apDungCho=" + apDungCho +
                 '}'
     }
 }
+

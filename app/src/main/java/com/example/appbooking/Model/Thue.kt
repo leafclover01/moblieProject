@@ -1,7 +1,7 @@
 package com.example.appbooking.Model
 
 import java.io.Serializable
-import java.sql.Date
+import java.util.Date
 
 
 class Thue : Serializable {
@@ -28,3 +28,4 @@ class Thue : Serializable {
                 '}'
     }
 }
+

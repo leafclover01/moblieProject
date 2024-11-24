@@ -1,24 +1,26 @@
 package com.example.appbooking.Model
 
 import java.io.Serializable
-import java.sql.Date
+import java.util.Date
+
+
 
 
 class Don : Serializable {
     var maDon: Int
-    var maNhanVienNhapPhieu: Int
+    var ma_nguoi_dat: Int
     var checkIn: Date? = null
     var ngayLapPhieu: Date? = null
 
     constructor() {
         this.maDon = -1
-        this.maNhanVienNhapPhieu = -1
+        this.ma_nguoi_dat = -1
     }
 
-    constructor(maDon: Int, checkIn: Date?, maNhanVienNhapPhieu: Int, ngayLapPhieu: Date?) {
+    constructor(maDon: Int, checkIn: java.util.Date?, maNhanVienNhapPhieu: Int, ngayLapPhieu: java.util.Date?) {
         this.maDon = maDon
         this.checkIn = checkIn
-        this.maNhanVienNhapPhieu = maNhanVienNhapPhieu
+        this.ma_nguoi_dat = maNhanVienNhapPhieu
         this.ngayLapPhieu = ngayLapPhieu
     }
 
@@ -26,7 +28,7 @@ class Don : Serializable {
         return "Don{" +
                 "maDon=" + maDon +
                 ", checkIn=" + checkIn +
-                ", maNhanVienNhapPhieu=" + maNhanVienNhapPhieu +
+                ", maNhanVienNhapPhieu=" + ma_nguoi_dat +
                 ", ngayLapPhieu=" + ngayLapPhieu +
                 '}'
     }

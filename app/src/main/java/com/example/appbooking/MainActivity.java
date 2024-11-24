@@ -2,6 +2,7 @@ package com.example.appbooking;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -17,14 +19,19 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import com.example.appbooking.Database.MySQLite;
+import com.example.appbooking.Model.Don;
 import com.example.appbooking.page.DashboardActivity;
 import com.example.booking.Model.TaiKhoan;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     // khai báo tạm thời
     EditText edtUsername, edtPassword;
     Button btnLogIn;
     MySQLite db;
+    ImageView ivAnh;
+    ArrayList<TaiKhoan> dstk = new ArrayList<>();
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +46,17 @@ public class MainActivity extends AppCompatActivity {
 
         /////////////////////// Test //////////////////////////////////////////////////////////
         db = new MySQLite(MainActivity.this, db.DATABASE_NAME, null, 1);
-        String kt = db.isTableExists("ksdfj") ? "t" : "f";
-        Toast.makeText(this, kt, Toast.LENGTH_SHORT).show();
+//        Vidu ve set hinh anh khi lay ten anh tu db
+        dstk = db.docDuLieuTaiKhoan("Select * from TAI_KHOAN");
+        String s = db.getDrawableResourceUrl(MainActivity.this, dstk.get(0).getHinh());
+        ivAnh = findViewById(R.id.ivAnh);
+        ivAnh.setImageURI(Uri.parse(s));
+
+
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
+
+
         btnLogIn = findViewById(R.id.btnLogIn);
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override

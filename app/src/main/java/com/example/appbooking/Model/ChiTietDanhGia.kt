@@ -8,13 +8,19 @@ class ChiTietDanhGia : Serializable {
     var maDanhGia: Int
     var maDon: Int
     var danhGiaChatLuongPhong: Int = 0
-    var danhGiaChatLuongDichVu: Int = 0
     var danhGiaSachSe: Int = 0
     var danhGiaNhanVienPhucVu: Int = 0
     var danhGiaTienNghi: Int = 0
     var moTaChiTiet: String? = null
     var ngayDanhGia: Date? = null
-
+//            ma_danh_gia INTEGER PRIMARY KEY AUTOINCREMENT,
+//            ma_don INTEGER UNIQUE,
+//            ngay_danh_gia DATE,
+//            danh_gia_chat_luong_phong INTEGER,
+//            danh_gia_sach_se INTEGER,
+//            danh_gia_nhan_vien_phuc_vu INTEGER,
+//            danh_gia_tien_nghi INTEGER,
+//            mo_ta_chi_tiet VARCHAR,
     constructor() {
         this.maDanhGia = -1
         this.maDon = -1
@@ -29,7 +35,7 @@ class ChiTietDanhGia : Serializable {
         this.maDon = maDon
         this.ngayDanhGia = ngayDanhGia
         this.danhGiaChatLuongPhong = danhGiaChatLuongPhong
-        this.danhGiaChatLuongDichVu = danhGiaChatLuongDichVu
+
         this.danhGiaSachSe = danhGiaSachSe
         this.danhGiaNhanVienPhucVu = danhGiaNhanVienPhucVu
         this.danhGiaTienNghi = danhGiaTienNghi
@@ -42,7 +48,7 @@ class ChiTietDanhGia : Serializable {
                 ", maDon=" + maDon +
                 ", ngayDanhGia=" + ngayDanhGia +
                 ", danhGiaChatLuongPhong=" + danhGiaChatLuongPhong +
-                ", danhGiaChatLuongDichVu=" + danhGiaChatLuongDichVu +
+
                 ", danhGiaSachSe=" + danhGiaSachSe +
                 ", danhGiaNhanVienPhucVu=" + danhGiaNhanVienPhucVu +
                 ", danhGiaTienNghi=" + danhGiaTienNghi +

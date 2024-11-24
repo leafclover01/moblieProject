@@ -32,3 +32,10 @@ class HoaDon : Serializable {
                 '}'
     }
 }
+//        createTable("HOA_DON", """
+//            ma_hoa_don INTEGER PRIMARY KEY AUTOINCREMENT,
+//            ma_don INTEGER UNIQUE,
+//            ngay_thanh_toan DATE,
+//            so_tien_thanh_toan INTEGER,
+//            FOREIGN KEY (ma_don) REFERENCES DON(ma_don)
+//        """)

@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.appbooking.Model.ChiTietUuDai
+import com.example.appbooking.Model.TienNghi
 
 import com.example.booking.Model.TaiKhoan
 import java.util.Date
@@ -95,7 +96,6 @@ class MySQLite(context: Context, dbName: String, cursorFactory: SQLiteDatabase.C
             ma_don INTEGER UNIQUE, 
             ngay_danh_gia DATE, 
             danh_gia_chat_luong_phong INTEGER, 
-            danh_gia_chat_luong_dich_vu INTEGER, 
             danh_gia_sach_se INTEGER, 
             danh_gia_nhan_vien_phuc_vu INTEGER, 
             danh_gia_tien_nghi INTEGER, 
@@ -116,7 +116,7 @@ class MySQLite(context: Context, dbName: String, cursorFactory: SQLiteDatabase.C
 
         createTable("UU_DAI", """
             ma_nhan_vien INTEGER, 
-            ma_uu_dai INTEGER PRIMARY KEY, 
+            ma_uu_dai INTEGER PRIMARY KEY AUTOINCREMENT, 
             ngay_bat_dau DATE, 
             ngay_het_han DATE, 
             giam DECIMAL(10, 2), 
@@ -141,39 +141,54 @@ class MySQLite(context: Context, dbName: String, cursorFactory: SQLiteDatabase.C
 
         // insert data
        if(!isTableHasData("TAI_KHOAN")){
-           insertDataTaiKhoan("admin", "123456","Nguyễn Văn A", "quantri@gmail.com", "0123456789", "001204014888", "Hà Nội", "baseline_person_24")
-           insertDataTaiKhoan("user1", "123456","Trần Văn B", "nhanvien@gmail.com", "0123456989", "001204015888", "Hà Nội", "baseline_person_24")
-           insertDataTaiKhoan("user2", "123456","Trần Văn C", "nhanvien1@gmail.com", "0123456988", "001204015488", "Hà Nội", "baseline_person_24")
+           insertDataTaiKhoan(1,"admin", "123456","Nguyễn Văn A", "quantri@gmail.com", "0123456789", "001204014888", "Hà Nội", "ic_avt")
+           insertDataTaiKhoan(2,"user1", "123456","Trần Văn B", "nhanvien@gmail.com", "0123456989", "001204015888", "Hà Nội", "ic_avt")
+           insertDataTaiKhoan(3,"user2","123456","Trần Văn C", "nhanvien1@gmail.com", "0123456988", "001204015488", "Hà Nội", "ic_avt")
+           insertDataTaiKhoan(null,"user3","123456","Trần Văn D", "nhanvien3@gmail.com", "0121456988", "011204015488", "Hà Nội", "ic_avt")
+           insertDataTaiKhoan(null,"admin2", "123456","Nguyễn Văn B", "quantri1@gmail.com", "0122456789", "001204024888", "Hà Nội", "ic_avt")
+           // test th loi
+           insertDataTaiKhoan(null,"user2", "123456","Trần Văn B", "nhanvien@gmail.com", "0123456989", "001204015888", "Hà Nội", "ic_avt")
+           insertDataTaiKhoan(3,"user000","123456","Trần Văn C", "nhanvien1@gmail.com", "0123456988", "001204015488", "Hà Nội", "ic_avt")
        }
 
         if(!isTableHasData("LOAI_PHONG")){
-            insertDataLoaiPhong("Phòng Standard", 2000000, 3, """
+            insertDataLoaiPhong(1,"Phòng Standard", 2000000, 3, """
             Loại phòng Vip 1
             """)
-            insertDataLoaiPhong("Phòng Superior", 2043000, 3, """
+            insertDataLoaiPhong(2,"Phòng Superior", 2043000, 3, """
             Loại phòng Vip 2
             """)
-            insertDataLoaiPhong("Phòng Deluxe", 7043000, 3, """
+            insertDataLoaiPhong(3,"Phòng Deluxe", 7043000, 3, """
             Loại phòng Vip 3
             """)
-            insertDataLoaiPhong("Phòng Suite", 10043000, 3, """
+            insertDataLoaiPhong(4,"Phòng Suite", 10043000, 3, """
             Loại phòng Vip 4
+            """)
+            insertDataLoaiPhong(null,"Phòng Deluxe 2", 8043000, 3, """
+            Loại phòng Vip 3+
+            """)
+            // loi
+            insertDataLoaiPhong(3,"Phòng Suite 2", 10043000, 3, """
+            Loại phòng Vip 5
             """)
         }
 
         if(!isTableHasData("PHONG")){
-            insertDataPhong("P101", 1)
-            insertDataPhong("P102", 1)
-            insertDataPhong("P103", 1)
-            insertDataPhong("P201", 2)
-            insertDataPhong("P202", 2)
-            insertDataPhong("P203", 2)
-            insertDataPhong("P301", 3)
-            insertDataPhong("P302", 3)
-            insertDataPhong("P303", 3)
-            insertDataPhong("P401", 4)
-            insertDataPhong("P402", 4)
-            insertDataPhong("P403", 4)
+            insertDataPhong(1,"P101", 1)
+            insertDataPhong(2,"P102", 1)
+            insertDataPhong(3,"P103", 1)
+            insertDataPhong(4,"P201", 2)
+            insertDataPhong(5,"P202", 2)
+            insertDataPhong(6,"P203", 2)
+            insertDataPhong(7,"P301", 3)
+            insertDataPhong(8, "P302", 3)
+            insertDataPhong(9,"P303", 3)
+            insertDataPhong(10,"P401", 4)
+            insertDataPhong(11,"P402", 4)
+            insertDataPhong(12,"P403", 4)
+            insertDataPhong(null,"P501", 4)
+            //erorr
+            insertDataPhong(12,"P500", 4)
         }
 
         if(!isTableHasData("CHI_TIET_LOAI_PHONG")){
@@ -193,10 +208,13 @@ class MySQLite(context: Context, dbName: String, cursorFactory: SQLiteDatabase.C
 
         if(!isTableHasData("DON")){
             val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
-            insertDataDon(2, dateFormat.parse("2024-11-23 12:00"), dateFormat.parse("2024-11-27 12:00"))
-            insertDataDon(3, dateFormat.parse("2024-11-24 11:00"), dateFormat.parse("2024-11-25 15:00"))
-            insertDataDon(3, dateFormat.parse("2024-11-10 13:00"), dateFormat.parse("2024-12-24 17:00"))
-            insertDataDon(2, dateFormat.parse("2024-11-11 9:40"), dateFormat.parse("2024-11-20 8:00"))
+            insertDataDon(1,2, dateFormat.parse("2024-11-23 12:00"), dateFormat.parse("2024-11-27 12:00"))
+            insertDataDon(2,3, dateFormat.parse("2024-11-24 11:00"), dateFormat.parse("2024-11-25 15:00"))
+            insertDataDon(3,3, dateFormat.parse("2024-11-10 13:00"), dateFormat.parse("2024-12-24 17:00"))
+            insertDataDon(4,2, dateFormat.parse("2024-11-11 9:40"), dateFormat.parse("2024-11-20 8:00"))
+
+            // loi
+            insertDataDon(4,3, dateFormat.parse("2024-11-11 9:40"), dateFormat.parse("2024-11-20 8:00"))
         }
 
         if(!isTableHasData("THUE")){
@@ -209,8 +227,11 @@ class MySQLite(context: Context, dbName: String, cursorFactory: SQLiteDatabase.C
 
         if(!isTableHasData("UU_DAI")){
             val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
-            insertDataUuDai(1, dateFormat.parse("2024-11-17 9:00"), dateFormat.parse("2024-12-30 9:00"), 0.1, 0)
-            insertDataUuDai(1, dateFormat.parse("2024-11-1 9:00"), dateFormat.parse("2024-11-15 9:00"), 0.15, 0)
+            insertDataUuDai(100000,1, dateFormat.parse("2024-11-17 9:00"), dateFormat.parse("2024-12-30 9:00"), 0.1, 0)
+            insertDataUuDai(100001,1, dateFormat.parse("2024-11-1 9:00"), dateFormat.parse("2024-11-15 9:00"), 0.15, 0)
+            insertDataUuDai(null,1, dateFormat.parse("2024-12-01 9:00"), dateFormat.parse("2024-12-15 9:00"), 0.2, 4000000)
+            // loi
+            insertDataUuDai(100001,1, dateFormat.parse("2024-11-1 9:00"), dateFormat.parse("2024-11-15 9:00"), 0.5, 0)
         }
 
         if(!isTableHasData("CHI_TIET_UU_DAI")){
@@ -225,7 +246,32 @@ class MySQLite(context: Context, dbName: String, cursorFactory: SQLiteDatabase.C
             insertApMa(4, 100001)
         }
 
+        if(!isTableHasData("TIEN_NGHI")){
+            insertTienNghi(1,"Wifi miễn phí", "ic_wifi") //1
+            insertTienNghi(2,"Hồ bơi", "ic_water") //2
+            insertTienNghi(3,"Để xe miễn phí", "ic_local_park") //3
+            insertTienNghi(4,"Đưa đón", "ic_taxi") //4
+            insertTienNghi(5,"Truyền thông - TV", "ic_tv") //5
+        }
+        if(!isTableHasData("CO_TIEN_NGHI")){
+            insertCoTienNghi(1, 1)
+            insertCoTienNghi(1, 3)
 
+            insertCoTienNghi(2, 1)
+            insertCoTienNghi(2, 3)
+            insertCoTienNghi(2, 5)
+
+            insertCoTienNghi(3, 1)
+            insertCoTienNghi(3, 3)
+            insertCoTienNghi(3, 5)
+            insertCoTienNghi(3, 2)
+
+            insertCoTienNghi(4, 1)
+            insertCoTienNghi(4, 2)
+            insertCoTienNghi(4, 3)
+            insertCoTienNghi(4, 4)
+            insertCoTienNghi(4, 5)
+        }
 
     }
 
@@ -240,32 +286,50 @@ class MySQLite(context: Context, dbName: String, cursorFactory: SQLiteDatabase.C
     fun createTable(tableName: String, columns: String) {
         querySQL("CREATE TABLE IF NOT EXISTS $tableName ($columns);")
     }
-
-    fun insertDataTaiKhoan(username: String, password: String, name: String, email: String, sdt: String, cccd: String, address: String, tenAnh: String) {
+    fun insertCoTienNghi(maLoaiPhong: Int, maTienNghi: Int) {
+        val sql = """
+                INSERT INTO CO_TIEN_NGHI
+                VALUES ($maTienNghi, $maLoaiPhong);
+                """
+        querySQL(sql)
+    }
+    fun insertDataTaiKhoan(id: Int?, username: String, password: String, name: String, email: String, sdt: String, cccd: String, address: String, tenAnh: String) {
         val cursor = getDataFromSQL("SELECT COUNT(id) FROM TAI_KHOAN WHERE username = '$username';")
         if (cursor.moveToNext() && cursor.getInt(0) <= 0) {
+            try {
+                val sql = """
+                    INSERT INTO TAI_KHOAN 
+                    VALUES ($id, '$username', '$password', '$name', '$email', '$sdt', '$cccd', '$address', 0, '$tenAnh');
+                    """
+                querySQL(sql)
+            } catch (e: Exception) {
+                println("Lỗi xảy ra khi chèn dữ liệu: ${e.message}")
+            }
+        }
+    }
+    fun insertDataUuDai(id: Int?, maNhanVien: Int, ngayBatDau: java.util.Date?, ngayHetHan: java.util.Date?, giam: Double, dieuKienVeGia: Int) {
+//            var id_max: Int = 100000
+//            var cursor = getDataFromSQL("SELECT MAX(ma_uu_dai) from UU_DAI")
+//            while (cursor.moveToNext()){
+//                id_max = if (cursor.getInt(0) >= id_max) {
+//                    cursor.getInt(0) + 1
+//                } else {
+//                    id_max
+//                }
+//            }
+//            val sql = """
+//                INSERT INTO UU_DAI
+//                VALUES ($maNhanVien, $id_max, '$ngayBatDau', '$ngayHetHan', $giam, $dieuKienVeGia);
+//                """
+//            querySQL(sql)
+        val cursor = getDataFromSQL("SELECT COUNT(*) FROM UU_DAI WHERE ma_uu_dai = '$id';")
+        if (cursor.moveToNext() && cursor.getInt(0) <= 0) {
             val sql = """
-                INSERT INTO TAI_KHOAN 
-                VALUES (NULL, '$username', '$password', '$name', '$email', '$sdt', '$cccd', '$address', 0, '$tenAnh');
+                INSERT INTO UU_DAI 
+                VALUES ($maNhanVien, $id, '$ngayBatDau', '$ngayHetHan', $giam, $dieuKienVeGia);
                 """
             querySQL(sql)
         }
-    }
-    fun insertDataUuDai(maNhanVien: Int, ngayBatDau: java.util.Date?, ngayHetHan: java.util.Date?, giam: Double, dieuKienVeGia: Int) {
-            var id_max: Int = 100000
-            var cursor = getDataFromSQL("SELECT MAX(ma_uu_dai) from UU_DAI")
-            while (cursor.moveToNext()){
-                id_max = if (cursor.getInt(0) >= id_max) {
-                    cursor.getInt(0) + 1
-                } else {
-                    id_max
-                }
-            }
-            val sql = """
-                INSERT INTO UU_DAI 
-                VALUES ($maNhanVien, $id_max, '$ngayBatDau', '$ngayHetHan', $giam, $dieuKienVeGia);
-                """
-            querySQL(sql)
     }
     fun insertChiTietUuDai(maUuDai: Int, hinh: String){
         val sql = """
@@ -276,45 +340,75 @@ class MySQLite(context: Context, dbName: String, cursorFactory: SQLiteDatabase.C
     }
     fun insertApMa(maDon: Int, maUuDai: Int){
         val sql = """
-                INSERT INTO CHI_TIET_UU_DAI 
+                INSERT INTO AP_MA 
                 VALUES ($maDon, $maUuDai);
                 """
         querySQL(sql)
     }
-    fun insertDataLoaiPhong(ten: String, gia: Int, soNguoiToiDa: Int, moTa: String) {
-        val cursor = getDataFromSQL("SELECT COUNT(*) FROM LOAI_PHONG WHERE ten = '$ten';")
+    fun insertTienNghi(maTienNghi: Int?, tenTienNghi: String, ic_mo_ta: String) {
+        val cursor = getDataFromSQL("SELECT COUNT(*) FROM TIEN_NGHI WHERE ma_tien_nghi = $maTienNghi;")
+        if (cursor.moveToNext() && cursor.getInt(0) <= 0) {
+            val sql = """
+                INSERT INTO TIEN_NGHI
+                VALUES ($maTienNghi, "$tenTienNghi", "$ic_mo_ta");
+                """
+            querySQL(sql)
+        }
+    }
+    fun insertDataLoaiPhong(maLoaiPhong: Int?, ten: String, gia: Int, soNguoiToiDa: Int, moTa: String) {
+        val cursor = getDataFromSQL("SELECT COUNT(*) FROM LOAI_PHONG WHERE ma_loai_phong = '$maLoaiPhong';")
         if (cursor.moveToNext() && cursor.getInt(0) <= 0) {
             val sql = """
                 INSERT INTO LOAI_PHONG 
-                VALUES (NULL, '$ten', $gia, $soNguoiToiDa, '$moTa');
+                VALUES ($maLoaiPhong, '$ten', $gia, $soNguoiToiDa, '$moTa');
                 """
             querySQL(sql)
         }
     }
 
-    fun insertDataPhong(viTri: String, maLoaiPhong: Int) {
-        val cursor = getDataFromSQL("SELECT COUNT(*) FROM PHONG WHERE vi_tri = '$viTri';")
+    fun insertDataPhong(maPhong: Int?, viTri: String, maLoaiPhong: Int) {
+        val cursor = getDataFromSQL("SELECT COUNT(*) FROM PHONG WHERE ma_phong = '$maPhong';")
         if (cursor.moveToNext() && cursor.getInt(0) <= 0) {
             val sql = """
                 INSERT INTO PHONG 
-                VALUES (NULL, '$viTri', $maLoaiPhong);
+                VALUES ($maPhong, '$viTri', $maLoaiPhong);
                 """
             querySQL(sql)
         }
     }
 
-    fun insertDataDon(ma_nguoi_dat: Int, ngayLapPhieu: java.util.Date?, checkIn: java.util.Date?) {
+    fun insertDataDon(maDon: Int?, ma_nguoi_dat: Int, ngayLapPhieu: java.util.Date?, checkIn: java.util.Date?) {
+        val cursor = getDataFromSQL("SELECT COUNT(*) FROM DON WHERE ma_don = '$maDon';")
+        if (cursor.moveToNext() && cursor.getInt(0) <= 0) {
             val sql = """
                 INSERT INTO DON
-                VALUES (NULL, '$checkIn', $ma_nguoi_dat, '$ngayLapPhieu');
+                VALUES ($maDon, '$checkIn', $ma_nguoi_dat, '$ngayLapPhieu');
                 """
             querySQL(sql)
+        }
     }
 
     fun insertDataThue(maDon: Int, maPhong: Int, checkOut: java.util.Date?) {
         val sql = """
                 INSERT INTO THUE
                 VALUES ($maDon, $maPhong, '$checkOut');
+                """
+        querySQL(sql)
+    }
+
+    fun insertDataChiTietDanhGia(maDon: Int,
+                                 danhGiaChatLuongPhong: Int,
+                                 danhGiaSachSe: Int,
+                                 danhGiaNhanVienPhucVu: Int,
+                                 danhGiaTienNghi: Int,
+                                 moTaChiTiet: String,
+                                 ngayDanhGia: java.util.Date?
+                                 ) {
+        val sql = """
+                INSERT INTO CHI_TIET_DANH_GIA
+                VALUES (null, $maDon, '$ngayDanhGia', $danhGiaChatLuongPhong,
+                        $danhGiaSachSe, $danhGiaNhanVienPhucVu, $danhGiaTienNghi, $moTaChiTiet
+                );
                 """
         querySQL(sql)
     }
@@ -360,6 +454,9 @@ class MySQLite(context: Context, dbName: String, cursorFactory: SQLiteDatabase.C
         return listTaiKhoan
     }
 
+    fun tinhSoTienThanhToan(maDon: Int){
+
+    }
     fun isTableExists(tableName: String): Boolean {
         val query = "SELECT name FROM sqlite_master WHERE type='table' AND name='$tableName'"
         val cursor = getDataFromSQL(query)

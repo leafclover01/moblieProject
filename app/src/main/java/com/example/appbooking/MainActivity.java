@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         /////////////////////// Test //////////////////////////////////////////////////////////
         db = new MySQLite(MainActivity.this, db.DATABASE_NAME, null, 1);
 
+
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
         btnLogIn = findViewById(R.id.btnLogIn);

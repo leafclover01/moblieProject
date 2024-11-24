@@ -27,9 +27,3 @@ class ChiTietLoaiPhong : Serializable {
                 '}'
     }
 }
-//        createTable("CHI_TIET_LOAI_PHONG", """
-//            id INTEGER PRIMARY KEY AUTOINCREMENT,
-//            ma_loai_phong INTEGER,
-//            hinh VARCHAR(255),
-//            FOREIGN KEY (ma_loai_phong) REFERENCES LOAI_PHONG(ma_loai_phong)
-//        """)

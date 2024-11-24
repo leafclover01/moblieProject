@@ -34,7 +34,7 @@ class MySQLite(context: Context, dbName: String, cursorFactory: SQLiteDatabase.C
 
         createTable("PHONG", """
             ma_phong INTEGER PRIMARY KEY AUTOINCREMENT, 
-            vi_tri VARCHAR(255), ma_loai_phong INTEGER, 
+            vi_tri VARCHAR(255),
             ma_loai_phong integer,
             FOREIGN KEY (ma_loai_phong) REFERENCES LOAI_PHONG(ma_loai_phong)
         """)
@@ -216,7 +216,7 @@ class MySQLite(context: Context, dbName: String, cursorFactory: SQLiteDatabase.C
     }
 
     fun insertDataPhong(viTri: String, maLoaiPhong: Int) {
-        val cursor = getDataFromSQL("SELECT COUNT(*) FROM PHONG WHERE ten = '$viTri';")
+        val cursor = getDataFromSQL("SELECT COUNT(*) FROM PHONG WHERE vi_tri = '$viTri';")
         if (cursor.moveToNext() && cursor.getInt(0) <= 0) {
             val sql = """
             INSERT INTO PHONG 
@@ -225,6 +225,17 @@ class MySQLite(context: Context, dbName: String, cursorFactory: SQLiteDatabase.C
             querySQL(sql)
         }
     }
+
+//    fun insertDataDon(viTri: String, maLoaiPhong: Int) {
+//        val cursor = getDataFromSQL("SELECT COUNT(*) FROM DON WHERE ten = '$viTri';")
+//        if (cursor.moveToNext() && cursor.getInt(0) <= 0) {
+//            val sql = """
+//            INSERT INTO DON
+//            VALUES (NULL, '$viTri', $maLoaiPhong);
+//        """
+//            querySQL(sql)
+//        }
+//    }
 
     fun insertDataChiTietLoaiPhong(maLoaiPhong: Int, hinh: String){
         val cursor = getDataFromSQL("SELECT COUNT(*) FROM CHI_TIET_LOAI_PHONG WHERE ma_loai_phong = $maLoaiPhong and hinh = '$hinh';")
@@ -265,7 +276,16 @@ class MySQLite(context: Context, dbName: String, cursorFactory: SQLiteDatabase.C
         return listTaiKhoan
     }
 
-    override fun onCreate(db: SQLiteDatabase?) {}
+    fun isTableExists(tableName: String): Boolean {
+        val query = "SELECT name FROM sqlite_master WHERE type='table' AND name=?"
+        val cursor = getDataFromSQL(query)
+        val exists = cursor.count > 0
+        cursor.close()
+        return exists
+    }
+    override fun onCreate(db: SQLiteDatabase?) {
+
+    }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {}
 }

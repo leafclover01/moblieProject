@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
         /////////////////////// Test //////////////////////////////////////////////////////////
         db = new MySQLite(MainActivity.this, db.DATABASE_NAME, null, 1);
-
-
+        String kt = db.isTableExists("ksdfj") ? "t" : "f";
+        Toast.makeText(this, kt, Toast.LENGTH_SHORT).show();
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
         btnLogIn = findViewById(R.id.btnLogIn);

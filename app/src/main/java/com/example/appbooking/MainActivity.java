@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
         db = new MySQLite();
 //        db.insertDataDon(1, "2024-11-23 12:00", "2024-11-23 12:00");
         TaiKhoan taiKhoan = new TaiKhoan();
-
+        String msg = db.insertChiTietUuDai(100000, "df");
+        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
         TaiKhoan tk = db.getTaiKhoan(1);
 
         String pathImg = db.getDrawableResourceUrl(MainActivity.this, "ic_avt");

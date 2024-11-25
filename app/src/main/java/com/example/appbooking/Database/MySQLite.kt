@@ -257,5 +257,21 @@ class MySQLite {
         }
     }
 
+    fun executeQuery(sql: String): List<Row> {
+        val resultList = mutableListOf<Row>()
+        db.connect().use { conn ->
+            val rows = conn.query(sql)
+            rows.forEach { row ->
+                // Thêm từng Row vào danh sách resultList
+                resultList.add(row)
+            }
+        }
+        return resultList
+    }
+
+    fun updateSQL(sql: String) {
+        db.connect().execute(sql)
+    }
+
 
 }

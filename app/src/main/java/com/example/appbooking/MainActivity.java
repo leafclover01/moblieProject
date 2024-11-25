@@ -22,6 +22,7 @@ import com.example.appbooking.Database.MySQLite;
 import com.example.appbooking.Model.Don;
 import com.example.appbooking.page.DashboardActivity;
 import com.example.appbooking.Model.TaiKhoan;
+import com.example.appbooking.page.admin.homeAdmin;
 
 import java.util.ArrayList;
 
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 //                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                     if (taiKhoan.getId() >= 0 && taiKhoan.getRole() >= 0) {
                         if (taiKhoan.getRole() == 0) {
-                            Intent intentQuanTri = new Intent(MainActivity.this, DashboardActivity.class);
+                            Intent intentQuanTri = new Intent(MainActivity.this, homeAdmin.class);
                             intentQuanTri.putExtra("taiKhoan", taiKhoan);
                             startActivity(intentQuanTri);
                         }

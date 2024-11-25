@@ -42,8 +42,7 @@ class MySQLite {
     fun insertDataUuDai(maNhanVien: Int, ngayBatDau: String, ngayHetHan: String, giam: Double, dieuKienVeGia: Int) {
         val sql = """
                 INSERT INTO UU_DAI ( ma_uu_dai, ma_nhan_vien, ngay_bat_dau, ngay_het_han, giam, dieu_kien_ve_gia) VALUES
-                (null, $maNhanVien, '$ngayBatDau', '$ngayHetHan', '$giam', '$dieuKienVeGia')
-                ON CONFLICT(ma_uu_dai) DO NOTHING;
+                (null, $maNhanVien, '$ngayBatDau', '$ngayHetHan', '$giam', '$dieuKienVeGia');
                 """
         db.connect().query(sql)
     }
@@ -67,52 +66,48 @@ class MySQLite {
 //        executeQuery(sql)
 //    }
 //
-//    fun insertDataLoaiPhong(maLoaiPhong: Int?, ten: String, gia: Int, soNguoiToiDa: Int, moTa: String) {
-//        val sql = """
-//        INSERT INTO LOAI_PHONG
-//        VALUES ($maLoaiPhong, '$ten', $gia, $soNguoiToiDa, '$moTa')
-//        ON CONFLICT(ma_loai_phong) DO NOTHING;
-//    """
-//        executeQuery(sql)
-//    }
-//
-//    fun insertDataPhong(maPhong: Int?, viTri: String, maLoaiPhong: Int) {
-//        val sql = """
-//        INSERT INTO PHONG
-//        VALUES ($maPhong, '$viTri', $maLoaiPhong)
-//        ON CONFLICT(ma_phong) DO NOTHING;
-//    """
-//        executeQuery(sql)
-//    }
-//
-//    fun insertDataDon(maDon: Int?, ma_nguoi_dat: Int, ngayLapPhieu: String, checkIn: String) {
-//        val sql = """
-//        INSERT INTO DON
-//        VALUES ($maDon, '$checkIn', $ma_nguoi_dat, '$ngayLapPhieu')
-//        ON CONFLICT(ma_don) DO NOTHING;
-//    """
-//        executeQuery(sql)
-//    }
-//
-//    fun insertDataThue(maDon: Int, maPhong: Int, checkOut: String) {
-//        val sql = "INSERT INTO THUE VALUES ($maDon, $maPhong, '$checkOut');"
-//        executeQuery(sql)
-//    }
-//
+    fun insertDataLoaiPhong(ten: String, gia: Int, soNguoiToiDa: Int, moTa: String) {
+        val sql = """
+            INSERT INTO LOAI_PHONG (ma_loai_phong, ten, gia, so_nguoi_toi_da, mo_ta)
+            VALUES (NULL, '$ten', $gia, $soNguoiToiDa, '$moTa');
+            """
+        db.connect().execute(sql)
+    }
+
+    fun insertDataPhong(viTri: String, maLoaiPhong: Int) {
+        val sql = """
+            INSERT INTO PHONG (ma_phong, vi_tri, ma_loai_phong)
+            VALUES (NULL, '$viTri', $maLoaiPhong);
+        """
+        db.connect().execute(sql)
+    }
+
+    fun insertDataDon(ma_nguoi_dat: Int, ngayLapPhieu: String, checkIn: String) {
+        val sql = """
+            INSERT INTO DON (ma_don, check_in, ma_nguoi_dat, ngay_lap_phieu)
+            VALUES (NULL, '$checkIn', $ma_nguoi_dat, '$ngayLapPhieu');
+        """
+        db.connect().execute(sql)
+    }
+
+    fun insertDataThue(maDon: Int, maPhong: Int, checkOut: String) {
+        val sql = "INSERT INTO THUE VALUES ($maDon, $maPhong, '$checkOut');"
+        db.connect().execute(sql)
+    }
+
     fun insertDataChiTietLoaiPhong(maLoaiPhong: Int, hinh: String) {
         val sql = """
-                INSERT INTO CHI_TIET_LOAI_PHONG
-                VALUES (NULL, $maLoaiPhong, '$hinh')
-                ON CONFLICT(hinh) DO NOTHING;
+                INSERT INTO CHI_TIET_LOAI_PHONG (id, ma_loai_phong, hinh)
+                VALUES (NULL, $maLoaiPhong, '$hinh');
             """
-    db.connect().execute(sql)
+        db.connect().execute(sql)
     }
 
 
     fun kiemTraDangNhap(username: String, password: String): TaiKhoan{
         var taiKhoan = TaiKhoan()
         db.connect().use { conn ->
-            val sql = "SELECT * FROM TAI_KHOAN WHERE username = '$username' AND password = '$password'"
+            val sql = "SELECT * FROM TAI_KHOAN WHERE username = '$username' AND password = '$password';"
             val rows = conn.query(sql)
             rows.forEach { row ->
                 taiKhoan = TaiKhoan(
@@ -135,7 +130,7 @@ class MySQLite {
     fun getTaiKhoan(id: Int): TaiKhoan{
         var taiKhoan = TaiKhoan()
         db.connect().use { conn ->
-            val sql = "SELECT * FROM TAI_KHOAN WHERE id='$id'"
+            val sql = "SELECT * FROM TAI_KHOAN WHERE id='$id';"
             val rows = conn.query(sql)
             rows.forEach { row ->
                 taiKhoan = TaiKhoan(
@@ -154,7 +149,29 @@ class MySQLite {
         }
         return taiKhoan
     }
-
+    fun layDanhSachTaiKhoan(): ArrayList<TaiKhoan>{
+        var list = ArrayList<TaiKhoan>()
+        db.connect().use { conn ->
+            val sql = "SELECT * FROM TAI_KHOAN;"
+            val rows = conn.query(sql)
+            rows.forEach { row ->
+                var taiKhoan : TaiKhoan = TaiKhoan(
+                    row.get(0).toString().toInt(),
+                    row.get(8).toString().toInt(),
+                    row.get(1).toString(),
+                    row.get(2).toString(),
+                    row.get(4).toString(),
+                    row.get(7).toString(),
+                    row.get(5).toString(),
+                    row.get(6).toString(),
+                    row.get(3).toString(),
+                    row.get(9).toString()
+                )
+                list.add(TaiKhoan())
+            }
+        }
+        return list
+    }
 
     fun getDrawableResourceUrl(context: Context, imageName: String): String? {
         val resourceId = context.resources.getIdentifier(imageName, "drawable", context.packageName)

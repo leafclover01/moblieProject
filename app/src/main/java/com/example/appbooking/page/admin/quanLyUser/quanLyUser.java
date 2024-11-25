@@ -1,6 +1,10 @@
 package com.example.appbooking.page.admin.quanLyUser;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +16,9 @@ import com.example.appbooking.R;
 
 public class quanLyUser extends AppCompatActivity {
 
+    ImageButton ad_refesh_;
+    Spinner ad_dkLoc;
+    ListView ad_listV;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

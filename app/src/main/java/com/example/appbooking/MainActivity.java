@@ -21,7 +21,8 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.appbooking.Database.MySQLite;
 import com.example.appbooking.Model.Don;
 import com.example.appbooking.page.DashboardActivity;
-import com.example.booking.Model.TaiKhoan;
+import com.example.appbooking.Model.TaiKhoan;
+import com.example.appbooking.page.admin.homeAdmin;
 
 import java.util.ArrayList;
 
@@ -45,12 +46,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         /////////////////////// Test //////////////////////////////////////////////////////////
-        db = new MySQLite(MainActivity.this, db.DATABASE_NAME, null, 1);
-//        Vidu ve set hinh anh khi lay ten anh tu db
-        dstk = db.docDuLieuTaiKhoan("Select * from TAI_KHOAN");
-        String s = db.getDrawableResourceUrl(MainActivity.this, dstk.get(0).getHinh());
+        db = new MySQLite();
+
+
+
+        String pathImg = db.getDrawableResourceUrl(MainActivity.this, "ic_avt");
         ivAnh = findViewById(R.id.ivAnh);
-        ivAnh.setImageURI(Uri.parse(s));
+        ivAnh.setImageURI(Uri.parse(pathImg));
 
 
         edtUsername = findViewById(R.id.edtUsername);
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 //                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                     if (taiKhoan.getId() >= 0 && taiKhoan.getRole() >= 0) {
                         if (taiKhoan.getRole() == 0) {
-                            Intent intentQuanTri = new Intent(MainActivity.this, DashboardActivity.class);
+                            Intent intentQuanTri = new Intent(MainActivity.this, homeAdmin.class);
                             intentQuanTri.putExtra("taiKhoan", taiKhoan);
                             startActivity(intentQuanTri);
                         }

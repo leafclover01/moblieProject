@@ -23,6 +23,9 @@ import com.example.appbooking.Model.Don;
 import com.example.appbooking.page.DashboardActivity;
 import com.example.appbooking.Model.TaiKhoan;
 import com.example.appbooking.page.admin.homeAdmin;
+import tech.turso.libsql.Database;
+import tech.turso.libsql.Libsql;
+import tech.turso.libsql.Rows;
 
 import java.util.ArrayList;
 
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         /////////////////////// Test //////////////////////////////////////////////////////////
         db = new MySQLite();
 //        db.insertDataDon(1, "2024-11-23 12:00", "2024-11-23 12:00");
-        db.insertDataLoaiPhong("test", 1, 1,"");
+        TaiKhoan taiKhoan = new TaiKhoan();
 
         TaiKhoan tk = db.getTaiKhoan(1);
 

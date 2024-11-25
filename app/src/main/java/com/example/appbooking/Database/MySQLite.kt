@@ -25,20 +25,19 @@ class MySQLite {
         )
     }
 
-//    fun insertCoTienNghi(maLoaiPhong: Int, maTienNghi: Int) {
-//        val sql = "INSERT INTO CO_TIEN_NGHI VALUES ($maTienNghi, $maLoaiPhong);"
-//        executeQuery(sql)
-//    }
-//
-//    fun insertDataTaiKhoan(id: Int?, username: String, password: String, name: String, email: String, sdt: String, cccd: String, address: String, tenAnh: String) {
-//        val sql = """
-//        INSERT INTO TAI_KHOAN
-//        VALUES ($id, '$username', '$password', '$name', '$email', '$sdt', '$cccd', '$address', 0, '$tenAnh')
-//        ON CONFLICT(username) DO NOTHING;
-//    """
-//        executeQuery(sql)
-//    }
-//
+    fun insertCoTienNghi(maLoaiPhong: Int, maTienNghi: Int) {
+        val sql = "INSERT INTO CO_TIEN_NGHI (ma_tien_nghi, ma_loai_phong) VALUES ($maTienNghi, $maLoaiPhong);"
+        db.connect().query(sql)
+    }
+
+    fun insertDataTaiKhoan(username: String, password: String, name: String, email: String, sdt: String, cccd: String, address: String, role: Int, tenAnh: String) {
+        val sql = """
+        INSERT INTO TAI_KHOAN (id, username, password, name, email, sdt, cccd, address, role, hinh)
+        VALUES (NULL, '$username', '$password', '$name', '$email', '$sdt', '$cccd', '$address', $role, '$tenAnh');
+        """
+        db.connect().query(sql)
+    }
+
     fun insertDataUuDai(maNhanVien: Int, ngayBatDau: String, ngayHetHan: String, giam: Double, dieuKienVeGia: Int) {
         val sql = """
                 INSERT INTO UU_DAI ( ma_uu_dai, ma_nhan_vien, ngay_bat_dau, ngay_het_han, giam, dieu_kien_ve_gia) VALUES
@@ -46,26 +45,25 @@ class MySQLite {
                 """
         db.connect().query(sql)
     }
-//
-//    fun insertChiTietUuDai(maUuDai: Int, hinh: String) {
-//        val sql = "INSERT INTO CHI_TIET_UU_DAI VALUES (NULL, $maUuDai, '$hinh');"
-//        executeQuery(sql)
-//    }
-//
-//    fun insertApMa(maDon: Int, maUuDai: Int) {
-//        val sql = "INSERT INTO AP_MA VALUES ($maDon, $maUuDai);"
-//        executeQuery(sql)
-//    }
-//
-//    fun insertTienNghi(maTienNghi: Int?, tenTienNghi: String, ic_mo_ta: String) {
-//        val sql = """
-//        INSERT INTO TIEN_NGHI
-//        VALUES ($maTienNghi, '$tenTienNghi', '$ic_mo_ta')
-//        ON CONFLICT(ma_tien_nghi) DO NOTHING;
-//    """
-//        executeQuery(sql)
-//    }
-//
+
+    fun insertChiTietUuDai(maUuDai: Int, hinh: String) {
+        val sql = "INSERT INTO CHI_TIET_UU_DAI (id, ma_uu_dai, hinh) VALUES (NULL, $maUuDai, '$hinh');"
+        db.connect().execute(sql)
+    }
+
+    fun insertApMa(maDon: Int, maUuDai: Int) {
+        val sql = "INSERT INTO AP_MA (ma_don, ma_uu_dai) VALUES  ($maDon, $maUuDai);"
+        db.connect().execute(sql)
+    }
+
+    fun insertTienNghi(tenTienNghi: String, ic_mo_ta: String) {
+        val sql = """
+            INSERT INTO TIEN_NGHI (ma_tien_nghi, ten_tien_nghi, ic_mo_ta)
+            VALUES (null, '$tenTienNghi', '$ic_mo_ta');
+            """
+
+    }
+
     fun insertDataLoaiPhong(ten: String, gia: Int, soNguoiToiDa: Int, moTa: String) {
         val sql = """
             INSERT INTO LOAI_PHONG (ma_loai_phong, ten, gia, so_nguoi_toi_da, mo_ta)
@@ -181,5 +179,6 @@ class MySQLite {
             null
         }
     }
+
 
 }

@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.appbooking"
-        minSdk = 26
+        minSdk = 34
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -19,21 +19,40 @@ android {
 
     buildTypes {
         release {
+
+
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
+
             )
+
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "1.8"
+    }
+    buildToolsVersion = "35.0.0"
+}
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://repo.turso.tech/maven") }
+
+    }
+    dependencies {
+        // Update this to the latest version
+        classpath("com.android.tools.build:gradle:8.5.1")
     }
 }
+
+
 
 dependencies {
 
@@ -45,4 +64,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation("tech.turso.libsql:libsql:0.1.0")
 }

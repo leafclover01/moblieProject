@@ -99,20 +99,43 @@ class MySQLite {
 //        executeQuery(sql)
 //    }
 //
-//    fun insertDataChiTietLoaiPhong(maLoaiPhong: Int, hinh: String) {
-//        val sql = """
-//        INSERT INTO CHI_TIET_LOAI_PHONG
-//        VALUES (NULL, $maLoaiPhong, '$hinh')
-//        ON CONFLICT(hinh) DO NOTHING;
-//    """
-//        executeQuery(sql)
-//    }
+    fun insertDataChiTietLoaiPhong(maLoaiPhong: Int, hinh: String) {
+        val sql = """
+                INSERT INTO CHI_TIET_LOAI_PHONG
+                VALUES (NULL, $maLoaiPhong, '$hinh')
+                ON CONFLICT(hinh) DO NOTHING;
+            """
+    db.connect().execute(sql)
+    }
 
 
     fun kiemTraDangNhap(username: String, password: String): TaiKhoan{
         var taiKhoan = TaiKhoan()
         db.connect().use { conn ->
             val sql = "SELECT * FROM TAI_KHOAN WHERE username = '$username' AND password = '$password'"
+            val rows = conn.query(sql)
+            rows.forEach { row ->
+                taiKhoan = TaiKhoan(
+                    row.get(0).toString().toInt(),
+                    row.get(8).toString().toInt(),
+                    row.get(1).toString(),
+                    row.get(2).toString(),
+                    row.get(4).toString(),
+                    row.get(7).toString(),
+                    row.get(5).toString(),
+                    row.get(6).toString(),
+                    row.get(3).toString(),
+                    row.get(9).toString()
+                )
+            }
+        }
+        return taiKhoan
+    }
+
+    fun getTaiKhoan(id: Int): TaiKhoan{
+        var taiKhoan = TaiKhoan()
+        db.connect().use { conn ->
+            val sql = "SELECT * FROM TAI_KHOAN WHERE id='$id'"
             val rows = conn.query(sql)
             rows.forEach { row ->
                 taiKhoan = TaiKhoan(

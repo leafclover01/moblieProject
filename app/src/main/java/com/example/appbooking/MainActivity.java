@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         /////////////////////// Test //////////////////////////////////////////////////////////
         db = new MySQLite();
-
+        db.insertDataChiTietLoaiPhong(1,"trajsdf");
 
 
         String pathImg = db.getDrawableResourceUrl(MainActivity.this, "ic_avt");

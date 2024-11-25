@@ -37,6 +37,7 @@
         app:headerLayout="@layout/drawer_header"
         app:menu="@menu/nav_menu"
         app:itemIconTint="@color/brandBlue30"
+
         app:itemTextColor="@color/brandBlue30"/>
 
 </androidx.drawerlayout.widget.DrawerLayout >

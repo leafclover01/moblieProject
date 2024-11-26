@@ -50,11 +50,19 @@ public class MainActivity extends AppCompatActivity {
 
         /////////////////////// Test //////////////////////////////////////////////////////////
         db = new MySQLite();
-//        db.insertDataDon(1, "2024-11-23 12:00", "2024-11-23 12:00");
-        TaiKhoan taiKhoan = new TaiKhoan();
-        String msg = db.insertChiTietUuDai(10, "df");
-        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-        TaiKhoan tk = db.getTaiKhoan(1);
+
+//        db.insertDataDon(1, "2024-11-23 12:00", "2024-11-26 23:00");
+//        TaiKhoan taiKhoan = new TaiKhoan();
+//        String msg = db.insertDataQuanLy(1, 5);
+//        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+
+
+//        String start = "2024-11-27 12:00";
+//        String end = "2024-11-28 09:00";
+//
+//
+//        ArrayList<Integer> e = db.tinhTienThanhToan(1);
+//        Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
 
         String pathImg = db.getDrawableResourceUrl(MainActivity.this, "ic_avt");
         ivAnh = findViewById(R.id.ivAnh);

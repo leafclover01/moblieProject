@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.appbooking.Model.ChiTietUuDai
 import com.example.appbooking.Model.TaiKhoan
+import com.example.appbooking.Model.LoaiPhong
 import tech.turso.libsql.Database
 import tech.turso.libsql.Libsql
 import tech.turso.libsql.Row
@@ -19,6 +20,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+
 
 import kotlin.time.Duration.Companion.days
 
@@ -49,7 +51,6 @@ class MySQLite {
         }
         return "Tài khoản đã tồn tại"
     }
-
     fun insertCoTienNghi(maLoaiPhong: Int, maTienNghi: Int): String {
         return try {
             val sql = "INSERT INTO CO_TIEN_NGHI (ma_tien_nghi, ma_loai_phong) VALUES ($maTienNghi, $maLoaiPhong);"
@@ -59,7 +60,6 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-
     fun insertDataUuDai(maNhanVien: Int, ngayBatDau: String, ngayHetHan: String, giam: Double, dieuKienVeGia: Int): String {
         return try {
             val sql = """
@@ -72,7 +72,6 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-
     fun insertChiTietUuDai(maUuDai: Int, hinh: String): String {
         return try {
             val sql = "INSERT INTO CHI_TIET_UU_DAI (id, ma_uu_dai, hinh) VALUES (NULL, $maUuDai, '$hinh');"
@@ -82,7 +81,6 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-
     fun insertApMa(maDon: Int, maUuDai: Int): String {
         return try {
             val sql = "INSERT INTO AP_MA (ma_don, ma_uu_dai) VALUES ($maDon, $maUuDai);"
@@ -92,7 +90,6 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-
     fun insertTienNghi(tenTienNghi: String, ic_mo_ta: String): String {
         return try {
             val sql = """
@@ -105,12 +102,11 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-
-    fun insertDataLoaiPhong(ten: String, gia: Int, soNguoiToiDa: Int, moTa: String): String {
+    fun insertDataLoaiPhong(ten: String, gia: Int, soNguoiToiDa: Int, moTa: String, moTaChiTiet: String): String {
         return try {
             val sql = """
-            INSERT INTO LOAI_PHONG (ma_loai_phong, ten, gia, so_nguoi_toi_da, mo_ta)
-            VALUES (NULL, '$ten', $gia, $soNguoiToiDa, '$moTa');
+            INSERT INTO LOAI_PHONG (ma_loai_phong, ten, gia, so_nguoi_toi_da, mo_ta, mo_ta_chi_tiet)
+            VALUES (NULL, '$ten', $gia, $soNguoiToiDa, '$moTa', '$moTaChiTiet');
         """
             db.connect().execute(sql)
             "Thêm thành công"
@@ -118,7 +114,6 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-
     fun insertDataPhong(viTri: String, maLoaiPhong: Int): String {
         return try {
             val sql = """
@@ -131,7 +126,6 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-
     fun insertDataDon(ma_nguoi_dat: Int, ngayLapPhieu: String, checkIn: String): String {
         return try {
             val sql = """
@@ -144,7 +138,6 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-
     fun insertDataThue(maDon: Int, maPhong: Int, checkOut: String): String {
         return try {
             val sql = "INSERT INTO THUE VALUES ($maDon, $maPhong, '$checkOut');"
@@ -154,7 +147,6 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-
     fun insertDataChiTietLoaiPhong(maLoaiPhong: Int, hinh: String): String {
         return try {
             val sql = """
@@ -167,7 +159,6 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-
     fun insertDataHoaDon(ma_don: Int, ngay_thanh_toan: String): String {
         return try {
             var tien: Int = tinhTienThanhToan(ma_don).get(3)
@@ -181,7 +172,6 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-
     fun insertDataQuanLy(ma_nhan_vien: Int, ma_don: Int): String {
         return try {
             var is_ma_don = -1
@@ -207,7 +197,6 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-
     fun kiemTraDangNhap(username: String, password: String): TaiKhoan{
         var taiKhoan = TaiKhoan()
         db.connect().use { conn ->
@@ -230,7 +219,6 @@ class MySQLite {
         }
         return taiKhoan
     }
-
     fun getTaiKhoan(id: Int): TaiKhoan{
         var taiKhoan = TaiKhoan()
         db.connect().use { conn ->
@@ -287,11 +275,9 @@ class MySQLite {
         }
         return resultList
     }
-
     fun updateSQL(sql: String) {
         db.connect().execute(sql)
     }
-
     fun getDrawableResourceUrl(context: Context, imageName: String): String? {
         val resourceId = context.resources.getIdentifier(imageName, "drawable", context.packageName)
         return if (resourceId != 0) {
@@ -300,8 +286,6 @@ class MySQLite {
             null
         }
     }
-
-
     fun calculateTimeDiff(start: String, end: String): Long {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val startTime = LocalDateTime.parse(start, formatter)
@@ -309,7 +293,6 @@ class MySQLite {
         val duration = Duration.between(startTime, endTime)
         return duration.toHours()
     }
-
     fun generateDateRange(start: String, end: String): ArrayList<String> {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val startDate = LocalDateTime.parse(start, formatter)
@@ -322,7 +305,6 @@ class MySQLite {
         }
         return dateList
     }
-
     fun totalTime6to22(start: String, end: String): Long {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val startDate = LocalDateTime.parse(start, formatter)
@@ -419,5 +401,26 @@ class MySQLite {
         return result
     }
 
+    fun layDuLieuLoaiPhong(): ArrayList<LoaiPhong> {
+        var ds = ArrayList<LoaiPhong>()
+        db.connect().use { conn ->
+            var sql = """
+                Select * from LOAI_PHONG;
+            """
+            var rows = conn.query(sql)
 
+            rows.forEach{ row ->
+                ds.add(LoaiPhong(
+                    row.get(0).toString().toInt(),
+                    row.get(1).toString(),
+                    row.get(2).toString().toInt(),
+                    row.get(3).toString().toInt(),
+                    row.get(4).toString(),
+                    row.get(5).toString()
+                ))
+            }
+
+        }
+        return  ds
+    }
 }

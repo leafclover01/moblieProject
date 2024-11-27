@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -28,6 +29,7 @@ import tech.turso.libsql.Libsql;
 import tech.turso.libsql.Rows;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
     // khai báo tạm thời
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     MySQLite db;
     ImageView ivAnh;
     ArrayList<TaiKhoan> dstk = new ArrayList<>();
+    TextView tvError;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +53,19 @@ public class MainActivity extends AppCompatActivity {
 
         /////////////////////// Test //////////////////////////////////////////////////////////
         db = new MySQLite();
-//        db.insertDataDon(1, "2024-11-23 12:00", "2024-11-23 12:00");
-        TaiKhoan taiKhoan = new TaiKhoan();
 
-        TaiKhoan tk = db.getTaiKhoan(1);
+//        db.insertDataDon(1, "2024-11-23 12:00", "2024-11-26 23:00");
+//        TaiKhoan taiKhoan = new TaiKhoan();
+//        String msg = db.insertDataHoaDon(4, "2024-11-11 9:40");
+//        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+
+//        Long msg = db.tinhSoDem("2024-11-20 14:00", "2024-11-24 10:00");
+//        String msg = db.insertDataHoaDon(5, "2024-11-11 9:40");
+//        HashMap<String, Object> map = db.tinhGiaPhong(4);
+        tvError = findViewById(R.id.tvError);
+
+//        tvError.setText(msg.toString());
+
 
         String pathImg = db.getDrawableResourceUrl(MainActivity.this, "ic_avt");
         ivAnh = findViewById(R.id.ivAnh);

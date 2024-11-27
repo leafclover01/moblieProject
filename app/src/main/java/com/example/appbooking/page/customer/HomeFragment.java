@@ -35,10 +35,11 @@ public class HomeFragment extends Fragment {
 
     private List<LoaiPhong> getLoaiPhongList() {
         List<LoaiPhong> loaiPhongList = new ArrayList<>();
-        loaiPhongList.add(new LoaiPhong(1, "Phòng La Vela 1 giường lớn", 500000, 2, "View mặt đường"));
-        loaiPhongList.add(new LoaiPhong(2, "Phòng La Vela 2 giường", 700000, 3, "View thành phố"));
-        loaiPhongList.add(new LoaiPhong(3, "Phòng La Vela giường đôi", 1500000, 5, "View bãi biển"));
-        loaiPhongList.add(new LoaiPhong(4, "Phòng La Vela giường đôi lớn", 5000000, 5, "View thành phố toàn cảnh"));
+        loaiPhongList.add(new LoaiPhong(1, "Phòng La Vela 1 giường lớn", 500000, 2, "View mặt đường", "v1_1.jpg"));
+        loaiPhongList.add(new LoaiPhong(2, "Phòng La Vela 2 giường", 700000, 3, "View thành phố", "v2_2.jpg"));
+        loaiPhongList.add(new LoaiPhong(3, "Phòng La Vela giường đôi", 1500000, 5, "View bãi biển", "v3_1.jpg"));
+        loaiPhongList.add(new LoaiPhong(4, "Phòng La Vela giường đôi lớn", 5000000, 5, "View thành phố toàn cảnh", "v4_1.jpg"));
         return loaiPhongList;
     }
+
 }

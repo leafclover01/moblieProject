@@ -15,6 +15,9 @@
         android:theme="@style/Theme.AppBooking"
         tools:targetApi="31">
         <activity
+            android:name=".page.admin.QuanLyDanhGia.QuanLyDanhGia"
+            android:exported="false" />
+        <activity
             android:name=".page.admin.adRoom.Component.AddRoom"
             android:exported="false" />
         <activity

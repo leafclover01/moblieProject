@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import com.example.appbooking.Model.ChiTietUuDai
 import com.example.appbooking.Model.TaiKhoan
 import com.example.appbooking.Model.LoaiPhong
+import com.example.appbooking.Model.Phong
 import tech.turso.libsql.Database
 import tech.turso.libsql.Libsql
 import tech.turso.libsql.Row
@@ -385,5 +386,54 @@ class MySQLite {
 
         }
         return  ds
+    }
+
+    fun layDuLieuPhongTrong(checkIn: String, checkOut: String, maLoaiPhong: String): ArrayList<Phong> {
+        var ds = ArrayList<Phong>()
+        db.connect().use {conn ->
+            var sql = """
+                select * from PHONG
+                    where ma_phong not in 
+                        (SELECT P.ma_phong
+                            FROM PHONG AS P
+                            LEFT JOIN THUE AS T ON P.ma_phong = T.ma_phong
+                            LEFT JOIN DON AS D ON D.ma_don = T.ma_don
+                            LEFT JOIN QUAN_LY AS Q ON Q.ma_don = D.ma_don
+                            WHERE (
+                                (D.check_in <= $checkOut AND T.check_out >= $checkIn)
+                                OR
+                                (Q.check_in_thuc_te <= $checkOut AND Q.check_out_thuc_te >= $checkIn)
+                                ) 
+                            group by P.ma_phong)
+                        And ma_loai_phong = $maLoaiPhong;
+            """
+            var rows = conn.query(sql).forEach{ row ->
+                ds.add(Phong(
+                    row.get(0).toString().toInt(),
+                    row.get(1).toString(),
+                    row.get(2).toString().toInt()
+                ))
+            }
+        }
+        return ds
+    }
+
+    fun layDuLieuCacAnhCuaLoaiPhong(maLoaiPhong: String): ArrayList<String>{
+        var ds = ArrayList<String>()
+        db.connect().use {conn ->
+            var sql = """
+                select * from PHONG
+                    where ma_phong not in 
+                        (SELECT hinh from LOAI_PHONG AS L
+                            JOIN CHI_TIET_LOAI_PHONG AS C ON L.ma_loai_phong = C.ma_loai_phong
+                            WHERE ma_loai_phong = $maLoaiPhong;
+            """
+            var rows = conn.query(sql).forEach{ row ->
+                ds.add(
+                    row.get(0).toString()
+                )
+            }
+        }
+        return ds
     }
 }

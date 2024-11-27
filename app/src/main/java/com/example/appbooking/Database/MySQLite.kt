@@ -8,6 +8,7 @@ import com.example.appbooking.Model.ChiTietUuDai
 import com.example.appbooking.Model.TaiKhoan
 import com.example.appbooking.Model.LoaiPhong
 import com.example.appbooking.Model.Phong
+import com.example.appbooking.Model.Don
 import tech.turso.libsql.Database
 import tech.turso.libsql.Libsql
 import tech.turso.libsql.Row
@@ -22,7 +23,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.temporal.ChronoUnit
-
+import java.util.Locale
 
 
 import kotlin.time.Duration.Companion.days
@@ -436,4 +437,47 @@ class MySQLite {
         }
         return ds
     }
+
+    fun traVeLoaiPhongTuMaDon(ma_don: Int): String {
+        var ds = ""
+        db.connect().use {conn ->
+            var sql = """
+                select ten from PHONG as P
+                    join LOAI_PHONG as L on P.ma_loai_phong = L.ma_loai_phong
+                    join THUE as D on D.ma_phong = P.ma_phong
+                    where D.ma_don = $ma_don
+            """
+            var rows = conn.query(sql).forEach{ row ->
+                ds = row.get(0).toString()
+            }
+        }
+        return ds
+    }
+    fun layDuLieuDonCuaUser(id: Int): ArrayList<Don> {
+        var ds = ArrayList<Don>()
+        db.connect().use {conn ->
+            var sql = """
+                    SELECT * from DON
+                        WHERE ma_nguoi_dat = $id
+            """
+            var rows = conn.query(sql).forEach{ row ->
+                ds.add(Don(
+                    row.get(0).toString().toInt(),
+                    parseDate(row.get(1).toString()),
+                    row.get(2).toString().toInt(),
+                    parseDate(row.get(3).toString())
+                ))
+            }
+        }
+        return ds
+    }
+
+    fun parseDate(dateStr: String): Date? {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+        return dateFormat.parse(dateStr)
+    }
 }
+//    var maDon: Int
+//    var ma_nguoi_dat: Int
+//    var checkIn: Date? = null
+//    var ngayLapPhieu: Date? = null

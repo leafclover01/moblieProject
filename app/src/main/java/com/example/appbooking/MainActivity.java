@@ -24,6 +24,8 @@ import com.example.appbooking.Model.Don;
 import com.example.appbooking.page.DashboardActivity;
 import com.example.appbooking.Model.TaiKhoan;
 import com.example.appbooking.page.admin.homeAdmin;
+import com.example.appbooking.page.customer.HomeFragment;
+
 import tech.turso.libsql.Database;
 import tech.turso.libsql.Libsql;
 import tech.turso.libsql.Rows;
@@ -60,11 +62,11 @@ public class MainActivity extends AppCompatActivity {
 //        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
 
 //        Long msg = db.tinhSoDem("2024-11-20 14:00", "2024-11-24 10:00");
-//        String msg = db.insertDataHoaDon(5, "2024-11-11 9:40");
+        ArrayList<Don> msg = db.layDuLieuDonCuaUser(2);
 //        HashMap<String, Object> map = db.tinhGiaPhong(4);
         tvError = findViewById(R.id.tvError);
 
-//        tvError.setText(msg.toString());
+        tvError.setText(msg.toString());
 
 
         String pathImg = db.getDrawableResourceUrl(MainActivity.this, "ic_avt");

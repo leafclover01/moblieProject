@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".page.admin.quanLyUser.quanLyUser">
+    tools:context=".page.admin.QuanLyDanhGia.QuanLyDanhGia">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,5 +31,4 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

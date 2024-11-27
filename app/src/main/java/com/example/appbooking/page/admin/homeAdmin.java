@@ -13,7 +13,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.appbooking.R;
-import com.example.appbooking.page.admin.adRoom.QuanLyDanhGia;
+import com.example.appbooking.page.admin.QuanLyDanhGia.QuanLyDanhGia;
+
 import com.example.appbooking.page.admin.adRoom.quanLyPhong;
 import com.example.appbooking.page.admin.quanLyUser.quanLyUser;
 

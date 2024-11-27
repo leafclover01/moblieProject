@@ -6,5 +6,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".page.admin.adRoom.quanLyPhong">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="horizontal">
+            <Spinner
+                android:id="@+id/ad_dkl1"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"/>
+
+            <Spinner
+                android:id="@+id/ad_dkl2"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"/>
+            <ImageButton
+                android:src="@drawable/ad_refesh"
+                android:id="@+id/ad_btnLoad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="Load content"/>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/ad_listViewRT"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_shadow"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/ad_themP"
+                android:text="Thêm phòng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+            <Button
+                android:layout_weight="1"
+                android:id="@+id/ad_themLP"
+                android:text="Thêm loại phòng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

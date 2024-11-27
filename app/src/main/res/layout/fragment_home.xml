@@ -14,5 +14,39 @@
         android:clipToPadding="false"
         android:padding="8dp"
         tools:listitem="@layout/item_loai_phong" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Test"
+        android:textColor="@color/brandBlue30"
+        android:textSize="30sp" />
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="165dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="155dp"
+        android:layout_marginBottom="259dp"
+        android:text="Ckickk" />
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="162dp"
+        android:layout_marginTop="138dp"
+        android:layout_marginEnd="158dp"
+        android:layout_marginBottom="159dp"
+        android:text="Trang menu admin" />
 </RelativeLayout>

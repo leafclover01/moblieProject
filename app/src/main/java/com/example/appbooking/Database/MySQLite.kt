@@ -19,7 +19,9 @@ import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatterBuilder
 import java.time.temporal.ChronoUnit
+
 
 
 import kotlin.time.Duration.Companion.days
@@ -160,8 +162,9 @@ class MySQLite {
         }
     }
     fun insertDataHoaDon(ma_don: Int, ngay_thanh_toan: String): String {
+
         return try {
-            var tien: Int = tinhTienThanhToan(ma_don).get(3)
+            var tien: Any? = tinhGiaPhong(ma_don).get("tongTien")
             val sql = """
             INSERT INTO HOA_DON (ma_hoa_don, ma_don, ngay_thanh_toan, so_tien_thanh_toan)
             VALUES (NULL, $ma_don, '$ngay_thanh_toan', $tien);
@@ -169,7 +172,7 @@ class MySQLite {
             db.connect().execute(sql)
             "Thêm thành công"
         } catch (e: Exception) {
-            "Thêm không thành công: ${e.message}"
+            "Thêm không thành công: ${e} }"
         }
     }
     fun insertDataQuanLy(ma_nhan_vien: Int, ma_don: Int): String {
@@ -286,68 +289,32 @@ class MySQLite {
             null
         }
     }
-    fun calculateTimeDiff(start: String, end: String): Long {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        val startTime = LocalDateTime.parse(start, formatter)
-        val endTime = LocalDateTime.parse(end, formatter)
-        val duration = Duration.between(startTime, endTime)
-        return duration.toHours()
-    }
-    fun generateDateRange(start: String, end: String): ArrayList<String> {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        val startDate = LocalDateTime.parse(start, formatter)
-        val endDate = LocalDateTime.parse(end, formatter)
-        val dateList = ArrayList<String>()
-        var currentDate = startDate
-        while (currentDate <= endDate) {
-            dateList.add(currentDate.toLocalDate().toString())  // Format: yyyy-MM-dd
-            currentDate = currentDate.plusDays(1)
-        }
-        return dateList
-    }
-    fun totalTime6to22(start: String, end: String): Long {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        val startDate = LocalDateTime.parse(start, formatter)
-        val endDate = LocalDateTime.parse(end, formatter)
-        var total: Int = 0
-
-        var newStartDate = startDate
-        if (startDate.hour < 6){
-            newStartDate = newStartDate.withHour(6).withMinute(0).withSecond(0)
-        } else if (startDate.hour >= 22){
-            newStartDate = newStartDate.withHour(22).withMinute(0).withSecond(0)
-        }
-        total += 22 - newStartDate.hour
-
-        var newEndDate = endDate
-        if (endDate.hour <= 6){
-            newEndDate = newEndDate.withHour(6).withMinute(0).withSecond(0)
-        } else if (endDate.hour >=22){
-            newEndDate = newEndDate.withHour(22).withMinute(0).withSecond(0)
-        }
-        total += newEndDate.hour - 6
-
-        var countDateList = generateDateRange(start, end).count()
-        var countFullDay = if (countDateList >= 3){
-            countDateList - 2
-        } else {
-            0
-        }
-        total += countFullDay*16
-
-        return total.toLong()
-    }
     fun formatDateTime(dateTime: String): String {   // dinh dang H -> HH
         val input = DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm")
         val output = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val parsedDateTime = LocalDateTime.parse(dateTime, input)
         return parsedDateTime.format(output)
     }
-    fun tinhTienThanhToan(ma_don: Int): ArrayList<Int> {
-        var result: ArrayList<Int> = ArrayList()
+
+    fun formatDateTime2(dateTime: String): String {
+        val inputFormatter = DateTimeFormatterBuilder()
+            .appendOptional(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+            .appendOptional(DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm"))
+            .toFormatter()
+
+        return LocalDateTime.parse(dateTime, inputFormatter)
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
+    }
+
+
+
+    fun tinhGiaPhong(ma_don: Int): HashMap<String, Any> {
+        var map = HashMap<String, Any>()
         var giaThuePhong: Double = 0.0
         var query = """
-        SELECT D.ma_don, D.check_in, T.check_out, LP.gia, U.ngay_bat_dau, U.ngay_het_han, U.giam, U.dieu_kien_ve_gia FROM DON AS D 
+        SELECT D.ma_don, D.check_in, T.check_out, LP.gia, U.ngay_bat_dau, U.ngay_het_han, U.giam, U.dieu_kien_ve_gia
+        FROM DON AS D 
             JOIN THUE AS T ON D.ma_don = T.ma_don 
             JOIN PHONG AS P ON P.ma_phong = T.ma_phong 
             JOIN LOAI_PHONG AS LP ON LP.ma_loai_phong = P.ma_loai_phong 
@@ -373,32 +340,28 @@ class MySQLite {
                 ngayBatDau = row.get(4)?.toString()
                 giam = row.get(6)?.toString()?.toDouble() ?: 0.0
                 dieuKienVeGia = row.get(7)?.toString()?.toInt() ?: 0
+
             }
         }
-        checkIn = formatDateTime(checkIn)
-        checkOut = formatDateTime(checkOut)
 
-        var time6to22 = totalTime6to22(checkIn, checkOut)
-        var no_time6to22 = calculateTimeDiff(checkIn, checkOut) - time6to22
-
-        giaThuePhong = giaPhong * (time6to22.toInt()  + no_time6to22.toInt() * 1.5) /24
+        giaThuePhong = giaPhong * tinhSoDem(checkIn, checkOut).toDouble()
         var thueVAT = giaThuePhong*0.1 // thue vat 10%
         var tienGiam:Double = 0.0
 
-        if (giaThuePhong > (dieuKienVeGia?.toDouble() ?: 0.0)) {
-            tienGiam = giaThuePhong * (giam ?: 0.0)
-        }
 
-
-        var tongTien:Double = giaThuePhong + thueVAT - tienGiam
-        result.add(thueVAT.toInt())
-        result.add(tienGiam.toInt())
-        result.add(giaThuePhong.toInt()) // chỉ tính tiền phòng thôi
-        result.add(tongTien.toInt())
-//        result.add(time6to22.toDouble())
-//        result.add(no_time6to22.toDouble())
-
-        return result
+        var tongTien = giaThuePhong + thueVAT - tienGiam
+        map["giaThuePhong"] = giaThuePhong.toInt()
+        map["thueVAT"] = thueVAT.toInt()
+        map["tienGiam"] = tienGiam.toInt()
+        map["tongTien"] = tongTien.toInt()
+        map["soDem"] = tinhSoDem(checkIn, checkOut)
+        return map
+    }
+    fun tinhSoDem(checkIn: String, checkOut: String): Long {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val checkInDate = LocalDate.parse(formatDateTime2(checkIn), formatter)
+        val checkOutDate = LocalDate.parse(formatDateTime2(checkOut), formatter)
+        return ChronoUnit.DAYS.between(checkInDate, checkOutDate)
     }
 
     fun layDuLieuLoaiPhong(): ArrayList<LoaiPhong> {

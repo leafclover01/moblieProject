@@ -2,6 +2,16 @@
     <string name="app_name">Booking Hotel</string>
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="province_array">
+        <item>Hà Nội</item>
+        <item>TP Hồ Chí Minh</item>
+        <item>Đà Nẵng</item>
+        <item>Hải Phòng</item>
+        <item>Cần Thơ</item>
+        <item>Bắc Ninh</item>
+        <!-- Thêm các tỉnh khác -->
+    </string-array>
+
 </resources>

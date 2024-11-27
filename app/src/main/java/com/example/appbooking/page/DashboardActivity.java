@@ -1,9 +1,11 @@
 package com.example.appbooking.page;
-
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
-
+import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.appbooking.R;
+import com.example.appbooking.Utils.SharedPreferencesHelper;
 import com.example.appbooking.page.customer.AccountFragment;
 import com.example.appbooking.page.customer.HistoryFragment;
 import com.example.appbooking.page.customer.HomeFragment;
@@ -34,6 +37,17 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_dashboard);
+
+        // Nhận ID từ Intent
+        int userId = getIntent().getIntExtra("userId", -1);
+
+        // Hiển thị Toast với ID người dùng
+        if (userId != -1) {
+            Toast.makeText(this, "ID người dùng: " + userId, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Không nhận được ID người dùng.", Toast.LENGTH_SHORT).show();
+        }
+
 
         // Xử lý insets cho drawer layout
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawer_layout), (v, insets) -> {

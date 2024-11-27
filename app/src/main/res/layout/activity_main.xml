@@ -7,46 +7,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     tools:context=".MainActivity">
-<<<<<<< HEAD
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/ivAnh"
-            />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="50sp"
-            android:hint="Username"
-            android:id="@+id/edtUsername"
-            />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="50sp"
-            android:hint="Password"
-            android:id="@+id/edtPassword"
-            />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Log In"
-            android:id="@+id/btnLogIn"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvError"
-            />
-    </LinearLayout>
-=======
 <!--    Logo-->
     <ImageView
         android:id="@+id/imgLogo"
@@ -102,7 +62,6 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="16dp">
->>>>>>> 32c7cccae787573487aa221b45dad2bfccc38445
 
             <!-- EditText mật khẩu -->
             <EditText

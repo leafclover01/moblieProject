@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvLoaiPhong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tên phòng"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvGiaPhong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Giá phòng" />
+
+    <TextView
+        android:id="@+id/tvSoNguoiToiDa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Số người tối đa" />
+
+    <TextView
+        android:id="@+id/tvMoTa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mô tả" />
+</LinearLayout>

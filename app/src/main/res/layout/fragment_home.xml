@@ -5,7 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".page.customer.HomeFragment">
-    <!-- TODO: Update blank fragment layout -->
+
+    <!-- RecyclerView để hiển thị danh sách loại phòng -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewLoaiPhong"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="8dp"
+        tools:listitem="@layout/item_loai_phong" />
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"

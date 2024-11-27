@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Ảnh của loại phòng -->
+        <ImageView
+            android:id="@+id/imageLoaiPhong"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            />
+
+        <!-- Tên loại phòng -->
+        <TextView
+            android:id="@+id/tenLoaiPhong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên phòng"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:paddingTop="8dp" />
+
+        <!-- Giá loại phòng -->
+        <TextView
+            android:id="@+id/giaLoaiPhong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giá: 500.000 VND"
+            android:paddingTop="8dp" />
+
+        <!-- Số người tối đa -->
+        <TextView
+            android:id="@+id/soNguoiToiDa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số người tối đa: 2"
+            android:paddingTop="8dp" />
+
+        <!-- Mô tả -->
+        <TextView
+            android:id="@+id/moTa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mô tả"
+            android:paddingTop="8dp" />
+    </LinearLayout>
+</ScrollView>

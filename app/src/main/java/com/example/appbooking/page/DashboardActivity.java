@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.appbooking.R;
 import com.example.appbooking.page.customer.AccountFragment;
+import com.example.appbooking.page.customer.BillHistory;
 import com.example.appbooking.page.customer.HomeFragment;
 import com.example.appbooking.page.customer.OrderHotelFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -86,6 +87,11 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, new AccountFragment())
+                    .commit();
+        } else if (id == R.id.nav_bill) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new BillHistory())
                     .commit();
         }
 

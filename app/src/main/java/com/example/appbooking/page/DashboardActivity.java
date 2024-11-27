@@ -20,6 +20,7 @@ import com.example.appbooking.page.customer.AccountFragment;
 import com.example.appbooking.page.customer.BillHistory;
 import com.example.appbooking.page.customer.HomeFragment;
 import com.example.appbooking.page.customer.OrderHotelFragment;
+import com.example.appbooking.page.customer.PayMentHouse;
 import com.google.android.material.navigation.NavigationView;
 
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {

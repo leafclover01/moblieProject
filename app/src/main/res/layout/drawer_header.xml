@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Trần Đức Hiếu"
+        android:text="Nhóm 4 "
         android:textColor="@color/light"
         android:textStyle="bold"/>
     <TextView

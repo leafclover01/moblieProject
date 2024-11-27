@@ -1,10 +1,9 @@
 package com.example.appbooking.page;
 
-import android.os.Build;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.WindowInsetsController;
-import android.view.WindowManager;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -15,16 +14,21 @@ import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.example.appbooking.R;
 import com.example.appbooking.page.customer.AccountFragment;
+import com.example.appbooking.page.customer.HistoryFragment;
 import com.example.appbooking.page.customer.HomeFragment;
+import com.example.appbooking.page.customer.BillHistory;
 import com.example.appbooking.page.customer.OrderHotelFragment;
+import com.example.appbooking.page.customer.SettingFragment;
+import com.example.appbooking.page.customer.PayMentHouse;
 import com.google.android.material.navigation.NavigationView;
 
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +41,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
 
         // Thiết lập Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -75,7 +80,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         } else if (id == R.id.nav_settings) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, new HomeFragment())
+                    .replace(R.id.fragment_container, new SettingFragment())
                     .commit();
         } else if (id == R.id.nav_hotel) {
             getSupportFragmentManager()
@@ -86,6 +91,16 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, new AccountFragment())
+                    .commit();
+        } else if (id == R.id.nav_history_survey) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new HistoryFragment())
+                    .commit();
+        }else if (id == R.id.nav_bill) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new BillHistory())
                     .commit();
         }
 

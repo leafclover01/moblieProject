@@ -1,6 +1,7 @@
 package com.example.appbooking.page.customer
 
 import android.annotation.SuppressLint
+import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +10,13 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.appbooking.Adapter.DonAdapter
 import com.example.appbooking.Database.MySQLite
 import com.example.appbooking.Model.Don
 import com.example.appbooking.R
 
+
 class HistoryFragment : Fragment() {
-    private val db1 = MySQLite()
+    val db = MySQLite()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -33,18 +34,20 @@ class HistoryFragment : Fragment() {
         val btnChiTiet = view.findViewById<Button>(R.id.btnChiTiet)
         val lvDon = view.findViewById<ListView>(R.id.lvDon)
 
-        // Example of a user ID, can be dynamic based on your app's logic
-        val id_user = 2
+//
+        val sharedPreferences = requireContext().getSharedPreferences("UserInfo", MODE_PRIVATE)
+        val userId = sharedPreferences.getInt("userId", -1)
+        val username = sharedPreferences.getString("username", "Guest")
+        val role = sharedPreferences.getInt("role", -1)
 
-        // Fetch the data for the user
-        val listDon: List<Don> = db1.layDuLieuDonCuaUser(id_user)
-
+        tvError.text = userId.toString()
+        val listDon: ArrayList<Don> = db.layDuLieuDonCuaUser(userId)
         // Set up the adapter for the ListView
-        val donAdapter = DonAdapter(requireContext(), R.layout.user_item_history, listDon)
-        lvDon.adapter = donAdapter
-
-
+//        val donAdapter = DonAdapter(requireContext(), R.layout.user_item_history, listDon)
+//        lvDon.adapter = donAdapter
 
         return view
     }
+
+
 }

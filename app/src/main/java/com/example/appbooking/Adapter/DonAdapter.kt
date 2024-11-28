@@ -12,11 +12,11 @@ import com.example.appbooking.Model.Don
 import com.example.appbooking.R
 
 class DonAdapter(
-    context: Context, // Accept Context as the first parameter
+    context: Context,
     private val resource: Int,
-    private var listDon: List<Don> // Use List instead of ArrayList
+    private var listDon: ArrayList<Don>
 ) : ArrayAdapter<Don>(context, resource, listDon) {
-    private val mySQLite = MySQLite()
+    val mySQLite = MySQLite()
 
     override fun getCount(): Int {
         return listDon.size
@@ -39,14 +39,7 @@ class DonAdapter(
         tvLoaiPhongDat.text = mySQLite.traVeLoaiPhongTuMaDon(don.maDon)
         tvMaDon.text = "Mã đơn: ${don.maDon}"
 
-        // Set click listeners for buttons if needed
-        btnDanhGia.setOnClickListener {
-            // Handle "Đánh giá" button click
-        }
 
-        btnChiTiet.setOnClickListener {
-            // Handle "Chi tiết" button click
-        }
 
         return view
     }

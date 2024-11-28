@@ -1,5 +1,6 @@
 package com.example.appbooking.page;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.appbooking.MainActivity;
 import com.example.appbooking.R;
 import com.example.appbooking.Utils.SharedPreferencesHelper;
 import com.example.appbooking.page.customer.AccountFragment;
@@ -38,16 +40,14 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_dashboard);
 
-        // Nhận ID từ Intent
-        int userId = getIntent().getIntExtra("userId", -1);
+        SharedPreferences sharedPreferences = this.getSharedPreferences("UserInfo", this.MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("userId", -1);
 
-        // Hiển thị Toast với ID người dùng
         if (userId != -1) {
             Toast.makeText(this, "ID người dùng: " + userId, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Không nhận được ID người dùng.", Toast.LENGTH_SHORT).show();
         }
-
 
         // Xử lý insets cho drawer layout
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawer_layout), (v, insets) -> {
@@ -111,11 +111,16 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                     .beginTransaction()
                     .replace(R.id.fragment_container, new HistoryFragment())
                     .commit();
-        }else if (id == R.id.nav_bill) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, new BillHistory())
-                    .commit();
+        }else if (id == R.id.nav_logout) {
+            SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+            Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

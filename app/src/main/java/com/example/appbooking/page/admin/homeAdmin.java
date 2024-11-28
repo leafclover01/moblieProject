@@ -90,9 +90,10 @@ public class homeAdmin extends AppCompatActivity {
         qlDon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent qlDon = new Intent(homeAdmin.this, QuanLyDonThanhToan.class);
-                startActivity(qlDon);
+                Intent qlDonThanhToan = new Intent(homeAdmin.this, QuanLyDonThanhToan.class);
+                startActivity(qlDonThanhToan);
             }
+
         });
 
     }

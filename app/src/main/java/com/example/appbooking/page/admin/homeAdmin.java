@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.appbooking.R;
 import com.example.appbooking.page.admin.QuanLyDanhGia.QuanLyDanhGia;
 
+import com.example.appbooking.page.admin.QuanLyDon.QuanLyDonThanhToan;
 import com.example.appbooking.page.admin.adRoom.quanLyPhong;
 import com.example.appbooking.page.admin.quanLyUser.quanLyUser;
 
@@ -72,7 +73,8 @@ public class homeAdmin extends AppCompatActivity {
         qlDon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent qlDon = new Intent(homeAdmin.this, QuanLyDonThanhToan.class);
+                startActivity(qlDon);
             }
         });
 

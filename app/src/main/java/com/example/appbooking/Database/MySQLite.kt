@@ -389,7 +389,7 @@ class MySQLite {
         return  ds
     }
 
-    fun layDuLieuPhongTrong(checkIn: String, checkOut: String, maLoaiPhong: String): ArrayList<Phong> {
+    fun layDuLieuPhongKhongCoNguoiDat(checkIn: String, checkOut: String, maLoaiPhong: String): ArrayList<Phong> {
         var ds = ArrayList<Phong>()
         db.connect().use {conn ->
             var sql = """

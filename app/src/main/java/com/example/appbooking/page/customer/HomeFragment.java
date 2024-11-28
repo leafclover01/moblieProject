@@ -22,25 +22,13 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    Button a, btn3;
     RecyclerView recyclerViewLoaiPhong;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // Initialize buttons
-        a = view.findViewById(R.id.button2);
-        btn3 = view.findViewById(R.id.btn3);
 
-        // Handle button "a" click event
-        a.setOnClickListener(v -> Toast.makeText(getContext(), "Logout!", Toast.LENGTH_SHORT).show());
-
-        // Handle button "btn3" click event
-        btn3.setOnClickListener(v -> {
-            Intent in = new Intent(getContext(), homeAdmin.class);
-            startActivity(in);
-        });
 
         // Initialize RecyclerView
         recyclerViewLoaiPhong = view.findViewById(R.id.recyclerViewLoaiPhong);

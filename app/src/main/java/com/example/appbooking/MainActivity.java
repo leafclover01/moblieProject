@@ -23,8 +23,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.appbooking.Activities.SignUpActivity;
 import com.example.appbooking.Database.MySQLite;
 import com.example.appbooking.Model.TaiKhoan;
+import com.example.appbooking.Model.Don;
 import com.example.appbooking.page.DashboardActivity;
 import com.example.appbooking.page.admin.homeAdmin;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +59,32 @@ public class MainActivity extends AppCompatActivity {
         db = new MySQLite();
         sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
         editor = sharedPreferences.edit();
+
+        // Chuyen trang khi da danh nhap truoc do
+        int userId_kt = sharedPreferences.getInt("userId", -1);
+        String username_kt = sharedPreferences.getString("username", "Guest");
+        int role_kt = sharedPreferences.getInt("role", -1);
+
+        if(userId_kt != -1){
+            String sql = "Select username from TAI_KHOAN where id = " + userId_kt + ";";
+            List<List<Object>> list = db.executeQuery(sql); // Execute SQL query
+            String tk_name = "";
+            for (List<Object> row : list) {
+                tk_name = row.get(0).toString();
+            }
+            if(tk_name.equals(username_kt)){
+                if (role_kt == 0) {
+                    Intent intentAdmin = new Intent(MainActivity.this, homeAdmin.class);
+                    startActivity(intentAdmin);
+                    finish(); // Đảm bảo đóng màn hình này
+                } else if (role_kt == 1) {
+                    Intent intentUser = new Intent(MainActivity.this, DashboardActivity.class);
+                    startActivity(intentUser);
+                    finish(); // Đảm bảo đóng màn hình này
+                }
+            }
+        }
+
 
         // Định dạng TextView "Đăng ký"
         String fullText = "Bạn chưa có tài khoản? Đăng ký";
@@ -167,6 +197,9 @@ public class MainActivity extends AppCompatActivity {
                         // Lưu thông tin vào SharedPreferences
                         editor.putInt("userId", taiKhoan.getId());
                         editor.putString("username", username);
+                        editor.putString("email", taiKhoan.getEmail());
+                        editor.putString("ten", taiKhoan.getName());
+                        editor.putString("hinh", taiKhoan.getHinh());
                         editor.putInt("role", taiKhoan.getRole());
                         editor.apply();
 
@@ -176,18 +209,18 @@ public class MainActivity extends AppCompatActivity {
                         int savedRole = sharedPreferences.getInt("role", -1);  // Giá trị mặc định -1 nếu không có
 
                         // Hiển thị thông báo với Toast
-                        Toast.makeText(MainActivity.this, "Đăng nhập thành công! User ID: " + savedUserId + ", Username: " + savedUsername + ", Role: " + savedRole, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "Đăng nhập thành công! User ID: " + savedUserId + ", Username: " + savedUsername + ", Role: " + savedRole, Toast.LENGTH_SHORT).show();
 
                         // Điều hướng đến màn hình tiếp theo dựa trên role
                         if (taiKhoan.getRole() == 0) {
                             // Nếu là Admin
-                            Toast.makeText(MainActivity.this, "Chào mừng Admin!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MainActivity.this, "Chào mừng Admin!", Toast.LENGTH_SHORT).show();
                             Intent intentAdmin = new Intent(MainActivity.this, homeAdmin.class);
                             startActivity(intentAdmin);
                             finish(); // Đảm bảo đóng màn hình này
                         } else if (taiKhoan.getRole() == 1) {
                             // Nếu là User
-                            Toast.makeText(MainActivity.this, "Chào mừng User!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MainActivity.this, "Chào mừng User!", Toast.LENGTH_SHORT).show();
                             Intent intentUser = new Intent(MainActivity.this, DashboardActivity.class);
                             startActivity(intentUser);
                             finish(); // Đảm bảo đóng màn hình này
@@ -199,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
 
 
         // Sự kiện chuyển tới màn hình Đăng ký

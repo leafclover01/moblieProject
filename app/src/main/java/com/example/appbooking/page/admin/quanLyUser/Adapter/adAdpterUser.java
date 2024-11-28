@@ -92,7 +92,7 @@ public class adAdpterUser extends ArrayAdapter {
                             db1.updateSQL("DELETE FROM TAI_KHOAN WHERE id = " + tk.getId() + ";");
                             ArrayList<TaiKhoan> list = getall("SELECT * FROM TAI_KHOAN;");
                             updateData(list);
-
+                            Toast.makeText(context, "Xóa "+ tk.getName()+ " thành công", Toast.LENGTH_SHORT).show();
                         }catch(Exception e){
                             Toast.makeText(context, "Lỗi khi xóa dữ liệu", Toast.LENGTH_SHORT).show();
                         }

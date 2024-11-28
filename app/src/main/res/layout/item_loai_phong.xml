@@ -1,33 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
 
-    <TextView
-        android:id="@+id/tvLoaiPhong"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tên phòng"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/brandBlue10">
 
-    <TextView
-        android:id="@+id/tvGiaPhong"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Giá phòng" />
+        <!-- Tên loại phòng -->
+        <TextView
+            android:id="@+id/tvLoaiPhong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên phòng"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/tvSoNguoiToiDa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Số người tối đa" />
+        <!-- Giá phòng -->
+        <TextView
+            android:id="@+id/tvGiaPhong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giá phòng"
+            android:textSize="16sp"/>
 
-    <TextView
-        android:id="@+id/tvMoTa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mô tả" />
-</LinearLayout>
+        <!-- Số người tối đa -->
+        <TextView
+            android:id="@+id/tvSoNguoiToiDa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số người tối đa"
+            android:textSize="16sp"/>
+
+        <!-- Mô tả -->
+        <TextView
+            android:id="@+id/tvMoTa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mô tả"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

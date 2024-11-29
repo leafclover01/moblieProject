@@ -56,7 +56,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".page.customer.ChiTietLoaiPhongActivity"
+            android:name=".page.customer.DetailsTypeRoomActivity"
             android:exported="false" />
 
     </application>

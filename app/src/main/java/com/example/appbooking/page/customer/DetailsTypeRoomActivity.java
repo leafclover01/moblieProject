@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.appbooking.Database.MySQLite;
 import com.example.appbooking.R;
 
 import java.text.SimpleDateFormat;
@@ -16,8 +18,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class ChiTietLoaiPhongActivity extends AppCompatActivity {
-
+public class DetailsTypeRoomActivity extends AppCompatActivity {
+    MySQLite db1 = new MySQLite();
     private ImageView imageLoaiPhong;
     private TextView tenLoaiPhong;
     private TextView giaLoaiPhong;
@@ -25,8 +27,10 @@ public class ChiTietLoaiPhongActivity extends AppCompatActivity {
     private TextView moTa;
     private Button btnCheckIn;
     private Button btnCheckOut;
-    private Button btnChonThoiGian;
+    Button btnChonThoiGian;
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private TextView textViewThoiGian;
+    String timeCheckIn, timeCheckOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +69,8 @@ public class ChiTietLoaiPhongActivity extends AppCompatActivity {
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(ChiTietLoaiPhongActivity.this,
+            timeCheckIn = formatter.format(calendar.getTime());
+            DatePickerDialog datePickerDialog = new DatePickerDialog(DetailsTypeRoomActivity.this,
                     (view, selectedYear, selectedMonth, selectedDay) ->
                             btnCheckIn.setText("Check-in: " + selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear),
                     year, month, day);
@@ -79,8 +83,10 @@ public class ChiTietLoaiPhongActivity extends AppCompatActivity {
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
+            timeCheckOut = formatter.format(calendar.getTime());
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(ChiTietLoaiPhongActivity.this,
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(DetailsTypeRoomActivity.this,
                     (view, selectedYear, selectedMonth, selectedDay) ->
                             btnCheckOut.setText("Check-out: " + selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear),
                     year, month, day);
@@ -89,23 +95,8 @@ public class ChiTietLoaiPhongActivity extends AppCompatActivity {
 
         // Xử lý sự kiện khi người dùng nhấn nút chọn thời gian
         btnChonThoiGian.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(ChiTietLoaiPhongActivity.this,
-                    (view, selectedYear, selectedMonth, selectedDay) -> {
-                        // Chọn ngày thành công, hiển thị ngày đã chọn
-                        String selectedDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
-                        Date date = parseDate(selectedDate);
-                        if (date != null) {
-                            // Cập nhật TextView với thời gian đã chọn
-                            textViewThoiGian.setText("Thời gian đã chọn: " + new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date));
-                        }
-                    },
-                    year, month, day);
-            datePickerDialog.show();
+            Toast.makeText(this, timeCheckIn + " -- " + timeCheckOut, Toast.LENGTH_SHORT).show();
+//            db1.layDuLieuPhongTrong()
         });
     }
 

@@ -1,8 +1,7 @@
 package com.example.appbooking.page.customer;
 
-import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,7 +34,7 @@ public class HomeFragment extends Fragment {
 
         if (loaiPhongList != null && !loaiPhongList.isEmpty()) {
             // Set up RecyclerView adapter
-            LoaiPhongAdapter adapter = new LoaiPhongAdapter(loaiPhongList, getActivity());
+            TypeRoomAdapter adapter = new TypeRoomAdapter(loaiPhongList, getActivity());
             recyclerViewLoaiPhong.setAdapter(adapter);
         } else {
             // Hiển thị thông báo nếu không có dữ liệu

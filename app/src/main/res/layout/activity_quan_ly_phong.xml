@@ -13,7 +13,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <ImageButton
+                android:id="@+id/back"
+                android:background="#B6A1DA"
+                android:src="@drawable/ad_back_left"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="back"/>
             <Spinner
                 android:id="@+id/ad_dkl1"
                 android:layout_width="wrap_content"
@@ -26,19 +35,23 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"/>
             <ImageButton
+                android:background="#C1E2E6"
                 android:src="@drawable/ad_refesh"
                 android:id="@+id/ad_btnLoad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:contentDescription="Load content"/>
         </LinearLayout>
 
         <ListView
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:id="@+id/ad_listViewRT"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="2dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:dividerHeight="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,17 +59,17 @@
             android:background="@drawable/border_shadow"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/ad_themP"
-                android:text="Thêm phòng"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-            <Button
                 android:layout_weight="1"
                 android:id="@+id/ad_themLP"
                 android:text="Thêm loại phòng"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/ad_themP"
+                android:text="Thêm phòng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

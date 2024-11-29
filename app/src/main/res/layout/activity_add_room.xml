@@ -11,6 +11,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/back"
+                android:background="#B6A1DA"
+                android:src="@drawable/ad_back_left"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="back"/>
+        </LinearLayout>
         <TextView
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
@@ -41,7 +53,6 @@
                 android:layout_weight="1"/>
             <EditText
                 android:hint="Nhập vị trí phòng"
-                android:inputType="number"
                 android:id="@+id/ad_r_viTri"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"/>
@@ -60,7 +71,7 @@
                 android:layout_weight="1"/>
             <Spinner
                 android:id="@+id/ad_r_sp"
-                android:layout_width="150dp"
+                android:layout_width="220dp"
                 android:layout_height="50dp"/>
         </LinearLayout>
 

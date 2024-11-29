@@ -75,8 +75,7 @@ public class homeAdmin extends AppCompatActivity {
         qlDanhGia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in3 = new Intent(homeAdmin.this, QuanLyDanhGia.class);
-                startActivity(in3);
+
             }
         });
 

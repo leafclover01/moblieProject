@@ -2,108 +2,246 @@ package com.example.appbooking;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.method.PasswordTransformationMethod;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.View;
-import android.view.WindowInsetsController;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.example.appbooking.Activities.SignUpActivity;
 import com.example.appbooking.Database.MySQLite;
+import com.example.appbooking.Model.TaiKhoan;
 import com.example.appbooking.Model.Don;
 import com.example.appbooking.page.DashboardActivity;
-import com.example.appbooking.Model.TaiKhoan;
 import com.example.appbooking.page.admin.homeAdmin;
-import tech.turso.libsql.Database;
-import tech.turso.libsql.Libsql;
-import tech.turso.libsql.Rows;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    // khai báo tạm thời
+
+    // Khai báo các biến
     EditText edtUsername, edtPassword;
     Button btnLogIn;
+    ImageView ivTogglePassword;
+    TextView txvSignUp;
     MySQLite db;
-    ImageView ivAnh;
-    ArrayList<TaiKhoan> dstk = new ArrayList<>();
-    TextView tvError;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    boolean isPasswordVisible = false;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        /////////////////////// Test //////////////////////////////////////////////////////////
-        db = new MySQLite();
-
-//        db.insertDataDon(1, "2024-11-23 12:00", "2024-11-26 23:00");
-//        TaiKhoan taiKhoan = new TaiKhoan();
-//        String msg = db.insertDataHoaDon(4, "2024-11-11 9:40");
-//        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-
-//        Long msg = db.tinhSoDem("2024-11-20 14:00", "2024-11-24 10:00");
-//        String msg = db.insertDataHoaDon(5, "2024-11-11 9:40");
-//        HashMap<String, Object> map = db.tinhGiaPhong(4);
-        tvError = findViewById(R.id.tvError);
-
-//        tvError.setText(msg.toString());
-
-
-        String pathImg = db.getDrawableResourceUrl(MainActivity.this, "ic_avt");
-        ivAnh = findViewById(R.id.ivAnh);
-        ivAnh.setImageURI(Uri.parse(pathImg));
-
-
+        // Khởi tạo các view
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
-
-
         btnLogIn = findViewById(R.id.btnLogIn);
+        ivTogglePassword = findViewById(R.id.ivTogglePassword);
+        txvSignUp = findViewById(R.id.txvSignUp);
+
+        // Khởi tạo đối tượng cơ sở dữ liệu và SharedPreferences
+        db = new MySQLite();
+        sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        // Chuyen trang khi da danh nhap truoc do
+        int userId_kt = sharedPreferences.getInt("userId", -1);
+        String username_kt = sharedPreferences.getString("username", "Guest");
+        int role_kt = sharedPreferences.getInt("role", -1);
+
+        if(userId_kt != -1){
+            String sql = "Select username from TAI_KHOAN where id = " + userId_kt + ";";
+            List<List<Object>> list = db.executeQuery(sql); // Execute SQL query
+            String tk_name = "";
+            for (List<Object> row : list) {
+                tk_name = row.get(0).toString();
+            }
+            if(tk_name.equals(username_kt)){
+                if (role_kt == 0) {
+                    Intent intentAdmin = new Intent(MainActivity.this, homeAdmin.class);
+                    startActivity(intentAdmin);
+                    finish(); // Đảm bảo đóng màn hình này
+                } else if (role_kt == 1) {
+                    Intent intentUser = new Intent(MainActivity.this, DashboardActivity.class);
+                    startActivity(intentUser);
+                    finish(); // Đảm bảo đóng màn hình này
+                }
+            }
+        }
+
+
+        // Định dạng TextView "Đăng ký"
+        String fullText = "Bạn chưa có tài khoản? Đăng ký";
+        String highlightText = "Đăng ký";
+        int startIndex = fullText.indexOf(highlightText);
+        int endIndex = startIndex + highlightText.length();
+        SpannableString spannableString = new SpannableString(fullText);
+        // Gạch chân
+        spannableString.setSpan(new UnderlineSpan(), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        // Đổi màu
+        spannableString.setSpan(new ForegroundColorSpan(Color.RED), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        // Gán chuỗi vào TextView
+        txvSignUp.setText(spannableString);
+
+        // Sự kiện ẩn/hiện mật khẩu
+        ivTogglePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPasswordVisible) {
+                    edtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ivTogglePassword.setImageResource(R.drawable.hidden_password);
+                } else {
+                    edtPassword.setTransformationMethod(null); // Hiển thị mật khẩu
+                    ivTogglePassword.setImageResource(R.drawable.show_password);
+                }
+                isPasswordVisible = !isPasswordVisible; // Chuyển trạng thái hiển thị
+            }
+        });
+
+//        btnLogIn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String username = edtUsername.getText().toString().trim();
+//                String password = edtPassword.getText().toString().trim();
+//
+//                // Xử lý Validate
+//                if (username.isEmpty() && password.isEmpty()) {
+//                    edtUsername.setError("Vui lòng nhập tên đăng nhập!");
+//                    edtPassword.setError("Vui lòng nhập mật khẩu!");
+//                } else if (username.isEmpty()) {
+//                    edtUsername.setError("Vui lòng nhập tên đăng nhập!");
+//                    edtPassword.setError(null);
+//                } else if (password.isEmpty()) {
+//                    edtPassword.setError("Vui lòng nhập mật khẩu!");
+//                    edtUsername.setError(null);
+//                } else {
+//                    edtUsername.setError(null);
+//                    edtPassword.setError(null);
+//
+//                    // Kiểm tra đăng nhập trong CSDL
+//                    TaiKhoan taiKhoan = db.kiemTraDangNhap(username, password);
+//                    Log.d("MainActivity", "TaiKhoan: " + (taiKhoan != null ? taiKhoan.getId() : "null"));
+//
+//                    if (taiKhoan != null && taiKhoan.getId() >= 0) {
+//                        // Lưu thông tin vào SharedPreferences
+//                        editor.putInt("userId", taiKhoan.getId());
+//                        editor.putString("username", username);
+//                        editor.putInt("role", taiKhoan.getRole());
+//                        editor.apply();
+//
+//                        // Hiển thị thông báo với Toast
+//                        Toast.makeText(MainActivity.this, "Đăng nhập thành công! User ID: " + taiKhoan.getId(), Toast.LENGTH_SHORT).show();
+//
+//                        // Log xem role của người dùng
+//                        Log.d("MainActivity", "User Role: " + taiKhoan.getRole());
+//
+//                        // Điều hướng đến màn hình tiếp theo dựa trên role
+//                        if (taiKhoan.getRole() == 0) {
+//                            // Nếu là Admin
+//                            Intent intentAdmin = new Intent(MainActivity.this, homeAdmin.class);
+//                            startActivity(intentAdmin);
+//                            finish(); // Đảm bảo đóng màn hình này
+//                        } else if (taiKhoan.getRole() == 1) {
+//                            // Nếu là User
+//                            Intent intentUser = new Intent(MainActivity.this, DashboardActivity.class);
+//                            startActivity(intentUser);
+//                            finish(); // Đảm bảo đóng màn hình này
+//                        }
+//                    } else {
+//                        // Nếu thông tin đăng nhập sai
+//                        edtPassword.setError("Tên đăng nhập hoặc mật khẩu không đúng!");
+//                    }
+//                }
+//            }
+//        });
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String tenDangNhap = edtUsername.getText().toString().trim();
-                String matKhau = edtPassword.getText().toString().trim();
-                if (tenDangNhap.length() > 0 && matKhau.length() > 0) {
-                    TaiKhoan taiKhoan = db.kiemTraDangNhap(tenDangNhap, matKhau);
-                    String msg = taiKhoan.getRole() == 0 ? "dung" : "sai";
-//                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    if (taiKhoan.getId() >= 0 && taiKhoan.getRole() >= 0) {
+                String username = edtUsername.getText().toString().trim();
+                String password = edtPassword.getText().toString().trim();
+
+                // Xử lý Validate
+                if (username.isEmpty() && password.isEmpty()) {
+                    edtUsername.setError("Vui lòng nhập tên đăng nhập!");
+                    edtPassword.setError("Vui lòng nhập mật khẩu!");
+                } else if (username.isEmpty()) {
+                    edtUsername.setError("Vui lòng nhập tên đăng nhập!");
+                    edtPassword.setError(null);
+                } else if (password.isEmpty()) {
+                    edtPassword.setError("Vui lòng nhập mật khẩu!");
+                    edtUsername.setError(null);
+                } else {
+                    edtUsername.setError(null);
+                    edtPassword.setError(null);
+
+                    // Kiểm tra đăng nhập trong CSDL
+                    TaiKhoan taiKhoan = db.kiemTraDangNhap(username, password);
+
+                    if (taiKhoan != null && taiKhoan.getId() >= 0) {
+                        // Lưu thông tin vào SharedPreferences
+                        editor.putInt("userId", taiKhoan.getId());
+                        editor.putString("username", username);
+                        editor.putString("email", taiKhoan.getEmail());
+                        editor.putString("ten", taiKhoan.getName());
+                        editor.putString("hinh", taiKhoan.getHinh());
+                        editor.putInt("role", taiKhoan.getRole());
+                        editor.apply();
+
+                        // Kiểm tra lại dữ liệu đã lưu trong SharedPreferences và hiển thị Toast
+                        int savedUserId = sharedPreferences.getInt("userId", -1);  // Giá trị mặc định -1 nếu không có
+                        String savedUsername = sharedPreferences.getString("username", "");  // Giá trị mặc định là chuỗi rỗng
+                        int savedRole = sharedPreferences.getInt("role", -1);  // Giá trị mặc định -1 nếu không có
+
+                        // Hiển thị thông báo với Toast
+//                        Toast.makeText(MainActivity.this, "Đăng nhập thành công! User ID: " + savedUserId + ", Username: " + savedUsername + ", Role: " + savedRole, Toast.LENGTH_SHORT).show();
+
+                        // Điều hướng đến màn hình tiếp theo dựa trên role
                         if (taiKhoan.getRole() == 0) {
-                            Intent intentQuanTri = new Intent(MainActivity.this, homeAdmin.class);
-                            intentQuanTri.putExtra("taiKhoan", taiKhoan);
-                            startActivity(intentQuanTri);
+                            // Nếu là Admin
+//                            Toast.makeText(MainActivity.this, "Chào mừng Admin!", Toast.LENGTH_SHORT).show();
+                            Intent intentAdmin = new Intent(MainActivity.this, homeAdmin.class);
+                            startActivity(intentAdmin);
+                            finish(); // Đảm bảo đóng màn hình này
+                        } else if (taiKhoan.getRole() == 1) {
+                            // Nếu là User
+//                            Toast.makeText(MainActivity.this, "Chào mừng User!", Toast.LENGTH_SHORT).show();
+                            Intent intentUser = new Intent(MainActivity.this, DashboardActivity.class);
+                            startActivity(intentUser);
+                            finish(); // Đảm bảo đóng màn hình này
                         }
-                        if (taiKhoan.getRole() == 1) {
-                            Intent intentDatHang = new Intent(MainActivity.this, DashboardActivity.class);
-                            intentDatHang.putExtra("taiKhoan", taiKhoan);
-                            startActivity(intentDatHang);
-                        }
-                    } else Toast.makeText(MainActivity.this, "Tài khoản hoặc mật khẩu không đúng!", Toast.LENGTH_SHORT).show();
-                } else Toast.makeText(MainActivity.this, "Vui lòng nhập tài khoản và mật khẩu!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Nếu thông tin đăng nhập sai
+                        Toast.makeText(MainActivity.this, "Tên đăng nhập hoặc mật khẩu không đúng!", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
 
 
-            /////////////////////// Test /////////////////////////////////////////////////////////
 
+        // Sự kiện chuyển tới màn hình Đăng ký
+        txvSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentSignUp = new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(intentSignUp);
+            }
+        });
     }
 }

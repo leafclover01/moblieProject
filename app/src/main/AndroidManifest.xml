@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <!-- Quyền cần thiết -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+     <uses-permission
+        android:name="android.permission.BROADCAST_SMS"
+        tools:ignore="BroadcastWithoutPermission,ProtectedPermissions" />
     <application
         android:allowBackup="true"
         android:requestLegacyExternalStorage="true"
@@ -15,16 +18,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppBooking"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".page.admin.adRoom.Component.AddRoom"
+            android:name=".Activities.EditInfoUserActivity"
             android:exported="false" />
         <activity
-            android:name=".page.admin.adRoom.Component.addRoomType"
+            android:name=".Activities.AddInfoUserActivity"
             android:exported="false" />
         <activity
-            android:name=".page.admin.quanLyUser.Component.editUser"
+            android:name=".Activities.InfoUserActivity"
             android:exported="false" />
+        <activity
+            android:name=".Activities.SignUpActivity"
+            android:exported="false" /> <!-- Các activity -->
         <activity
             android:name=".page.admin.quanLyUser.quanLyUser"
             android:exported="false" />
@@ -47,5 +54,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".page.customer.ChiTietLoaiPhongActivity"
+            android:exported="false" />
+
     </application>
 </manifest>

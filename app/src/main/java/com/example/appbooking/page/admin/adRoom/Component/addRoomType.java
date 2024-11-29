@@ -21,6 +21,7 @@ public class addRoomType extends AppCompatActivity {
     Button btnLuuLoaiPhong;
     MySQLite db1 = new MySQLite();
     ImageButton back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,11 +89,11 @@ public class addRoomType extends AppCompatActivity {
                     return;
                 }
                 // Gọi phương thức chèn dữ liệu
-                try{
+                try {
                     db1.insertDataLoaiPhong(tenLoaiPhong, giaPhong, soLuongNguoi, moTaPhongc, moTaPhong);
                     Toast.makeText(addRoomType.this, "Thêm loại phòng thành công!", Toast.LENGTH_SHORT).show();
                     finish();
-                }catch(Exception e){
+                } catch (Exception e) {
                     Toast.makeText(addRoomType.this, "Thêm loại phòng không thành công!", Toast.LENGTH_SHORT).show();
                 }
             }

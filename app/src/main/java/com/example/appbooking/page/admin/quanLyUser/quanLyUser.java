@@ -109,7 +109,12 @@ public class quanLyUser extends AppCompatActivity {
             query = "SELECT * FROM TAI_KHOAN WHERE role = 0;";  // Only admins
         }
 
-        filteredList = getall(query); // Fetch the filtered list based on role
+        try{
+            filteredList = getall(query);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        // Fetch the filtered list based on role
 
 //        Toast.makeText(this, filter + " data: " + filteredList.size(), Toast.LENGTH_SHORT).show();
 

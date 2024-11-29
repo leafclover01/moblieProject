@@ -117,7 +117,7 @@ public class editUser extends AppCompatActivity {
                     return;
                 }
 
-                if (cccd.isEmpty() || !cccd.matches("\\d{10}")) { // CCCD phải gồm 12 chữ số
+                if (cccd.isEmpty() || !cccd.matches("\\d{12}")) { // CCCD phải gồm 12 chữ số
                     tk_cccd.setError("CCCD phải có 12 chữ số");
                     tk_cccd.requestFocus();
                     return;

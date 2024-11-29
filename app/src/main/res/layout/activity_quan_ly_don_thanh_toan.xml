@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".page.admin.QuanLyDanhGia.QuanLyDanhGia">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- LinearLayout chứa Spinner và ImageButton -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <!-- Spinner dùng để chọn lọc -->
+            <Spinner
+                android:id="@+id/ad_dkLoc"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"/>
+
+            <!-- ImageButton dùng để tải lại dữ liệu -->
+            <ImageButton
+                android:src="@drawable/ad_refesh"
+                android:id="@+id/ad_btnLoad"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="Tải lại nội dung"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="8dp"/>
+        </LinearLayout>
+
+        <!-- ListView dùng để hiển thị danh sách -->
+        <ListView
+            android:id="@+id/ad_listDanhSachThue"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="0.5dp"
+            android:padding="8dp"
+            android:clipToPadding="false"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

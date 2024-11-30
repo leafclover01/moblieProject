@@ -39,6 +39,15 @@
             android:name=".page.admin.adRoom.quanLyPhong"
             android:exported="false" />
         <activity
+            android:name=".page.admin.adRoom.Component.AddRoom"
+            android:exported="false" />
+        <activity
+            android:name=".page.admin.adRoom.Component.addRoomType"
+            android:exported="false" />
+        <activity
+            android:name=".page.admin.quanLyUser.Component.editUser"
+            android:exported="false" />
+        <activity
             android:name=".page.admin.homeAdmin"
             android:exported="false" />
         <activity

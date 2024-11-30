@@ -3,13 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
     <!-- Quyền cần thiết -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+     <uses-permission
         android:name="android.permission.BROADCAST_SMS"
         tools:ignore="BroadcastWithoutPermission,ProtectedPermissions" />
-
     <application
         android:allowBackup="true"
         android:requestLegacyExternalStorage="true"
@@ -46,6 +44,15 @@
             
         <activity
             android:name=".page.admin.quanLyUser.quanLyUser"
+            android:exported="false" />
+        <activity
+            android:name=".page.admin.quanLyUser.Component.editUser"
+            android:exported="false" />
+        <activity
+            android:name=".page.admin.adRoom.Component.addRoomType"
+            android:exported="false" />
+        <activity
+            android:name=".page.admin.adRoom.Component.AddRoom"
             android:exported="false" />
         <activity
             android:name=".page.admin.adRoom.quanLyPhong"

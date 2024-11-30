@@ -32,6 +32,16 @@
         <activity
             android:name=".Activities.SignUpActivity"
             android:exported="false" /> <!-- Các activity -->
+         <activity
+            android:name=".page.admin.adRoom.Component.AddRoom"
+            android:exported="false" />
+        <activity
+            android:name=".page.admin.adRoom.Component.addRoomType"
+            android:exported="false" />
+        <activity
+            android:name=".page.admin.quanLyUser.Component.editUser"
+            android:exported="false" />
+            
         <activity
             android:name=".page.admin.quanLyUser.quanLyUser"
             android:exported="false" />
@@ -66,6 +76,9 @@
         <activity
             android:name=".page.customer.ChiTietLoaiPhongActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".page.admin.QuanLyDon.QuanLyDonThanhToan"
+            android:exported="false"
+            tools:ignore="DuplicateActivity" />
     </application>
 </manifest>

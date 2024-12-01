@@ -64,8 +64,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".page.customer.ChiTietLoaiPhongActivity"
+            android:name=".page.customer.DetailsTypeRoomActivity"
             android:exported="false" />
+            <activity android:name=".page.customer.PayMentHouse">
+
+        </activity>
         <activity
             android:name=".page.admin.QuanLyDon.QuanLyDonThanhToan"
             android:exported="false"

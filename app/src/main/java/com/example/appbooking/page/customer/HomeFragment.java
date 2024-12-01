@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
-
+    MySQLite db;
     RecyclerView recyclerViewLoaiPhong;
 
     @Override
@@ -35,9 +35,15 @@ public class HomeFragment extends Fragment {
         recyclerViewLoaiPhong.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         // Set up RecyclerView adapter
-        List<LoaiPhong> loaiPhongList = getLoaiPhongList();
-        LoaiPhongAdapter adapter = new LoaiPhongAdapter(loaiPhongList, getActivity());
-        recyclerViewLoaiPhong.setAdapter(adapter);
+        db = new MySQLite(); 
+        if (loaiPhongList != null && !loaiPhongList.isEmpty()) {
+            // Set up RecyclerView adapter
+            TypeRoomAdapter adapter = new TypeRoomAdapter(loaiPhongList, getActivity());
+            recyclerViewLoaiPhong.setAdapter(adapter);
+        } else {
+            // Hiển thị thông báo nếu không có dữ liệu
+            Toast.makeText(getContext(), "Không có loại phòng nào trong cơ sở dữ liệu", Toast.LENGTH_SHORT).show();
+        }
 
         return view;
     }

@@ -13,15 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.appbooking.R;
 import com.example.appbooking.Model.LoaiPhong;
 
+import java.util.Date;
 import java.util.List;
 
-public class LoaiPhongAdapter extends RecyclerView.Adapter<LoaiPhongAdapter.LoaiPhongViewHolder> {
+public class TypeRoomAdapter extends RecyclerView.Adapter<TypeRoomAdapter.LoaiPhongViewHolder> {
 
     private final List<LoaiPhong> loaiPhongList;
     private final Context context;  // Thêm Context vào Adapter
 
     // Cập nhật constructor để nhận vào Context
-    public LoaiPhongAdapter(List<LoaiPhong> loaiPhongList, Context context) {
+    public TypeRoomAdapter(List<LoaiPhong> loaiPhongList, Context context) {
         this.loaiPhongList = loaiPhongList;
         this.context = context;
     }
@@ -44,9 +45,17 @@ public class LoaiPhongAdapter extends RecyclerView.Adapter<LoaiPhongAdapter.Loai
         // Thêm sự kiện click cho từng item
         holder.itemView.setOnClickListener(v -> {
             // Tạo Intent để chuyển tới ChiTietLoaiPhongActivity
-            Intent intent = new Intent(context, ChiTietLoaiPhongActivity.class);
+            Intent intent = new Intent(context, DetailsTypeRoomActivity.class);
 
             // Truyền dữ liệu chi tiết về loại phòng
+//            intent.putExtra("checkIn", )
+
+            Date checkIn = new Date();
+            Date checkOut = new Date(System.currentTimeMillis() + 86400000);
+            intent.putExtra("checkIn", checkIn.getTime());
+            intent.putExtra("checkOut", checkOut.getTime());
+
+
             intent.putExtra("tenPhong", loaiPhong.getTen());
             intent.putExtra("giaPhong", String.valueOf(loaiPhong.getGia()));
             intent.putExtra("soNguoi", String.valueOf(loaiPhong.getSoNguoiToiDa()));

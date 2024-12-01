@@ -67,7 +67,10 @@
             android:name=".page.customer.DetailsTypeRoomActivity"
             android:exported="false" />
             <activity android:name=".page.customer.PayMentHouse">
-
+        </activity>
+        <activity android:name=".page.customer.EditCustomerInfoActivity">
+        </activity>
+        <activity android:name=".page.admin.QuanLyDon.RoomDetailDon">
         </activity>
         <activity
             android:name=".page.admin.QuanLyDon.QuanLyDonThanhToan"

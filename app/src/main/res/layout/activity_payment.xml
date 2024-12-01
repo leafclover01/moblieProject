@@ -1,78 +1,81 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#E3F2FD">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <!-- Title -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Thanh toán đặt phòng"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:paddingBottom="12dp" />
-
-        <!-- Editable customer name -->
         <TextView
             android:id="@+id/tvCustomerName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tên khách hàng: Nguyễn Văn A"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:padding="8dp"
-            android:background="#E0E0E0"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_marginBottom="12dp" />
-
-        <!-- RecyclerView for room list -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvRoomList"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Tên khách hàng"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:paddingBottom="8dp" />
 
-        <!-- Payment information -->
+        <TextView
+            android:id="@+id/tvCustomerContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Số điện thoại"
+            android:textSize="16sp"
+            android:paddingBottom="16dp" />
+
+        <!-- Room container -->
         <LinearLayout
+            android:id="@+id/roomContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="8dp"
-            android:background="#f5f5f5">
+            android:background="#FFFFFF"
+            android:elevation="4dp" />
 
-            <TextView
-                android:id="@+id/tvSubtotal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tạm tính: 0 VND" />
+        <!-- Payment details -->
+        <TextView
+            android:id="@+id/tvSubtotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tạm tính"
+            android:layout_marginTop="16dp" />
 
-            <TextView
-                android:id="@+id/tvTotal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tổng thanh toán: 0 VND"
-                android:textStyle="bold"
-                android:paddingTop="8dp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tvDiscount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Giảm giá"
+            android:paddingTop="8dp" />
 
-        <!-- Pay button -->
+        <TextView
+            android:id="@+id/tvTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tổng thanh toán"
+            android:textStyle="bold"
+            android:paddingTop="8dp" />
+
+        <!-- Buttons -->
+        <Button
+            android:id="@+id/btnEditCustomerInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chỉnh sửa thông tin"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#0288D1"
+            android:textColor="#FFFFFF" />
+
         <Button
             android:id="@+id/btnPay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Thanh Toán"
-            android:layout_marginTop="16dp"
+            android:text="Thanh toán"
+            android:layout_marginTop="8dp"
             android:backgroundTint="#FF5722"
             android:textColor="#FFFFFF" />
     </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

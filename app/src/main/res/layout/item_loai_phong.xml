@@ -6,20 +6,27 @@
     android:layout_margin="10dp">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="147dp"
+        android:layout_marginBottom="12dp"
         android:gravity="center_vertical"
-        android:padding="7dp">
+        android:inputType="textPersonName"
+        android:orientation="vertical"
+        android:padding="7dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textColor="#ffffff"
+        android:textColorHint="#cccccc">
 
         <!-- Tên loại phòng -->
         <TextView
             android:id="@+id/tvLoaiPhong"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tên phòng"
+            android:gravity="center"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <!-- Giá phòng -->
         <TextView
@@ -27,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Giá phòng"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <!-- Số người tối đa -->
         <TextView
@@ -35,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Số người tối đa"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <!-- Mô tả -->
         <TextView
@@ -43,6 +50,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mô tả"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
     </LinearLayout>
 </FrameLayout>

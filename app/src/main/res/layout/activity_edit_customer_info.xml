@@ -1,29 +1,57 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#E3F2FD">
 
-    <EditText
-        android:id="@+id/edtCustomerName"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tên khách hàng"
-        android:padding="16dp"
-        android:text="Nguyễn Văn A" />
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edtCustomerPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:hint="Số điện thoại" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chỉnh sửa thông tin khách hàng"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:paddingBottom="16dp" />
 
-    <EditText
-        android:id="@+id/edtCustomerEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:hint="Email" />
-</LinearLayout>
+        <EditText
+            android:id="@+id/etCustomerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên khách hàng"
+            android:textSize="16sp"
+            android:padding="8dp"
+
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/etCustomerContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Số điện thoại"
+            android:inputType="phone"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnSaveCustomerInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lưu thông tin"
+            android:backgroundTint="#0288D1"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hủy bỏ"
+            android:backgroundTint="#FF5722"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+</ScrollView>

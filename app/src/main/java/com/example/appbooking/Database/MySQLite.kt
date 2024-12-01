@@ -188,7 +188,7 @@ class MySQLite {
                         """
                 val rows = conn.query(sql1)
                 rows.forEach { row ->
-                        is_ma_don = row.get(0).toString().toInt()
+                    is_ma_don = row.get(0).toString().toInt()
                 }
             }
 
@@ -305,7 +305,7 @@ class MySQLite {
             .toFormatter()
 
         return LocalDateTime.parse(dateTime, inputFormatter)
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
     }
 
@@ -389,7 +389,7 @@ class MySQLite {
         return  ds
     }
 
-    fun layDuLieuPhongKhongCoNguoiDat(checkIn: String, checkOut: String, maLoaiPhong: String): ArrayList<Phong> {
+    fun layDuLieuPhongTrong(checkIn: String, checkOut: String, maLoaiPhong: String): ArrayList<Phong> {
         var ds = ArrayList<Phong>()
         db.connect().use {conn ->
             var sql = """

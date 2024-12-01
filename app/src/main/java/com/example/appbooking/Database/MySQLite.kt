@@ -64,11 +64,11 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-    fun insertDataUuDai(maNhanVien: Int, ngayBatDau: String, ngayHetHan: String, giam: Double, dieuKienVeGia: Int): String {
+    fun insertDataUuDai(maNhanVien: Int, tenMa: String, ngayBatDau: String, ngayHetHan: String, giam: Double, dieuKienVeGia: Int): String {
         return try {
             val sql = """
-            INSERT INTO UU_DAI (ma_uu_dai, ma_nhan_vien, ngay_bat_dau, ngay_het_han, giam, dieu_kien_ve_gia)
-            VALUES (null, $maNhanVien, '$ngayBatDau', '$ngayHetHan', '$giam', '$dieuKienVeGia');
+        INSERT INTO UU_DAI (ma_nhan_vien, ma_uu_dai, ten_ma, ngay_bat_dau, ngay_het_han, giam, dieu_kien_ve_gia)
+        VALUES ($maNhanVien, null, '$tenMa', '$ngayBatDau', '$ngayHetHan', $giam, $dieuKienVeGia);
         """
             db.connect().query(sql)
             "Thêm thành công"
@@ -76,6 +76,8 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
+
+
     fun insertChiTietUuDai(maUuDai: Int, hinh: String): String {
         return try {
             val sql = "INSERT INTO CHI_TIET_UU_DAI (id, ma_uu_dai, hinh) VALUES (NULL, $maUuDai, '$hinh');"

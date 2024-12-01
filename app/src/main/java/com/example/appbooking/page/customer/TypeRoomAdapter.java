@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.appbooking.R;
 import com.example.appbooking.Model.LoaiPhong;
 
+import java.util.Date;
 import java.util.List;
 
 public class TypeRoomAdapter extends RecyclerView.Adapter<TypeRoomAdapter.LoaiPhongViewHolder> {
@@ -47,7 +48,14 @@ public class TypeRoomAdapter extends RecyclerView.Adapter<TypeRoomAdapter.LoaiPh
             Intent intent = new Intent(context, DetailsTypeRoomActivity.class);
 
             // Truyền dữ liệu chi tiết về loại phòng
-//            intent.
+//            intent.putExtra("checkIn", )
+
+            Date checkIn = new Date();
+            Date checkOut = new Date(System.currentTimeMillis() + 86400000);
+            intent.putExtra("checkIn", checkIn.getTime());
+            intent.putExtra("checkOut", checkOut.getTime());
+
+
             intent.putExtra("tenPhong", loaiPhong.getTen());
             intent.putExtra("giaPhong", String.valueOf(loaiPhong.getGia()));
             intent.putExtra("soNguoi", String.valueOf(loaiPhong.getSoNguoiToiDa()));

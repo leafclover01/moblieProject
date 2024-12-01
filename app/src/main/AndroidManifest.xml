@@ -58,6 +58,9 @@
         <activity
             android:name=".page.customer.DetailsTypeRoomActivity"
             android:exported="false" />
+        <activity android:name=".page.customer.PayMentHouse">
+
+        </activity>
 
     </application>
 

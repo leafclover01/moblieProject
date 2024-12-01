@@ -28,8 +28,7 @@ import com.example.appbooking.page.admin.quanLyUser.quanLyUser;
 
 public class homeAdmin extends AppCompatActivity {
     LinearLayout qlUser, qlPhong, qlDanhGia, qlMa, qlDon;
-    ImageView imgAvt;
-    TextView tvTenTK;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

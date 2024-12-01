@@ -87,12 +87,12 @@ public class addRoomType extends AppCompatActivity {
                     Toast.makeText(addRoomType.this, "Hãy nhập mô tả chi tiết phòng", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                // Gọi phương thức chèn dữ liệu
-                try{
+
+                try {
                     db1.insertDataLoaiPhong(tenLoaiPhong, giaPhong, soLuongNguoi, moTaPhongc, moTaPhong);
                     Toast.makeText(addRoomType.this, "Thêm loại phòng thành công!", Toast.LENGTH_SHORT).show();
                     finish();
-                }catch(Exception e){
+                } catch (Exception e) {
                     Toast.makeText(addRoomType.this, "Thêm loại phòng không thành công!", Toast.LENGTH_SHORT).show();
                 }
             }

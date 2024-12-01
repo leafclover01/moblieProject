@@ -1,5 +1,8 @@
 package com.example.appbooking.page.admin.quanLyUser.Adapter;
 
+import static com.example.appbooking.R.*;
+import static com.example.appbooking.R.drawable.anh_user;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -64,9 +67,13 @@ public class adAdpterUser extends ArrayAdapter {
         ad_tv1.setText(tk.getName());
         ad_tv2.setText(tk.getEmail()+ " --- " + tk.getSdt());
         ad_tv3.setText(tk.getRole() == 0 ? "Admin" : "User");
-        if (tk.getHinh() != null && !tk.getHinh().isEmpty()) {
-            Uri imageUri = Uri.parse(db1.getDrawableResourceUrl(getContext(),tk.getHinh())); // Chuyển chuỗi URI thành đối tượng Uri
-            ad_img1.setImageURI(imageUri); // Hiển thị ảnh từ URI
+        try{
+            if (tk.getHinh() != null && !tk.getHinh().isEmpty()) {
+                Uri imageUri = Uri.parse(db1.getDrawableResourceUrl(getContext(), tk.getHinh())); // Chuyển chuỗi URI thành đối tượng Uri
+                ad_img1.setImageURI(imageUri); // Hiển thị ảnh từ URI
+            }
+        }catch (Exception e){
+            ad_img1.setImageURI(Uri.parse(db1.getDrawableResourceUrl(getContext(), "anh_user")));
         }
 
         ad_btnEdit.setOnClickListener(new View.OnClickListener() {

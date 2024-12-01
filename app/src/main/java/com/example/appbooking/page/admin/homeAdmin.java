@@ -22,6 +22,7 @@ import com.example.appbooking.MainActivity;
 import com.example.appbooking.R;
 import com.example.appbooking.page.admin.QuanLyDanhGia.QuanLyDanhGia;
 
+import com.example.appbooking.page.admin.QuanLyMaGiamGia.QuanLyMaGiamGia;
 import com.example.appbooking.page.admin.QuanLyDon.QuanLyDonThanhToan;
 import com.example.appbooking.page.admin.adRoom.quanLyPhong;
 import com.example.appbooking.page.admin.quanLyUser.quanLyUser;
@@ -81,7 +82,8 @@ public class homeAdmin extends AppCompatActivity {
         qlMa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent in4 = new Intent(homeAdmin.this, QuanLyMaGiamGia.class);
+                startActivity(in4);
             }
         });
 
@@ -114,6 +116,3 @@ public class homeAdmin extends AppCompatActivity {
     }
 }
 
-
-
-///12g

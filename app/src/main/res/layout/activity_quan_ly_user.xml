@@ -13,21 +13,36 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center">
             <ImageButton
                 android:id="@+id/back"
-                android:background="#B6A1DA"
+                android:background="@color/light"
                 android:src="@drawable/ad_back_left"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:contentDescription="back"/>
+                android:contentDescription="back" />
+            <TextView
+                android:paddingTop="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Quản lý user"
+                android:textAlignment="center"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <Spinner
                 android:id="@+id/ad_dkLoc"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="1"/>
             <ImageButton
-                android:background="#D4EAED"
+                android:background="@color/lightBackground"
                 android:src="@drawable/ad_refesh"
                 android:id="@+id/ad_btnLoad"
                 android:layout_width="50dp"

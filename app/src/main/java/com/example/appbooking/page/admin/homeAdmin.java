@@ -22,6 +22,7 @@ import com.example.appbooking.MainActivity;
 import com.example.appbooking.R;
 import com.example.appbooking.page.admin.QuanLyDanhGia.QuanLyDanhGia;
 
+import com.example.appbooking.page.admin.QuanLyMaGiamGia.QuanLyMaGiamGia;
 import com.example.appbooking.page.admin.QuanLyDon.QuanLyDonThanhToan;
 import com.example.appbooking.page.admin.adRoom.quanLyPhong;
 import com.example.appbooking.page.admin.quanLyUser.quanLyUser;
@@ -49,10 +50,9 @@ public class homeAdmin extends AppCompatActivity {
         qlDanhGia = findViewById(R.id.qlDanhGia);
         qlMa = findViewById(R.id.qlMa);
         qlDon = findViewById(R.id.qlDon);
-        //imgAvt = findViewById(R.id.imgAvt);
-        //tvTenTK = findViewById(R.id.tvTenTK);
-        //
-        // tvTenTK.setText(name);
+//        imgAvt = findViewById(R.id.imgAvt);
+//        tvTenTK = findViewById(R.id.tvTenTK);
+//        tvTenTK.setText(name);
         MySQLite db = new MySQLite();
         String anh = db.getDrawableResourceUrl(this, hinh);
 //        imgAvt.setImageURI(Uri.parse(anh));
@@ -82,7 +82,8 @@ public class homeAdmin extends AppCompatActivity {
         qlMa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent in4 = new Intent(homeAdmin.this, QuanLyMaGiamGia.class);
+                startActivity(in4);
             }
         });
 
@@ -96,4 +97,22 @@ public class homeAdmin extends AppCompatActivity {
         });
 
     }
+    public void onLogoutClick(View view) {
+        // Get the SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
+
+        // Clear the SharedPreferences to log the user out
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        // Start MainActivity (this is typically the login screen)
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+
+        // Show a toast message
+        Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+    }
 }
+

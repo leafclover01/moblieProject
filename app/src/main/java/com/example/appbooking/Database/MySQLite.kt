@@ -64,11 +64,11 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-    fun insertDataUuDai(maNhanVien: Int, ngayBatDau: String, ngayHetHan: String, giam: Double, dieuKienVeGia: Int): String {
+    fun insertDataUuDai(maNhanVien: Int, tenMa: String, ngayBatDau: String, ngayHetHan: String, giam: Double, dieuKienVeGia: Int): String {
         return try {
             val sql = """
-            INSERT INTO UU_DAI (ma_uu_dai, ma_nhan_vien, ngay_bat_dau, ngay_het_han, giam, dieu_kien_ve_gia)
-            VALUES (null, $maNhanVien, '$ngayBatDau', '$ngayHetHan', '$giam', '$dieuKienVeGia');
+        INSERT INTO UU_DAI (ma_nhan_vien, ma_uu_dai, ten_ma, ngay_bat_dau, ngay_het_han, giam, dieu_kien_ve_gia)
+        VALUES ($maNhanVien, null, '$tenMa', '$ngayBatDau', '$ngayHetHan', $giam, $dieuKienVeGia);
         """
             db.connect().query(sql)
             "Thêm thành công"
@@ -76,6 +76,8 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
+
+
     fun insertChiTietUuDai(maUuDai: Int, hinh: String): String {
         return try {
             val sql = "INSERT INTO CHI_TIET_UU_DAI (id, ma_uu_dai, hinh) VALUES (NULL, $maUuDai, '$hinh');"
@@ -188,7 +190,7 @@ class MySQLite {
                         """
                 val rows = conn.query(sql1)
                 rows.forEach { row ->
-                        is_ma_don = row.get(0).toString().toInt()
+                    is_ma_don = row.get(0).toString().toInt()
                 }
             }
 
@@ -305,7 +307,7 @@ class MySQLite {
             .toFormatter()
 
         return LocalDateTime.parse(dateTime, inputFormatter)
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
     }
 
@@ -389,7 +391,7 @@ class MySQLite {
         return  ds
     }
 
-    fun layDuLieuPhongKhongCoNguoiDat(checkIn: String, checkOut: String, maLoaiPhong: String): ArrayList<Phong> {
+    fun layDuLieuPhongTrong(checkIn: String, checkOut: String, maLoaiPhong: String): ArrayList<Phong> {
         var ds = ArrayList<Phong>()
         db.connect().use {conn ->
             var sql = """

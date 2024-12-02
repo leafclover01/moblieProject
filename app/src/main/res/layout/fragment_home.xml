@@ -1,17 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background"
     tools:context=".page.customer.HomeFragment">
 
-    <!-- RecyclerView để hiển thị danh sách loại phòng -->
+    <!-- RecyclerView chiếm toàn bộ màn hình, trừ phần dưới cùng dành cho ImageView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewLoaiPhong"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:padding="8dp"
+        android:padding="1dp"
         tools:listitem="@layout/item_loai_phong" />
+
+    <!-- ImageView nằm dưới RecyclerView, không che phủ nội dung -->
+    <ImageView
+        android:id="@+id/imgBackgroundBottom"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:scaleType="fitXY"
+        app:srcCompat="@mipmap/back_bottom" />
+
 </RelativeLayout>

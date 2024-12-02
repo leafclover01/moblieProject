@@ -21,6 +21,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".page.admin.QuanLyMaGiamGia.Component.TaoMaGiamGia"
+            android:exported="false" />
+        <activity
+            android:name=".page.admin.QuanLyMaGiamGia.Component.ThongTinMaGiamGia"
+            android:exported="false" />
+        <activity
+            android:name=".page.admin.QuanLyMaGiamGia.QuanLyMaGiamGia"
+            android:exported="false" />
+        <activity
             android:name=".Activities.EditInfoUserActivity"
             android:exported="false" />
         <activity
@@ -32,7 +41,13 @@
         <activity
             android:name=".Activities.SignUpActivity"
             android:exported="false" /> <!-- Các activity -->
-         <activity
+        <activity
+            android:name=".page.admin.quanLyUser.quanLyUser"
+            android:exported="false" />
+        <activity
+            android:name=".page.admin.adRoom.quanLyPhong"
+            android:exported="false" />
+        <activity
             android:name=".page.admin.adRoom.Component.AddRoom"
             android:exported="false" />
         <activity
@@ -40,12 +55,6 @@
             android:exported="false" />
         <activity
             android:name=".page.admin.quanLyUser.Component.editUser"
-            android:exported="false" />
-        <activity
-            android:name=".page.admin.quanLyUser.quanLyUser"
-            android:exported="false" />
-        <activity
-            android:name=".page.admin.adRoom.quanLyPhong"
             android:exported="false" />
         <activity
             android:name=".page.admin.homeAdmin"
@@ -64,11 +73,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".page.customer.ChiTietLoaiPhongActivity"
+            android:name=".page.customer.DetailsTypeRoomActivity"
             android:exported="false" />
+            <activity android:name=".page.customer.PayMentHouse">
+        </activity>
+        <activity android:name=".page.customer.EditCustomerInfoActivity">
+        </activity>
+        <activity android:name=".page.admin.QuanLyDon.RoomDetailDon">
+        </activity>
         <activity
             android:name=".page.admin.QuanLyDon.QuanLyDonThanhToan"
             android:exported="false"
             tools:ignore="DuplicateActivity" />
+            <activity
+            android:name=".page.customer.ChiTietLoaiPhongActivity"
+            android:exported="false" />
     </application>
 </manifest>

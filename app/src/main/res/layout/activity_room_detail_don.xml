@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".page.admin.QuanLyDon.RoomDetailDon">
+
+    <!-- TextView for displaying room name -->
+    <TextView
+        android:id="@+id/roomName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phòng 101"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp" />
+
+    <!-- ImageView for displaying the room image, moved below the room name -->
+    <ImageView
+        android:id="@+id/roomImage"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        app:layout_constraintTop_toBottomOf="@id/roomName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- TextView for displaying room type -->
+    <TextView
+        android:id="@+id/roomType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Loại phòng: VIP"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/roomImage"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp" />
+
+    <!-- TextView for displaying room details -->
+    <TextView
+        android:id="@+id/roomDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chi tiết phòng: Phòng có tiện nghi đầy đủ."
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/roomType"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp" />
+
+    <!-- TextView for displaying room price -->
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Giá: 500.000 VND"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/roomDetails"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp" />
+
+    <!-- TextView for displaying the person who booked -->
+    <TextView
+        android:id="@+id/bookedBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đặt bởi: Nguyễn Văn A"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/price"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp" />
+
+    <!-- TextView for displaying booking date -->
+    <TextView
+        android:id="@+id/bookedAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đặt vào: 12/12/2024"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/bookedBy"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp" />
+
+    <!-- Button for checking out the room -->
+    <Button
+        android:id="@+id/btnCheckout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Checkout"
+        app:layout_constraintTop_toBottomOf="@id/bookedAt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/login_btn_background"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
+
+    <!-- TextView for displaying the image description (room label) -->
+    <TextView
+        android:id="@+id/roomImageLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hình ảnh phòng"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@id/roomImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- ImageView for background at the bottom of the layout -->
+    <ImageView
+        android:id="@+id/imgBackgroundBottom"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@mipmap/back_bottom" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

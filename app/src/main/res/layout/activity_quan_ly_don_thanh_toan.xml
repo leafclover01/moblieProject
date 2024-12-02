@@ -5,12 +5,33 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".page.admin.QuanLyDanhGia.QuanLyDanhGia">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <!-- LinearLayout chứa SearchView -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <!-- SearchView cho chức năng tìm kiếm -->
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/ad_searchView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:queryHint="Tìm kiếm"
+                android:iconifiedByDefault="false"
+                android:queryBackground="@android:color/white"
+                android:padding="8dp"/>
+        </LinearLayout>
 
         <!-- LinearLayout chứa Spinner và ImageButton -->
         <LinearLayout
@@ -49,5 +70,13 @@
             android:padding="8dp"
             android:clipToPadding="false"/>
     </LinearLayout>
-
+    <ImageView
+        android:id="@+id/imgBackgroundBottom"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@mipmap/back_bottom" />
 </androidx.constraintlayout.widget.ConstraintLayout>

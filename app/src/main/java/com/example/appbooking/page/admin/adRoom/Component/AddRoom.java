@@ -137,7 +137,7 @@ public class AddRoom extends AppCompatActivity {
     }
     public void valiateAndpush(String uri, String vtri, String lp, detalPhong p){
         if(uri.toString().isEmpty()){
-            uri = "ad_anh_clone_phong";
+            uri = p.chiTietLoaiPhong.getHinh();
         }
         if(vtri.toString().isEmpty()){
             Toast.makeText(this, "không để phần vị trí bị chống", Toast.LENGTH_SHORT).show();

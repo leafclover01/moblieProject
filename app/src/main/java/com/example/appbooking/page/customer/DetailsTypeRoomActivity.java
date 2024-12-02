@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,8 +32,9 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     private String timeCheckIn = "", timeCheckOut = "";
     private MySQLite db1 = new MySQLite();
-   private Button btnNext;
+    private Button btnNext;
     public String maPhong = "";
+    TextView moTaChiTiet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,11 +51,21 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         btnChonThoiGian = findViewById(R.id.btnChonThoiGian);
         recyclerViewPhongTrong = findViewById(R.id.recyclerViewPhongTrong);
         btnNext = findViewById(R.id.btnNext);
+        moTaChiTiet = findViewById(R.id.moTaChiTiet);
+        ImageButton btnBack = findViewById(R.id.btn_back);
+        // button quay lại
+        btnBack.setOnClickListener(view -> {
+            // Quay lại màn hình trước đó
+            onBackPressed(); // Dùng phương thức này nếu Activity trước đó được gọi bằng Intent
+        });
+
         // Nhận dữ liệu từ Intent
         String tenPhong = getIntent().getStringExtra("tenPhong");
         String giaPhong = getIntent().getStringExtra("giaPhong");
         String soNguoi = getIntent().getStringExtra("soNguoi");
         String moTaPhong = getIntent().getStringExtra("moTaPhong");
+        String moTaChiTietPhong = getIntent().getStringExtra("moTaChiTiet");
+
         int imageResource = getIntent().getIntExtra("imageResource", R.drawable.anh_phong);
 
         // Cập nhật UI
@@ -61,6 +73,8 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         giaLoaiPhong.setText(giaPhong);
         soNguoiToiDa.setText(soNguoi);
         moTa.setText(moTaPhong);
+        moTaChiTiet.setText(moTaChiTietPhong);
+
         imageLoaiPhong.setImageResource(imageResource);
 
         // Xử lý chọn ngày Check-in
@@ -107,6 +121,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
                     intent.putExtra("giaPhong", giaPhong);  // Cập nhật giá trị này
                     intent.putExtra("maPhong", maPhong);  // Mã phòng cần có giá trị hợp lệ
                     intent.putExtra("moTaPhong", moTaPhong);
+                    intent.putExtra("moTaChiTiet", moTaChiTietPhong);
                     intent.putExtra("timeCheckIn", timeCheckIn);
                     intent.putExtra("timeCheckOut", timeCheckOut);
 

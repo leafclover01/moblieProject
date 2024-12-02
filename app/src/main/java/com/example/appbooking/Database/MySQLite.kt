@@ -419,15 +419,13 @@ class MySQLite {
         return ds
     }
 
-    fun layDuLieuCacAnhCuaLoaiPhong(maLoaiPhong: String): ArrayList<String>{
+    fun layDuLieuCacAnhCuaLoaiPhong(maLoaiPhong: Int): ArrayList<String>{
         var ds = ArrayList<String>()
         db.connect().use {conn ->
             var sql = """
-                select * from PHONG
-                    where ma_phong not in 
-                        (SELECT hinh from LOAI_PHONG AS L
+                        SELECT hinh from LOAI_PHONG AS L
                             JOIN CHI_TIET_LOAI_PHONG AS C ON L.ma_loai_phong = C.ma_loai_phong
-                            WHERE ma_loai_phong = $maLoaiPhong;
+                            WHERE L.ma_loai_phong = $maLoaiPhong;
             """
             var rows = conn.query(sql).forEach{ row ->
                 ds.add(

@@ -39,7 +39,7 @@ public class TypeRoomAdapter extends RecyclerView.Adapter<TypeRoomAdapter.LoaiPh
         LoaiPhong loaiPhong = loaiPhongList.get(position);
         holder.tvLoaiPhong.setText(loaiPhong.getTen());
         holder.tvGiaPhong.setText("Giá: " + loaiPhong.getGia() + " VND");
-        holder.tvSoNguoiToiDa.setText("Số người tối đa: " + loaiPhong.getSoNguoiToiDa());
+        holder.tvSoNguoiToiDa.setText("Tối đa: " + loaiPhong.getSoNguoiToiDa() + " người");
         holder.tvMoTa.setText(loaiPhong.getMoTa());
 
         // Thêm sự kiện click cho từng item

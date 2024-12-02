@@ -3,25 +3,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:scrollbars="none">
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="0dp"
+    android:scrollbars="none"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:layout_marginTop="0dp">
+<!--        <include-->
+<!--            layout="@layout/button_back"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            android:layout_margin="16dp" />-->
         <!-- Tiêu đề -->
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chi Tiết Loại Phòng"
-            android:textSize="35dp"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:textColor="@color/blue70" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp">
 
-        <!-- Ảnh của loại phòng -->
+            <!-- Nút Quay Lại -->
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="36dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/baseline_arrow_back_24" />
+
+            <!-- Tiêu Đề -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:gravity="center"
+                android:text="Chi Tiết Hạng Phòng"
+                android:textColor="@color/blue70"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <!-- Tên loại phòng -->
         <ImageView
@@ -29,6 +55,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:scaleType="centerCrop" />
+
 
         <TextView
             android:id="@+id/tenLoaiPhong"
@@ -62,8 +89,27 @@
             android:layout_height="wrap_content"
             android:text="Mô tả"
             android:paddingTop="8dp" />
-
-        <!-- Chọn thời gian check-in -->
+        <!-- Mô tả chi tiết -->
+<!--        <TextView-->
+<!--            android:id="@+id/moTaChiTiet"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Mô tả chi tiết:"-->
+<!--            android:textSize="14sp"-->
+<!--            android:textColor="#757575"-->
+<!--            android:layout_marginBottom="16dp" />-->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/moTaChiTiet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mô tả chi tiết: "
+                android:textSize="14sp"
+                android:textColor="#757575"
+                android:layout_marginBottom="16dp" />
+        </ScrollView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,14 +125,10 @@
                 android:layout_weight="1"
                 android:text="Ngày nhận phòng"
                 android:layout_marginEnd="8dp"
-                android:drawableLeft="@drawable/ic_calendar"/>
+                android:drawableLeft="@drawable/ic_calendar"
+                android:background="@drawable/login_btn_background"/>
 
             <!-- Chọn ngày Check-out -->
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text=" "-->
-<!--                android:textAlignment="center" />-->
             <Button
                 android:id="@+id/btnCheckOut"
                 android:layout_width="wrap_content"
@@ -94,18 +136,18 @@
                 android:layout_weight="1"
                 android:text="Ngày trả phòng"
                 android:layout_marginEnd="8dp"
-                android:drawableLeft="@drawable/ic_calendar"/>
-
+                android:background="@drawable/login_btn_background"
+            android:drawableLeft="@drawable/ic_calendar"/>
             <!-- Tiếp theo Button -->
-
         </LinearLayout>
-
         <Button
             android:id="@+id/btnChonThoiGian"
-            android:layout_width="396dp"
+            android:layout_width="match_parent"
             android:layout_height="36dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:text="Tìm kiếm" />
+            android:text="Tìm phòng"
+            android:background="@drawable/login_btn_background" />
 
         <!-- RecyclerView để hiển thị danh sách phòng trống -->
         <androidx.recyclerview.widget.RecyclerView
@@ -113,7 +155,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="16dp" />
-
         <Button
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
@@ -121,9 +162,6 @@
             android:text="Tiếp theo"
             android:layout_marginTop="16dp"
             android:layout_gravity="center" />
-
-
-
 
     </LinearLayout>
 </ScrollView>

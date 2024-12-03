@@ -51,7 +51,7 @@ buildscript {
     }
     dependencies {
         // Gradle plugin compatible with compileSdk 35
-        classpath("com.android.tools.build:gradle:8.7.2")
+        classpath("com.android.tools.build:gradle:8.5.2")
     }
 }
 
@@ -65,7 +65,10 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("tech.turso.libsql:libsql:0.1.0")
-
+    //them tv
+    implementation ("com.google.android.material:material:1.9.0")
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
 //    implementation 'com.android.support:design:26.1.0'
 //    implementation 'com.android.support:percent:26.1.0'
 //    implementation 'com.android.support:cardview-v7:26.1.0'

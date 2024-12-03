@@ -389,9 +389,10 @@ class MySQLite {
         return  ds
     }
 
-      var ds = ArrayList<Phong>()
-        fun layDuLieuPhongTrong(checkIn: String, checkOut: String, maLoaiPhong: String): ArrayList<Phong> {
-            db.connect().use {conn ->
+
+    fun layDuLieuPhongKhongCoNguoiDat(checkIn: String, checkOut: String, maLoaiPhong: Int): ArrayList<Phong> {
+        var ds = ArrayList<Phong>()
+        db.connect().use {conn ->
             var sql = """
                 select * from PHONG
                     where ma_phong not in 
@@ -401,9 +402,9 @@ class MySQLite {
                             LEFT JOIN DON AS D ON D.ma_don = T.ma_don
                             LEFT JOIN QUAN_LY AS Q ON Q.ma_don = D.ma_don
                             WHERE (
-                                (D.check_in <= $checkOut AND T.check_out >= $checkIn)
+                                (D.check_in <= '$checkOut' AND T.check_out >= '$checkIn')
                                 OR
-                                (Q.check_in_thuc_te <= $checkOut AND Q.check_out_thuc_te >= $checkIn)
+                                (Q.check_in_thuc_te <= '$checkOut' AND Q.check_out_thuc_te >= '$checkIn')
                                 ) 
                             group by P.ma_phong)
                         And ma_loai_phong = $maLoaiPhong;
@@ -416,8 +417,9 @@ class MySQLite {
                 ))
             }
         }
-                return ds
-            }
+        return ds
+    }
+
 
     fun layDuLieuCacAnhCuaLoaiPhong(maLoaiPhong: Int): ArrayList<String>{
         var ds = ArrayList<String>()

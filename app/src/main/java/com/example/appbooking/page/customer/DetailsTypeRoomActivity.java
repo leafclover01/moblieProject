@@ -77,7 +77,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
 
         imageLoaiPhong.setImageResource(imageResource);
 
-//        // Xử lý chọn ngày Check-in
+////        // Xử lý chọn ngày Check-in
         btnCheckIn.setOnClickListener(v -> showDatePickerDialog(true));
 
         // Xử lý chọn ngày Check-out
@@ -97,12 +97,12 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
                 Toast.makeText(this, "Vui lòng chọn ngày Check-in và Check-out!", Toast.LENGTH_SHORT).show();
             } else {
                 // Sử dụng thời gian đã được thêm giờ
-                ArrayList<Phong> dsPhongTrong = db1.layDuLieuPhongTrong(timeCheckIn, timeCheckOut, "1"); // Ví dụ mã loại phòng = "1"
+
+                ArrayList<Phong> dsPhongTrong = db1.layDuLieuPhongKhongCoNguoiDat(timeCheckIn, timeCheckOut, 1); // Ví dụ mã loại phòng = "1"
                 loadRoomList(dsPhongTrong);
+//                Toast.makeText(this, dsPhongTrong.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
 
         // Setup RecyclerView
         recyclerViewPhongTrong.setLayoutManager(new LinearLayoutManager(this));
@@ -133,28 +133,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
-
-//    // Hàm hiển thị DatePickerDialog
-//    private void showDatePickerDialog(boolean isCheckIn) {
-//        Calendar calendar = Calendar.getInstance();
-//        int year = calendar.get(Calendar.YEAR);
-//        int month = calendar.get(Calendar.MONTH);
-//        int day = calendar.get(Calendar.DAY_OF_MONTH);
-//
-//        new DatePickerDialog(this, (view, selectedYear, selectedMonth, selectedDay) -> {
-//            String selectedDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
-//            if (isCheckIn) {
-//                timeCheckIn = selectedDate;
-//                btnCheckIn.setText("Check-in: " + selectedDate);
-//            } else {
-//                timeCheckOut = selectedDate;
-//                btnCheckOut.setText("Check-out: " + selectedDate);
-//            }
-//        }, year, month, day).show();
-//    }
 private void showDatePickerDialog(boolean isCheckIn) {
     if (isCheckIn && !timeCheckIn.isEmpty()) {
         Toast.makeText(this, "Vui lòng chọn ngày Check-in!", Toast.LENGTH_SHORT).show();
@@ -195,20 +174,15 @@ private void showDatePickerDialog(boolean isCheckIn) {
             timeCheckIn = formattedDateTime;
             btnCheckIn.setText("Check-in: " + formattedDateTime);
 
-            Toast.makeText(DetailsTypeRoomActivity.this, "Ngày Check-in: " + formattedDateTime, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(DetailsTypeRoomActivity.this, "Ngày Check-in: " + formattedDateTime, Toast.LENGTH_SHORT).show();
         } else {
             timeCheckOut = formattedDateTime;
             btnCheckOut.setText("Check-out: " + formattedDateTime);
-            Toast.makeText(DetailsTypeRoomActivity.this, "Ngày Check-out: " + formattedDateTime, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(DetailsTypeRoomActivity.this, "Ngày Check-out: " + formattedDateTime, Toast.LENGTH_SHORT).show();
         }
 
     }, year, month, day).show();
 }
-
-
-
-
-
 
     // Hàm load danh sách phòng trống vào RecyclerView
     private void loadRoomList(ArrayList<Phong> dsPhongTrong) {

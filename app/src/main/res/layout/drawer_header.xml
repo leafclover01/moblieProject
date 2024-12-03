@@ -11,17 +11,20 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/imgAvt"
         android:src="@drawable/drawer_logo"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ADMIN"
+        android:id="@+id/tvTenUser"
         android:textColor="@color/light"
         android:textStyle="bold"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="admin@admin.vn"
+        android:id="@+id/tvEmail"
         android:textColor="@color/light"
         android:textSize="14sp"
         android:layout_marginBottom="16dp"/>

@@ -67,7 +67,8 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation("tech.turso.libsql:libsql:0.1.0")
     implementation ("com.google.android.material:material:1.9.0")
-
+    implementation("com.google.code.gson:gson:2.8.9")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
 //    implementation 'com.android.support:design:26.1.0'
 //    implementation 'com.android.support:percent:26.1.0'
 //    implementation 'com.android.support:cardview-v7:26.1.0'

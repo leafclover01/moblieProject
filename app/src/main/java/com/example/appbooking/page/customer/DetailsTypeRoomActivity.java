@@ -74,7 +74,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
             if (timeCheckIn.isEmpty() || timeCheckOut.isEmpty()) {
                 Toast.makeText(this, "Vui lòng chọn ngày Check-in và Check-out!", Toast.LENGTH_SHORT).show();
             } else {
-                ArrayList<Phong> dsPhongTrong = db1.layDuLieuPhongTrong(timeCheckIn, timeCheckOut, "1"); // Ví dụ mã loại phòng = "1"
+                ArrayList<Phong> dsPhongTrong = db1.layDuLieuPhongKhongCoNguoiDat(timeCheckIn, timeCheckOut, 1); // Ví dụ mã loại phòng = "1"
                 loadRoomList(dsPhongTrong);
             }
         });

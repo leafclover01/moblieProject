@@ -26,6 +26,7 @@ import com.example.appbooking.Model.TaiKhoan;
 import com.example.appbooking.page.DashboardActivity;
 import com.example.appbooking.page.admin.homeAdmin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,9 +58,8 @@ public class MainActivity extends AppCompatActivity {
         db = new MySQLite();
         sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        editor.clear().apply();
-
-
+        ArrayList<String> arr = db.layDuLieuCacAnhCuaLoaiPhong(1);
+        Toast.makeText(this, arr.toString(), Toast.LENGTH_SHORT).show();
         // Chuyen trang khi da danh nhap truoc do
         int userId_kt = sharedPreferences.getInt("userId", -1);
         String username_kt = sharedPreferences.getString("username", "Guest");
@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
 
 
         // Định dạng TextView "Đăng ký"
@@ -142,6 +143,9 @@ public class MainActivity extends AppCompatActivity {
                         // Lưu thông tin vào SharedPreferences
                         editor.putInt("userId", taiKhoan.getId());
                         editor.putString("username", username);
+                        editor.putString("email", taiKhoan.getEmail());
+                        editor.putString("ten", taiKhoan.getName());
+                        editor.putString("hinh", taiKhoan.getHinh());
                         editor.putInt("role", taiKhoan.getRole());
                         editor.apply();
 

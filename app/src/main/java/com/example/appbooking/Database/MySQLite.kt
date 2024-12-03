@@ -1,43 +1,33 @@
 package com.example.appbooking.Database
 
+
 import android.content.Context
-import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
-import com.example.appbooking.Model.ChiTietUuDai
-import com.example.appbooking.Model.TaiKhoan
+import android.util.Log
+import com.example.appbooking.Model.Don
 import com.example.appbooking.Model.LoaiPhong
 import com.example.appbooking.Model.Phong
-import com.example.appbooking.Model.Don
+import com.example.appbooking.Model.TaiKhoan
 import tech.turso.libsql.Database
 import tech.turso.libsql.Libsql
 import tech.turso.libsql.Row
-
-import java.util.Date
-
 import java.text.SimpleDateFormat
-import java.util.ArrayList
-import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.temporal.ChronoUnit
+import java.util.Date
 import java.util.Locale
-
-
-import kotlin.time.Duration.Companion.days
 
 class MySQLite {
     var db: Database
-
     init {
         db = Libsql.open(
-            url = "libsql://booking-hotel-haitrn.turso.io",
-            authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzI2MTkyMTksImlkIjoiMDgzMTMzOTQtZmM5NS00NTlhLWI1YTktODQ0ODlhMzQ5OTg1In0.WjpH3E9Kj1zJ2EjDecqib53VpjbGBe1ynstH9Iorvonqo8jqfKvNLYb7Lpa9rk_2CGnaZZqAjotpFDKvPzuMBg"
+            url = "libsql://booking-haitrn.turso.io",
+            authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3MzI4NDIwMzMsImlkIjoiMDk1NjVhODgtNTRmOS00NzNlLWIyNGEtYmFlZmJlYTlkNzAzIn0.wSCsJk9vlk0TBgZa4ZTKk2Be2ow6_m11FVT0681fR1-VTmpnCpkkS7jnhlh9ANLk94hMrTjitPK1Wd-2iiRCCQ"
         )
-    }
 
+    }
     fun insertDataTaiKhoan(username: String, password: String, name: String, email: String, sdt: String, cccd: String, address: String, role: Int, tenAnh: String): String {
         val query = "Select * from TAI_KHOAN where username = '$username';"
         val rows = db.connect().query(query)
@@ -76,8 +66,6 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-
-
     fun insertChiTietUuDai(maUuDai: Int, hinh: String): String {
         return try {
             val sql = "INSERT INTO CHI_TIET_UU_DAI (id, ma_uu_dai, hinh) VALUES (NULL, $maUuDai, '$hinh');"
@@ -248,6 +236,53 @@ class MySQLite {
         }
         return taiKhoan
     }
+    fun getTaiKhoantheoCCCD(cccd: String): TaiKhoan{
+        var taiKhoan = TaiKhoan()
+        db.connect().use { conn ->
+            val sql = "SELECT * FROM TAI_KHOAN WHERE cccd='$cccd';"
+            val rows = conn.query(sql)
+            rows.forEach { row ->
+                taiKhoan = TaiKhoan(
+                    row.get(0).toString().toInt(),
+                    row.get(8).toString().toInt(),
+                    row.get(1).toString(),
+                    row.get(2).toString(),
+                    row.get(4).toString(),
+                    row.get(7).toString(),
+                    row.get(5).toString(),
+                    row.get(6).toString(),
+                    row.get(3).toString(),
+                    row.get(9).toString()
+                )
+            }
+        }
+        return taiKhoan
+    }
+
+    fun getTaiKhoantheoSDT(sdt: String): TaiKhoan {
+        var taiKhoan = TaiKhoan()
+        db.connect().use { conn ->
+            val sql = "SELECT * FROM TAI_KHOAN WHERE cccd='$sdt';"
+            val rows = conn.query(sql)
+            rows.forEach { row ->
+                taiKhoan = TaiKhoan(
+                    row.get(0).toString().toInt(),
+                    row.get(8).toString().toInt(),
+                    row.get(1).toString(),
+                    row.get(2).toString(),
+                    row.get(4).toString(),
+                    row.get(7).toString(),
+                    row.get(5).toString(),
+                    row.get(6).toString(),
+                    row.get(3).toString(),
+                    row.get(9).toString()
+                )
+            }
+        }
+        return taiKhoan
+    }
+
+
     fun layDanhSachTaiKhoan(): ArrayList<TaiKhoan>{
         var list = ArrayList<TaiKhoan>()
         db.connect().use { conn ->
@@ -391,7 +426,7 @@ class MySQLite {
         return  ds
     }
 
-    fun layDuLieuPhongTrong(checkIn: String, checkOut: String, maLoaiPhong: String): ArrayList<Phong> {
+    fun layDuLieuPhongKhongCoNguoiDat(checkIn: String, checkOut: String, maLoaiPhong: Int): ArrayList<Phong> {
         var ds = ArrayList<Phong>()
         db.connect().use {conn ->
             var sql = """
@@ -403,9 +438,9 @@ class MySQLite {
                             LEFT JOIN DON AS D ON D.ma_don = T.ma_don
                             LEFT JOIN QUAN_LY AS Q ON Q.ma_don = D.ma_don
                             WHERE (
-                                (D.check_in <= $checkOut AND T.check_out >= $checkIn)
+                                (D.check_in <= '$checkOut' AND T.check_out >= '$checkIn')
                                 OR
-                                (Q.check_in_thuc_te <= $checkOut AND Q.check_out_thuc_te >= $checkIn)
+                                (Q.check_in_thuc_te <= '$checkOut' AND Q.check_out_thuc_te >= '$checkIn')
                                 ) 
                             group by P.ma_phong)
                         And ma_loai_phong = $maLoaiPhong;
@@ -421,15 +456,13 @@ class MySQLite {
         return ds
     }
 
-    fun layDuLieuCacAnhCuaLoaiPhong(maLoaiPhong: String): ArrayList<String>{
+    fun layDuLieuCacAnhCuaLoaiPhong(maLoaiPhong: Int): ArrayList<String>{
         var ds = ArrayList<String>()
         db.connect().use {conn ->
             var sql = """
-                select * from PHONG
-                    where ma_phong not in 
-                        (SELECT hinh from LOAI_PHONG AS L
+                        SELECT hinh from LOAI_PHONG AS L
                             JOIN CHI_TIET_LOAI_PHONG AS C ON L.ma_loai_phong = C.ma_loai_phong
-                            WHERE ma_loai_phong = $maLoaiPhong;
+                            WHERE L.ma_loai_phong = $maLoaiPhong;
             """
             var rows = conn.query(sql).forEach{ row ->
                 ds.add(
@@ -474,12 +507,10 @@ class MySQLite {
         return ds
     }
 
+
     fun parseDate(dateStr: String): Date? {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
         return dateFormat.parse(dateStr)
     }
+
 }
-//    var maDon: Int
-//    var ma_nguoi_dat: Int
-//    var checkIn: Date? = null
-//    var ngayLapPhieu: Date? = null

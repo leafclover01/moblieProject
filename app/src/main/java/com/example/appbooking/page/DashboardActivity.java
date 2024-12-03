@@ -2,10 +2,14 @@ package com.example.appbooking.page;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.activity.EdgeToEdge;
@@ -18,6 +22,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.appbooking.Database.MySQLite;
 import com.example.appbooking.MainActivity;
 import com.example.appbooking.R;
 import com.example.appbooking.Utils.SharedPreferencesHelper;
@@ -33,21 +38,31 @@ import com.google.android.material.navigation.NavigationView;
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
+    ImageView imgAvt;
+    TextView tvTenUser, tvEmail;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_dashboard);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        tvTenUser = headerView.findViewById(R.id.tvTenUser);
+        tvEmail = headerView.findViewById(R.id.tvEmail);
+        imgAvt = headerView.findViewById(R.id.imgAvt);
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("UserInfo", this.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("userId", -1);
+        String ten = sharedPreferences.getString("ten", "");
+        String email = sharedPreferences.getString("email", "");
+        String hinh = sharedPreferences.getString("hinh", "ic_avt");
 
-        if (userId != -1) {
-            Toast.makeText(this, "ID người dùng: " + userId, Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Không nhận được ID người dùng.", Toast.LENGTH_SHORT).show();
-        }
+        tvTenUser.setText(ten);
+        tvEmail.setText(email);
+        MySQLite db = new MySQLite();
+        String anh = db.getDrawableResourceUrl(this, hinh);
+        imgAvt.setImageURI(Uri.parse(anh));
 
         // Xử lý insets cho drawer layout
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawer_layout), (v, insets) -> {
@@ -63,7 +78,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
         // Thiết lập Navigation Drawer
         drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);

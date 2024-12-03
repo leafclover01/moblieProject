@@ -13,5 +13,6 @@
         <item>Bắc Ninh</item>
         <!-- Thêm các tỉnh khác -->
     </string-array>
-
+    <string name="loading">Đang tải...</string>
+    <string name="no_orders_found">Không tìm thấy đơn hàng.</string>
 </resources>

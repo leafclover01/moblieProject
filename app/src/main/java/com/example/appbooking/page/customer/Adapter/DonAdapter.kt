@@ -1,4 +1,4 @@
-package com.example.appbooking.Adapter
+package com.example.appbooking.page.customer.Adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -26,9 +26,9 @@ class DonAdapter(
         val view = convertView ?: LayoutInflater.from(context).inflate(resource, parent, false)
 
         // Bind views
-        val tvLoaiPhongDat = view.findViewById<TextView>(R.id.tvLoaiPhongDat)
+//        val tvLoaiPhongDat = view.findViewById<TextView>(R.id.tvLoaiPhongDat)
         val tvMaDon = view.findViewById<TextView>(R.id.tvMaDon)
-        val tvTongSoTien = view.findViewById<TextView>(R.id.tvTongSoTien)
+//        val tvTongSoTien = view.findViewById<TextView>(R.id.tvTongSoTien)
         val btnDanhGia = view.findViewById<Button>(R.id.btnDanhGia)
         val btnChiTiet = view.findViewById<Button>(R.id.btnChiTiet)
 
@@ -36,11 +36,10 @@ class DonAdapter(
         val don = listDon[position]
 
         // Set data to views
-        tvLoaiPhongDat.text = mySQLite.traVeLoaiPhongTuMaDon(don.maDon)
         tvMaDon.text = "Mã đơn: ${don.maDon}"
-
-
 
         return view
     }
+
+
 }

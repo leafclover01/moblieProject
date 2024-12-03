@@ -389,9 +389,9 @@ class MySQLite {
         return  ds
     }
 
-    fun layDuLieuPhongTrong(checkIn: String, checkOut: String, maLoaiPhong: String): ArrayList<Phong> {
-        var ds = ArrayList<Phong>()
-        db.connect().use {conn ->
+      var ds = ArrayList<Phong>()
+        fun layDuLieuPhongTrong(checkIn: String, checkOut: String, maLoaiPhong: String): ArrayList<Phong> {
+            db.connect().use {conn ->
             var sql = """
                 select * from PHONG
                     where ma_phong not in 
@@ -416,8 +416,8 @@ class MySQLite {
                 ))
             }
         }
-        return ds
-    }
+                return ds
+            }
 
     fun layDuLieuCacAnhCuaLoaiPhong(maLoaiPhong: Int): ArrayList<String>{
         var ds = ArrayList<String>()

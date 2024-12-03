@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -33,7 +34,8 @@ import java.util.List;
 public class ThongTinMaGiamGia extends AppCompatActivity {
 
     MySQLite db ;
-    ImageButton imgLoad, imgBack;
+    ImageButton imgLoad;
+    ImageView imgBack;
     Spinner spnMgg;
     ListView lvMgg;
     UuDaiAdapters UuDaiAdapter;
@@ -56,6 +58,7 @@ public class ThongTinMaGiamGia extends AppCompatActivity {
         imgLoad = findViewById(R.id.imgLoad);
         spnMgg = findViewById(R.id.spnMgg);
         lvMgg = findViewById(R.id.lvMagg);
+        imgBack = findViewById(R.id.imgBack);
 
         // Khởi tạo sql
         db = new MySQLite();

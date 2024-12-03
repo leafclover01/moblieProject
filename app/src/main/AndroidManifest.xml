@@ -4,22 +4,30 @@
     <!-- Quyền cần thiết -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-     <uses-permission
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission
         android:name="android.permission.BROADCAST_SMS"
         tools:ignore="BroadcastWithoutPermission,ProtectedPermissions" />
+
     <application
         android:allowBackup="true"
-        android:requestLegacyExternalStorage="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppBooking"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".page.admin.QuanLyDanhGia.Component.XemCacDanhGiaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".page.admin.QuanLyDanhGia.QuanLyDanhGiaActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppBooking" />
         <activity
             android:name=".page.admin.QuanLyMaGiamGia.Component.TaoMaGiamGia"
             android:exported="false" />
@@ -75,18 +83,16 @@
         <activity
             android:name=".page.customer.DetailsTypeRoomActivity"
             android:exported="false" />
-            <activity android:name=".page.customer.PayMentHouse">
-        </activity>
-        <activity android:name=".page.customer.EditCustomerInfoActivity">
-        </activity>
-        <activity android:name=".page.admin.QuanLyDon.RoomDetailDon">
-        </activity>
+        <activity android:name=".page.customer.PayMentHouse" />
+        <activity android:name=".page.customer.EditCustomerInfoActivity" />
+        <activity android:name=".page.admin.QuanLyDon.RoomDetailDon" />
         <activity
             android:name=".page.admin.QuanLyDon.QuanLyDonThanhToan"
             android:exported="false"
             tools:ignore="DuplicateActivity" />
-            <activity
+        <activity
             android:name=".page.customer.ChiTietLoaiPhongActivity"
             android:exported="false" />
     </application>
+
 </manifest>

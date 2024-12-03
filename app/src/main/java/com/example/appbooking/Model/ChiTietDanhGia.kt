@@ -1,7 +1,7 @@
 package com.example.appbooking.Model
 
 import java.io.Serializable
-import java.sql.Date
+import java.util.Date
 
 
 class ChiTietDanhGia : Serializable {
@@ -11,8 +11,8 @@ class ChiTietDanhGia : Serializable {
     var danhGiaSachSe: Int = 0
     var danhGiaNhanVienPhucVu: Int = 0
     var danhGiaTienNghi: Int = 0
-    var moTaChiTiet: String? = null
-    var ngayDanhGia: Date? = null
+    var moTaChiTiet: String = ""
+    var ngayDanhGia: String = ""
 //            ma_danh_gia INTEGER PRIMARY KEY AUTOINCREMENT,
 //            ma_don INTEGER UNIQUE,
 //            ngay_danh_gia DATE,
@@ -27,9 +27,9 @@ class ChiTietDanhGia : Serializable {
     }
 
     constructor(
-        maDanhGia: Int, maDon: Int, ngayDanhGia: Date?, danhGiaChatLuongPhong: Int,
+        maDanhGia: Int, maDon: Int, ngayDanhGia: String, danhGiaChatLuongPhong: Int,
         danhGiaChatLuongDichVu: Int, danhGiaSachSe: Int, danhGiaNhanVienPhucVu: Int,
-        danhGiaTienNghi: Int, moTaChiTiet: String?
+        danhGiaTienNghi: Int, moTaChiTiet: String
     ) {
         this.maDanhGia = maDanhGia
         this.maDon = maDon

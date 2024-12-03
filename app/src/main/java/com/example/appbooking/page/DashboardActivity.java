@@ -51,18 +51,20 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         tvTenUser = headerView.findViewById(R.id.tvTenUser);
         tvEmail = headerView.findViewById(R.id.tvEmail);
         imgAvt = headerView.findViewById(R.id.imgAvt);
-
+//
         SharedPreferences sharedPreferences = this.getSharedPreferences("UserInfo", this.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("userId", -1);
         String ten = sharedPreferences.getString("ten", "");
         String email = sharedPreferences.getString("email", "");
         String hinh = sharedPreferences.getString("hinh", "ic_avt");
-
+//
         tvTenUser.setText(ten);
         tvEmail.setText(email);
+        Toast.makeText(this, hinh, Toast.LENGTH_SHORT).show();
         MySQLite db = new MySQLite();
         String anh = db.getDrawableResourceUrl(this, hinh);
         imgAvt.setImageURI(Uri.parse(anh));
+
 
         // Xử lý insets cho drawer layout
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawer_layout), (v, insets) -> {

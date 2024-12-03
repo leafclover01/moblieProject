@@ -20,7 +20,7 @@
             android:padding="10dp"
             android:background="#fff"
             android:gravity="center_vertical"
-            android:weightSum="3">
+            android:weightSum="6">
 
             <!-- User Avatar -->
             <ImageView
@@ -41,7 +41,7 @@
                 android:textColor="#605be5"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:layout_weight="1"
+                android:layout_weight="4"
                 android:gravity="center"/>
 
             <!-- Logout Button -->
@@ -53,6 +53,7 @@
                 android:textStyle="bold"
                 android:textColor="#605be5"
                 android:backgroundTint="#fff"
+                android:padding="0dp"
                 android:layout_weight="1"
                 android:onClick="onLogoutClick" />
 

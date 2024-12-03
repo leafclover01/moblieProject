@@ -7,6 +7,7 @@ import com.example.appbooking.Model.Don
 import com.example.appbooking.Model.LoaiPhong
 import com.example.appbooking.Model.Phong
 import com.example.appbooking.Model.TaiKhoan
+
 import tech.turso.libsql.Database
 import tech.turso.libsql.Libsql
 import tech.turso.libsql.Row
@@ -23,10 +24,13 @@ class MySQLite {
     var db: Database
     init {
         db = Libsql.open(
-            url = "libsql://booking-haitrn.turso.io",
-            authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3MzI4NDIwMzMsImlkIjoiMDk1NjVhODgtNTRmOS00NzNlLWIyNGEtYmFlZmJlYTlkNzAzIn0.wSCsJk9vlk0TBgZa4ZTKk2Be2ow6_m11FVT0681fR1-VTmpnCpkkS7jnhlh9ANLk94hMrTjitPK1Wd-2iiRCCQ"
+            url = "libsql://booking-hotel-haitrn.turso.io",
+            authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzMyMzE0ODQsImlkIjoiMDgzMTMzOTQtZmM5NS00NTlhLWI1YTktODQ0ODlhMzQ5OTg1In0.MrDrfaRdKQm6-ODnqMHKpsMWRPTQx3DWdvs2SFzJxj8lblklkjnz9Ppg9lbl4DNpY8hDn1eZaRC0Gz4p3yIcAQ"
         )
-
+//        db = Libsql.open(
+//            url = "libsql://booking-haitrn.turso.io",
+//            authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3MzI4NDIwMzMsImlkIjoiMDk1NjVhODgtNTRmOS00NzNlLWIyNGEtYmFlZmJlYTlkNzAzIn0.wSCsJk9vlk0TBgZa4ZTKk2Be2ow6_m11FVT0681fR1-VTmpnCpkkS7jnhlh9ANLk94hMrTjitPK1Wd-2iiRCCQ"
+//        )
     }
     fun insertDataTaiKhoan(username: String, password: String, name: String, email: String, sdt: String, cccd: String, address: String, role: Int, tenAnh: String): String {
         val query = "Select * from TAI_KHOAN where username = '$username';"
@@ -104,6 +108,18 @@ class MySQLite {
         """
             db.connect().execute(sql)
             "Thêm thành công"
+        } catch (e: Exception) {
+            "Thêm không thành công: ${e.message}"
+        }
+    }
+    fun insertDataChiTietDanhGia(maDon: Int, ngayDanhGia: String, phong: Int, sachSe: Int, nVien: Int, tienNghi: Int, moTa: String): String {
+        return try {
+            val sql = """
+            INSERT INTO CHI_TIET_DANH_GIA (ma_danh_gia, ma_don, ngay_danh_gia, danh_gia_chat_luong_phong, danh_gia_sach_se, danh_gia_nhan_vien_phuc_vu, danh_gia_tien_nghi, mo_ta_chi_tiet)
+            VALUES (NULL, $maDon, '$ngayDanhGia', $phong, $sachSe, $nVien, $tienNghi ,'$moTa');
+        """
+            db.connect().execute(sql)
+            "Đánh giá thành công"
         } catch (e: Exception) {
             "Thêm không thành công: ${e.message}"
         }
@@ -281,6 +297,7 @@ class MySQLite {
         }
         return taiKhoan
     }
+
 
 
     fun layDanhSachTaiKhoan(): ArrayList<TaiKhoan>{

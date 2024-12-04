@@ -1,25 +1,27 @@
 package com.example.appbooking.page.admin.QuanLyDon;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.appbooking.Model.Phong;
-import com.example.appbooking.Model.Thue;
 import com.example.appbooking.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class PhongAdapter extends ArrayAdapter<Object> {
+public class PhongAdapter extends ArrayAdapter<HashMap<String, String>> {
 
-    private Activity context;
-    private int resource;
-    private ArrayList<Object> dataList;
+    Activity context;
+    int resource;
+    ArrayList<HashMap<String, String>> dataList;
 
-    public PhongAdapter(Activity context, int resource, ArrayList<Object> dataList) {
+    public PhongAdapter(Activity context, int resource, ArrayList<HashMap<String, String>> dataList) {
         super(context, resource, dataList);
         this.context = context;
         this.resource = resource;
@@ -27,48 +29,62 @@ public class PhongAdapter extends ArrayAdapter<Object> {
     }
 
     @Override
-    public int getItemViewType(int position) {
-        Object item = dataList.get(position);
-        return (item instanceof Phong) ? 0 : 1;  // Return 0 for Phong and 1 for Thue
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return 2;  // We have two view types: Phong and Thue
-    }
-
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        int type = getItemViewType(position);
-        View customView;
+        ViewHolder holder;
 
-        // Recycle the view if it's available (use convertView)
         if (convertView == null) {
-            customView = inflater.inflate(R.layout.ad_item_admin_quan_ly_don, parent, false);
+            holder = new ViewHolder();
+            convertView = inflater.inflate(resource, parent, false);
+
+            // Ánh xạ các view
+            holder.tenPhong = convertView.findViewById(R.id.tenPhong);
+            holder.username = convertView.findViewById(R.id.username); // User ID
+            holder.ad_btnEditRoom = convertView.findViewById(R.id.ad_btnEditRoom); // Ánh xạ nút "Xem Chi Tiết"
+
+            convertView.setTag(holder);
         } else {
-            customView = convertView;
+            // Tái sử dụng view
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        if (type == 0) {  // Phong
-            Phong phong = (Phong) dataList.get(position);
-            ((TextView) customView.findViewById(R.id.maPhong)).setText(String.valueOf(phong.getMaPhong()));
-            ((TextView) customView.findViewById(R.id.tenPhong)).setText(phong.getViTri());
-            ((TextView) customView.findViewById(R.id.soLuong)).setText(String.valueOf(phong.getMaLoaiPhong()));
-        } else {  // Thue
-            Thue thue = (Thue) dataList.get(position);
-            ((TextView) customView.findViewById(R.id.maPhong)).setText(String.valueOf(thue.getMaPhong()));
-            ((TextView) customView.findViewById(R.id.tenPhong)).setText("Đã thuê");  // Display status for rented rooms
-            ((TextView) customView.findViewById(R.id.soLuong)).setText(thue.getCheckOut().toString());  // Display check-out time
+        // Lấy dữ liệu từ danh sách
+        try {
+            HashMap<String, String> item = dataList.get(position);
+            String tenPhong = item.get("vi_tri"); // Tên phòng
+            String username = item.get("username"); // Tên người dùng
+            final String maPhong = item.get("ma_phong"); // Mã phòng (ID phòng)
+
+            holder.tenPhong.setText(tenPhong);
+            holder.username.setText(username);
+
+            // Đặt sự kiện click cho nút "Xem Chi Tiết"
+            holder.ad_btnEditRoom.setOnClickListener(v -> {
+                // Tạo Intent để mở activity chi tiết phòng
+                Intent intent = new Intent(context, RoomDetailDon.class);
+                intent.putExtra("MA_PHONG", maPhong); // Truyền mã phòng vào Intent
+                context.startActivity(intent);
+            });
+
+        } catch (Exception e) {
+            Toast.makeText(context, "Lỗi hiển thị phòng", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
 
-        return customView;
+        return convertView;
     }
 
-    public void updateData(ArrayList<Object> newData) {
-        // Clear old data and update with new data
+    // Phương thức cập nhật dữ liệu và làm mới ListView
+    public void updateData(ArrayList<HashMap<String, String>> newData) {
         dataList.clear();
         dataList.addAll(newData);
         notifyDataSetChanged();
+    }
+
+    // ViewHolder để lưu trữ các view con
+    private static class ViewHolder {
+        TextView tenPhong;
+        TextView username;
+        Button ad_btnEditRoom; // Khai báo Button cho nút "Xem Chi Tiết"
     }
 }

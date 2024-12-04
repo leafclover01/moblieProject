@@ -473,6 +473,120 @@ class MySQLite {
         return ds
     }
 
+    fun layDuLieuPhongCoNguoiDatTuMaPhong(checkIn: String, checkOut: String, maLoaiPhong: Int): ArrayList<HashMap<String, Any>> {
+        val ds = ArrayList<HashMap<String, Any>>()
+
+        db.connect().use { conn ->
+            val sql = """
+        SELECT 
+            P.ma_phong, 
+            P.vi_tri, 
+            P.ma_loai_phong, 
+            D.ma_don, 
+            D.check_in, 
+            T.check_out, 
+            N.username, 
+            N.id
+        FROM PHONG AS P
+        LEFT JOIN THUE AS T ON P.ma_phong = T.ma_phong
+        LEFT JOIN DON AS D ON D.ma_don = T.ma_don
+        LEFT JOIN QUAN_LY AS Q ON Q.ma_don = D.ma_don
+        LEFT JOIN TAI_KHOAN AS N ON N.id = D.ma_nguoi_dat
+        WHERE (
+            (D.check_in <= '$checkOut' AND T.check_out >= '$checkIn')
+            OR
+            (Q.check_in_thuc_te <= '$checkOut' AND Q.check_out_thuc_te >= '$checkIn')
+        )
+        AND ma_loai_phong = $maLoaiPhong
+        GROUP BY P.ma_phong
+        """
+
+            val rows = conn.query(sql)
+            rows.forEach { row ->
+                val resultMap = HashMap<String, Any>()
+
+                val maPhong = row.get(0).toString().toInt()
+                val viTri = row.get(1).toString()
+                val maLoaiPhong = row.get(2).toString().toInt()
+                val maDon = row.get(3).toString()
+                val checkInDb = row.get(4).toString()
+                val checkOutDb = row.get(5).toString()
+                val username = row.get(6).toString()
+                val id = row.get(7).toString()
+
+                resultMap["ma_phong"] = maPhong
+                resultMap["vi_tri"] = viTri
+                resultMap["ma_loai_phong"] = maLoaiPhong
+                resultMap["ma_don"] = maDon
+                resultMap["check_in"] = checkInDb
+                resultMap["check_out"] = checkOutDb
+                resultMap["username"] = username
+                resultMap["id"] = id
+
+                    ds.add(resultMap)
+            }
+        }
+
+        return ds
+    }
+
+
+    fun layDuLieuPhongCoNguoiDat(checkIn: String, checkOut: String): ArrayList<HashMap<String, Any>> {
+        val ds = ArrayList<HashMap<String, Any>>()
+
+        db.connect().use { conn ->
+            val sql = """
+        SELECT 
+            P.ma_phong, 
+            P.vi_tri, 
+            P.ma_loai_phong, 
+            D.ma_don, 
+            D.check_in, 
+            T.check_out, 
+            N.username, 
+            N.id
+        FROM PHONG AS P
+        LEFT JOIN THUE AS T ON P.ma_phong = T.ma_phong
+        LEFT JOIN DON AS D ON D.ma_don = T.ma_don
+        LEFT JOIN QUAN_LY AS Q ON Q.ma_don = D.ma_don
+        LEFT JOIN TAI_KHOAN AS N ON N.id = D.ma_nguoi_dat
+        WHERE (
+            (D.check_in <= '$checkOut' AND T.check_out >= '$checkIn')
+            OR
+            (Q.check_in_thuc_te <= '$checkOut' AND Q.check_out_thuc_te >= '$checkIn')
+        )
+        GROUP BY P.ma_phong
+        """
+
+            conn.query(sql).forEach { row ->
+                val maPhong = row.get(0).toString().toInt()
+                val viTri = row.get(1).toString()
+                val maLoaiPhong = row.get(2).toString().toInt()
+                val maDon = row.get(3).toString()
+                val checkInDb = row.get(4).toString()
+                val checkOutDb = row.get(5).toString()
+                val username = row.get(6).toString()
+                val id = row.get(7).toString()
+
+                val resultMap = HashMap<String, Any>().apply {
+                    put("ma_phong", maPhong)
+                    put("vi_tri", viTri)
+                    put("ma_loai_phong", maLoaiPhong)
+                    put("ma_don", maDon)
+                    put("check_in", checkInDb)
+                    put("check_out", checkOutDb)
+                    put("username", username)
+                    put("id", id)
+                }
+
+                    ds.add(resultMap)
+            }
+        }
+
+        return ds
+    }
+
+
     fun layDuLieuCacAnhCuaLoaiPhong(maLoaiPhong: Int): ArrayList<String>{
         var ds = ArrayList<String>()
         db.connect().use {conn ->

@@ -90,9 +90,9 @@
             android:name=".page.admin.QuanLyDon.QuanLyDonThanhToan"
             android:exported="false"
             tools:ignore="DuplicateActivity" />
-        <activity
-            android:name=".page.customer.ChiTietLoaiPhongActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".page.customer.ChiTietLoaiPhongActivity"-->
+<!--            android:exported="false" />-->
     </application>
 
 </manifest>

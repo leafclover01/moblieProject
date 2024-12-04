@@ -26,7 +26,7 @@
             <!-- TextView hiển thị tên phòng -->
             <TextView
                 android:text="Phòng 101"
-                android:id="@+id/maPhong"
+                android:id="@+id/tenPhong"
                 android:layout_marginStart="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -34,21 +34,10 @@
                 android:textStyle="bold"
                 android:textSize="22sp" />
 
-            <!-- TextView hiển thị trạng thái phòng -->
-            <TextView
-                android:text="Đang sử dụng"
-                android:id="@+id/tenPhong"
-                android:layout_marginStart="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:textStyle="bold"
-                android:textSize="16sp" />
-
             <!-- TextView hiển thị thông tin chi tiết phòng -->
             <TextView
                 android:text="Loại phòng: "
-                android:id="@+id/soLuong"
+                android:id="@+id/username"
                 android:layout_marginStart="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

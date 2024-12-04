@@ -17,7 +17,7 @@
             android:orientation="horizontal">
             <ImageButton
                 android:id="@+id/back"
-                android:background="#B6A1DA"
+                android:background="@color/gradStart"
                 android:src="@drawable/ad_back_left"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -27,18 +27,19 @@
             android:layout_marginTop="10dp"
             android:textSize="30dp"
             android:textAlignment="center"
-            android:textColor="#8496FD"
+            android:textColor="@color/brandBlue10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nhập Thông tin loại Phòng"/>
         <TextView
             android:layout_marginTop="40dp"
             android:textSize="18sp"
-            android:textColor="#165F80"
+            android:textColor="@color/green10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nhập Thông tin loại Phòng"/>
         <EditText
+            android:textColor="@color/light"
             android:hint="Nhập tên"
             android:id="@+id/ad_rt_ten"
             android:layout_width="match_parent"
@@ -47,11 +48,12 @@
         <TextView
             android:layout_marginTop="20dp"
             android:textSize="18sp"
-            android:textColor="#165F80"
+            android:textColor="@color/green10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nhập Thông tin giá"/>
         <EditText
+            android:textColor="@color/light"
             android:hint="Nhập giá"
             android:inputType="number"
             android:id="@+id/ad_rt_gia"
@@ -64,12 +66,13 @@
             android:orientation="horizontal">
             <TextView
                 android:textSize="18sp"
-                android:textColor="#165F80"
+                android:textColor="@color/green10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nhập số lượng người tối đa"
                 android:layout_weight="1"/>
             <EditText
+                android:textColor="@color/light"
                 android:hint="Số lượng"
                 android:inputType="number"
                 android:id="@+id/ad_rt_sl"
@@ -79,11 +82,12 @@
         <TextView
             android:layout_marginTop="20dp"
             android:textSize="18sp"
-            android:textColor="#165F80"
+            android:textColor="@color/green10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nhập Thông tin mô tả chi tiết"/>
         <EditText
+            android:textColor="@color/light"
             android:id="@+id/ad_rt_mttt"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -92,11 +96,12 @@
         <TextView
             android:layout_marginTop="20dp"
             android:textSize="18sp"
-            android:textColor="#165F80"
+            android:textColor="@color/green10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nhập Thông tin mô tả chi tiết"/>
         <EditText
+            android:textColor="@color/light"
             android:id="@+id/ad_rt_mt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -34,7 +34,6 @@ class HistoryFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_history, container, false)
 
-        // Initialize the views
         val tvError = view.findViewById<TextView>(R.id.tvError)
         val lvDon = view.findViewById<ListView>(R.id.lvDon)
 
@@ -72,7 +71,7 @@ class HistoryFragment : Fragment() {
                 val donAdapter = DonAdapter(requireContext(), R.layout.user_item_history, listDon)
                 lvDon.adapter = donAdapter
             }
-            // Re-enable interactions after the data is loaded
+
             lvDon.isClickable = true
             lvDon.isEnabled = true
         }, 350)  // Adjust the delay time as needed

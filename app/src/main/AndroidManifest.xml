@@ -6,8 +6,11 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission
         android:name="android.permission.BROADCAST_SMS"
         tools:ignore="BroadcastWithoutPermission,ProtectedPermissions" />
+
 
     <application
         android:allowBackup="true"
@@ -15,6 +18,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -31,6 +35,9 @@
             android:name=".page.admin.QuanLyDanhGia.QuanLyDanhGiaActivity"
             android:exported="false"
             android:theme="@style/Theme.AppBooking" />
+            <activity
+            android:name=".page.admin.QuanLyMaGiamGia.Component.SuaMaGiamGia"
+            android:exported="false" />
         <activity
             android:name=".page.admin.QuanLyMaGiamGia.Component.TaoMaGiamGia"
             android:exported="false" />
@@ -93,9 +100,10 @@
             android:name=".page.admin.QuanLyDon.QuanLyDonThanhToan"
             android:exported="false"
             tools:ignore="DuplicateActivity" />
-<!--        <activity-->
-<!--            android:name=".page.customer.ChiTietLoaiPhongActivity"-->
-<!--            android:exported="false" />-->
+<activity
+            android:name=".page.customer.ChiTietLoaiPhongActivity"
+            android:exported="false" />
     </application>
+
 
 </manifest>

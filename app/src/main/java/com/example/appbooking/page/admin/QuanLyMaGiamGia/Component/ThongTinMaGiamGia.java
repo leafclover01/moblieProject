@@ -63,20 +63,14 @@ public class ThongTinMaGiamGia extends AppCompatActivity {
         // Khởi tạo sql
         db = new MySQLite();
 
-        // khởi tạo arlist
+        // khởi tạo arrlist
         listMaUD = new ArrayList<>();
         listMaUD = getall("SELECT * FROM UU_DAI");
 
 
-        // khỏia tạo adapter
+        // khởi tạo adapter
         UuDaiAdapter = new UuDaiAdapters(this, R.layout.lv_magiamgia, listMaUD);
         lvMgg.setAdapter(UuDaiAdapter);
-
-        // Tạo danh sách spinner
-        List<String> filler = new ArrayList<>();
-        filler.add("Tất cả");
-        filler.add("Hoạt Động");
-        filler.add("Hết Hạn");
 
         // back
         imgBack.setOnClickListener(new View.OnClickListener() {
@@ -86,26 +80,64 @@ public class ThongTinMaGiamGia extends AppCompatActivity {
             }
         });
 
+        // Tạo danh sách spinner
+        List<String> filler = new ArrayList<>();
+        filler.add("Tất cả");
+        filler.add("Hoạt Động");
+        filler.add("Hết Hạn");
+
         // Tạo ArrayAdapter cho Spinner
         ArrayAdapter<String> filterAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, filler);
         filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnMgg.setAdapter(filterAdapter);
 
         // Thiết lập sự kiện cho Spinner
+        // Thiết lập sự kiện cho Spinner
         spnMgg.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // TODO : Thêm cuối cùng
+                switch (position) {
+                    case 0: // "Tất cả"
+                        listMaUD.clear();
+                        listMaUD.addAll(getall("SELECT * FROM UU_DAI"));
+                        break;
+
+                    case 1:
+                        listMaUD.clear();
+                        listMaUD.addAll(getall("SELECT * FROM UU_DAI WHERE ngay_het_han >= strftime('%Y/%m/%d %H:%M', datetime('now', '+7 hours'))"));
+                        break;
+
+                    case 2:
+                        listMaUD.clear();
+                        listMaUD.addAll(getall("SELECT * FROM UU_DAI WHERE ngay_het_han < strftime('%Y/%m/%d %H:%M', datetime('now', '+7 hours'))"));
+                        break;
+                }
+                UuDaiAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                // Không làm gì nếu không có gì được chọn
             }
         });
 
 
+
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshData();
+    }
+
+    private void refreshData() {
+        listMaUD.clear();
+        listMaUD.addAll(getall("SELECT * FROM UU_DAI"));
+        UuDaiAdapter.notifyDataSetChanged();
+    }
+
+
 
     // lay du lieu
     ArrayList<UuDai> getall(String sql){

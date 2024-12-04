@@ -1,7 +1,11 @@
 package com.example.appbooking.page.admin.QuanLyMaGiamGia.Adapter;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +22,12 @@ import androidx.appcompat.app.AlertDialog;
 import com.example.appbooking.Database.MySQLite;
 import com.example.appbooking.Model.UuDai;
 import com.example.appbooking.R;
+import com.example.appbooking.page.admin.QuanLyMaGiamGia.Component.SuaMaGiamGia;
+import com.example.appbooking.page.admin.QuanLyMaGiamGia.Component.TaoMaGiamGia;
+import com.example.appbooking.page.admin.QuanLyMaGiamGia.Component.ThongTinMaGiamGia;
+import com.example.appbooking.page.admin.QuanLyMaGiamGia.QuanLyMaGiamGia;
+
+import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -52,16 +62,17 @@ public class UuDaiAdapters extends ArrayAdapter {
 
         TextView tvTenMa = customView.findViewById(R.id.tvTenMaGG);
         TextView tvGiam = customView.findViewById(R.id.tvGiamGia);
+        TextView tvMaGiamGia = customView.findViewById(R.id.tvMaGiamGia);
         TextView tvTrangThai = customView.findViewById(R.id.tvTrangThai);
         ImageView imEdit = customView.findViewById(R.id.ivEdit);
-        ImageView imDelete = customView.findViewById(R.id.ivDelete);
+        ImageView imCopy = customView.findViewById(R.id.ivCopy);
 
         UuDai uuDai = this.listMaUuDai.get(position);
 
         tvTenMa.setText(uuDai.getTenMa());
         tvGiam.setText(uuDai.getGiam() + "");
+        tvMaGiamGia.setText(uuDai.getMaUuDai() +"");
 
-        // TODO : xu ly trang thai
         if (uuDai.getNgayHetHan() != null) {
             Date now = new Date();
             if (uuDai.getNgayHetHan().compareTo(now) <= 0) {
@@ -81,39 +92,31 @@ public class UuDaiAdapters extends ArrayAdapter {
         imEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO : xu ly
+                Intent suaMa = new Intent(context, SuaMaGiamGia.class);
+                suaMa.putExtra("id", uuDai.getMaUuDai());
+                context.startActivity(suaMa);
             }
         });
 
-        // Xử lý xóa
-        imDelete.setOnClickListener(new View.OnClickListener() {
+        // Xử lý Copy
+        imCopy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder dialogthoat = new AlertDialog.Builder(getContext());
-                dialogthoat.setTitle("Xóa mã giảm giá ? ");
-                dialogthoat.setMessage("Vui lòng chọn :");
-                dialogthoat.setPositiveButton("có", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        try{
-                            db.updateSQL("DELETE FROM UU_DAI WHERE id = " + uuDai.getMaUuDai() + ";");
-                            ArrayList<UuDai> list = getall("SELECT * FROM UU_DAI;");
-                            updateData(list);
+                // Lấy tên mã giảm giá từ đối tượng UuDai
+                String maGiamGia = uuDai.getMaUuDai() + "";
 
-                        }catch(Exception e){
-                            Toast.makeText(context, "Lỗi khi xóa dữ liệu", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                dialogthoat.setNegativeButton("không", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                dialogthoat.create().show();
+                // Tạo ClipboardManager
+                ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+
+                // Tạo ClipData chứa mã giảm giá
+                ClipData clipData = ClipData.newPlainText("Mã Giảm Giá", maGiamGia);
+                // Đưa dữ liệu vào Clipboard
+                clipboardManager.setPrimaryClip(clipData);
+                Toast.makeText(context, "Đã sao chép mã: " + maGiamGia, Toast.LENGTH_SHORT).show();
             }
         });
+
+
 
         return  customView;
     }

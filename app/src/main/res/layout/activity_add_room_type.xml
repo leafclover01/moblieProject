@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:text="Nhập Thông tin loại Phòng"/>
         <EditText
+            android:textColor="@color/light"
             android:hint="Nhập tên"
             android:id="@+id/ad_rt_ten"
             android:layout_width="match_parent"
@@ -52,6 +53,7 @@
             android:layout_height="wrap_content"
             android:text="Nhập Thông tin giá"/>
         <EditText
+            android:textColor="@color/light"
             android:hint="Nhập giá"
             android:inputType="number"
             android:id="@+id/ad_rt_gia"
@@ -70,6 +72,7 @@
                 android:text="Nhập số lượng người tối đa"
                 android:layout_weight="1"/>
             <EditText
+                android:textColor="@color/light"
                 android:hint="Số lượng"
                 android:inputType="number"
                 android:id="@+id/ad_rt_sl"
@@ -84,6 +87,7 @@
             android:layout_height="wrap_content"
             android:text="Nhập Thông tin mô tả chi tiết"/>
         <EditText
+            android:textColor="@color/light"
             android:id="@+id/ad_rt_mttt"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -97,6 +101,7 @@
             android:layout_height="wrap_content"
             android:text="Nhập Thông tin mô tả chi tiết"/>
         <EditText
+            android:textColor="@color/light"
             android:id="@+id/ad_rt_mt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

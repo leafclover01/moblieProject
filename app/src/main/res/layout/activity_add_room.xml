@@ -53,6 +53,7 @@
                 android:text="Vị trí phòng"
                 android:layout_weight="1"/>
             <EditText
+                android:textColor="@color/globalBackgroundDefault"
                 android:hint="Nhập vị trí phòng"
                 android:id="@+id/ad_r_viTri"
                 android:layout_width="match_parent"

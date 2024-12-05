@@ -18,27 +18,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TienNghiAdapter extends RecyclerView.Adapter<TienNghiAdapter.TienNghiViewHolder> {
+    private ArrayList<TienNghi> dsTienNghi;
 
-    private List<TienNghi> dsTienNghi;
-
-    public TienNghiAdapter(List<TienNghi> dsTienNghi) {
+    public TienNghiAdapter(ArrayList<TienNghi> dsTienNghi) {
         this.dsTienNghi = dsTienNghi;
     }
 
     @NonNull
     @Override
     public TienNghiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_tien_nghi, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tien_nghi, parent, false);
         return new TienNghiViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TienNghiViewHolder holder, int position) {
         TienNghi tienNghi = dsTienNghi.get(position);
+        // Gán dữ liệu vào view (vd: tên tiện nghi, mô tả, icon...)
         holder.tenTienNghi.setText(tienNghi.getTenTienNghi());
-        // Nếu bạn có hình ảnh dưới dạng URL hoặc resource, xử lý tại đây
-        // holder.iconTienNghi.setImageResource(...);
+        holder.moTaTienNghi.setText(tienNghi.getIc_mo_ta());
+
+        // Nếu có icon tiện nghi, bạn có thể tải ảnh từ URL hoặc drawable ở đây
+        // Glide.with(holder.iconTienNghi.getContext())
+        //      .load(tienNghi.getIcMoTa())
+        //      .into(holder.iconTienNghi);
     }
 
     @Override
@@ -47,14 +50,15 @@ public class TienNghiAdapter extends RecyclerView.Adapter<TienNghiAdapter.TienNg
     }
 
     public static class TienNghiViewHolder extends RecyclerView.ViewHolder {
+        public TextView tenTienNghi;
+        public TextView moTaTienNghi;
+        // public ImageView iconTienNghi;
 
-        TextView tenTienNghi;
-        ImageView iconTienNghi;
-
-        public TienNghiViewHolder(@NonNull View itemView) {
+        public TienNghiViewHolder(View itemView) {
             super(itemView);
             tenTienNghi = itemView.findViewById(R.id.tenTienNghi);
-            iconTienNghi = itemView.findViewById(R.id.iconTienNghi);
+//            moTaTienNghi = itemView.findViewById(R.id.moTaTienNghi);
+            // iconTienNghi = itemView.findViewById(R.id.iconTienNghi);
         }
     }
 }

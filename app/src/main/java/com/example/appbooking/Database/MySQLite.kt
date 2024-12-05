@@ -1,44 +1,39 @@
 package com.example.appbooking.Database
 
+
 import android.content.Context
-import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
-import com.example.appbooking.Model.ChiTietUuDai
-import com.example.appbooking.Model.TaiKhoan
+import android.util.Log
+import com.example.appbooking.Model.Don
 import com.example.appbooking.Model.LoaiPhong
 import com.example.appbooking.Model.Phong
-import com.example.appbooking.Model.Don
+//import com.example.appbooking.Model.RoomRating
+import com.example.appbooking.Model.TaiKhoan
 import com.example.appbooking.Model.TienNghi
+
 import tech.turso.libsql.Database
 import tech.turso.libsql.Libsql
 import tech.turso.libsql.Row
-
-import java.util.Date
-
 import java.text.SimpleDateFormat
-import java.util.ArrayList
-import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.temporal.ChronoUnit
+import java.util.Date
 import java.util.Locale
-
-
-import kotlin.time.Duration.Companion.days
 
 class MySQLite {
     var db: Database
-
     init {
         db = Libsql.open(
             url = "libsql://booking-hotel-haitrn.turso.io",
-            authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzI2MTkyMTksImlkIjoiMDgzMTMzOTQtZmM5NS00NTlhLWI1YTktODQ0ODlhMzQ5OTg1In0.WjpH3E9Kj1zJ2EjDecqib53VpjbGBe1ynstH9Iorvonqo8jqfKvNLYb7Lpa9rk_2CGnaZZqAjotpFDKvPzuMBg"
+            authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzMyMzE0ODQsImlkIjoiMDgzMTMzOTQtZmM5NS00NTlhLWI1YTktODQ0ODlhMzQ5OTg1In0.MrDrfaRdKQm6-ODnqMHKpsMWRPTQx3DWdvs2SFzJxj8lblklkjnz9Ppg9lbl4DNpY8hDn1eZaRC0Gz4p3yIcAQ"
         )
+//        db = Libsql.open(
+//            url = "libsql://booking-haitrn.turso.io",
+//            authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3MzI4NDIwMzMsImlkIjoiMDk1NjVhODgtNTRmOS00NzNlLWIyNGEtYmFlZmJlYTlkNzAzIn0.wSCsJk9vlk0TBgZa4ZTKk2Be2ow6_m11FVT0681fR1-VTmpnCpkkS7jnhlh9ANLk94hMrTjitPK1Wd-2iiRCCQ"
+//        )
     }
-
     fun insertDataTaiKhoan(username: String, password: String, name: String, email: String, sdt: String, cccd: String, address: String, role: Int, tenAnh: String): String {
         val query = "Select * from TAI_KHOAN where username = '$username';"
         val rows = db.connect().query(query)
@@ -65,11 +60,11 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-    fun insertDataUuDai(maNhanVien: Int, ngayBatDau: String, ngayHetHan: String, giam: Double, dieuKienVeGia: Int): String {
+    fun insertDataUuDai(maNhanVien: Int, tenMa: String, ngayBatDau: String, ngayHetHan: String, giam: Double, dieuKienVeGia: Int): String {
         return try {
             val sql = """
-            INSERT INTO UU_DAI (ma_uu_dai, ma_nhan_vien, ngay_bat_dau, ngay_het_han, giam, dieu_kien_ve_gia)
-            VALUES (null, $maNhanVien, '$ngayBatDau', '$ngayHetHan', '$giam', '$dieuKienVeGia');
+        INSERT INTO UU_DAI (ma_nhan_vien, ma_uu_dai, ten_ma, ngay_bat_dau, ngay_het_han, giam, dieu_kien_ve_gia)
+        VALUES ($maNhanVien, null, '$tenMa', '$ngayBatDau', '$ngayHetHan', $giam, $dieuKienVeGia);
         """
             db.connect().query(sql)
             "Thêm thành công"
@@ -115,6 +110,18 @@ class MySQLite {
         """
             db.connect().execute(sql)
             "Thêm thành công"
+        } catch (e: Exception) {
+            "Thêm không thành công: ${e.message}"
+        }
+    }
+    fun insertDataChiTietDanhGia(maDon: Int, ngayDanhGia: String, phong: Int, sachSe: Int, nVien: Int, tienNghi: Int, moTa: String): String {
+        return try {
+            val sql = """
+            INSERT INTO CHI_TIET_DANH_GIA (ma_danh_gia, ma_don, ngay_danh_gia, danh_gia_chat_luong_phong, danh_gia_sach_se, danh_gia_nhan_vien_phuc_vu, danh_gia_tien_nghi, mo_ta_chi_tiet)
+            VALUES (NULL, $maDon, '$ngayDanhGia', $phong, $sachSe, $nVien, $tienNghi ,'$moTa');
+        """
+            db.connect().execute(sql)
+            "Đánh giá thành công"
         } catch (e: Exception) {
             "Thêm không thành công: ${e.message}"
         }
@@ -189,7 +196,7 @@ class MySQLite {
                         """
                 val rows = conn.query(sql1)
                 rows.forEach { row ->
-                        is_ma_don = row.get(0).toString().toInt()
+                    is_ma_don = row.get(0).toString().toInt()
                 }
             }
 
@@ -247,6 +254,54 @@ class MySQLite {
         }
         return taiKhoan
     }
+    fun getTaiKhoantheoCCCD(cccd: String): TaiKhoan{
+        var taiKhoan = TaiKhoan()
+        db.connect().use { conn ->
+            val sql = "SELECT * FROM TAI_KHOAN WHERE cccd='$cccd';"
+            val rows = conn.query(sql)
+            rows.forEach { row ->
+                taiKhoan = TaiKhoan(
+                    row.get(0).toString().toInt(),
+                    row.get(8).toString().toInt(),
+                    row.get(1).toString(),
+                    row.get(2).toString(),
+                    row.get(4).toString(),
+                    row.get(7).toString(),
+                    row.get(5).toString(),
+                    row.get(6).toString(),
+                    row.get(3).toString(),
+                    row.get(9).toString()
+                )
+            }
+        }
+        return taiKhoan
+    }
+
+    fun getTaiKhoantheoSDT(sdt: String): TaiKhoan {
+        var taiKhoan = TaiKhoan()
+        db.connect().use { conn ->
+            val sql = "SELECT * FROM TAI_KHOAN WHERE cccd='$sdt';"
+            val rows = conn.query(sql)
+            rows.forEach { row ->
+                taiKhoan = TaiKhoan(
+                    row.get(0).toString().toInt(),
+                    row.get(8).toString().toInt(),
+                    row.get(1).toString(),
+                    row.get(2).toString(),
+                    row.get(4).toString(),
+                    row.get(7).toString(),
+                    row.get(5).toString(),
+                    row.get(6).toString(),
+                    row.get(3).toString(),
+                    row.get(9).toString()
+                )
+            }
+        }
+        return taiKhoan
+    }
+
+
+
     fun layDanhSachTaiKhoan(): ArrayList<TaiKhoan>{
         var list = ArrayList<TaiKhoan>()
         db.connect().use { conn ->
@@ -306,7 +361,7 @@ class MySQLite {
             .toFormatter()
 
         return LocalDateTime.parse(dateTime, inputFormatter)
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
     }
 
@@ -390,7 +445,6 @@ class MySQLite {
         return  ds
     }
 
-
     fun layDuLieuPhongKhongCoNguoiDat(checkIn: String, checkOut: String, maLoaiPhong: Int): ArrayList<Phong> {
         var ds = ArrayList<Phong>()
         db.connect().use {conn ->
@@ -420,65 +474,7 @@ class MySQLite {
         }
         return ds
     }
-//    fun getThongKe(): ArrayList<RoomRating> {
-//        var arr = ArrayList<RoomRating>()
-//        db.connect().use { conn ->
-//            val sql = """
-//                SELECT
-//                    L.ma_loai_phong,
-//                    L.ten,
-//                    COALESCE(AVG(DG.danh_gia_sach_se), 0) AS avg_danh_gia_sach_se,
-//                    COALESCE(AVG(DG.danh_gia_chat_luong_phong), 0) AS avg_danh_gia_chat_luong_phong,
-//                    COALESCE(AVG(DG.danh_gia_nhan_vien_phuc_vu), 0) AS avg_danh_gia_nhan_vien_phuc_vu,
-//                    COALESCE(AVG(DG.danh_gia_tien_nghi), 0) AS avg_danh_gia_tien_nghi
-//                FROM CHI_TIET_DANH_GIA AS DG
-//                RIGHT JOIN DON AS D ON D.ma_don = DG.ma_don
-//                JOIN THUE AS T ON D.ma_don = T.ma_don
-//                JOIN PHONG AS P ON P.ma_phong = T.ma_phong
-//                JOIN LOAI_PHONG AS L ON L.ma_loai_phong = P.ma_loai_phong
-//                GROUP BY L.ma_loai_phong, L.ten;
-//            """
-//            val rows = conn.query(sql)
-//            rows.forEach { row ->
-//                arr.add(
-//                    RoomRating(
-//                        row.get(0).toString(),
-//                        row.get(1).toString(),
-//                        row.get(2).toString().toFloat(),
-//                        row.get(3).toString().toFloat(),
-//                        row.get(4).toString().toFloat(),
-//                        row.get(5).toString().toFloat()
-//                    )
-//                )
-//            }
-//        }
-//        return arr
-//    }
 
-
-    fun layDuLieuTienNghi(maLoaiPhong: Int): ArrayList<TienNghi> {
-        val dsTienNghi = ArrayList<TienNghi>()
-        db.connect().use { conn ->
-            val sql = """
-            SELECT TN.ma_tien_nghi, TN.ten_tien_nghi, TN.ic_mo_ta
-            FROM LOAI_PHONG AS L
-            JOIN CO_TIEN_NGHI AS C ON L.ma_loai_phong = C.ma_loai_phong
-            JOIN TIEN_NGHI AS TN ON C.ma_tien_nghi = TN.ma_tien_nghi
-            WHERE L.ma_loai_phong = $maLoaiPhong;
-        """
-            val rows = conn.query(sql)
-            rows.forEach { row ->
-                dsTienNghi.add(
-                    TienNghi(
-                        row.get(2).toString(),//hinh
-                        row.get(1).toString(),// ten
-                        row.get(0).toString().toInt() //ma
-                    )
-                )
-            }
-        }
-        return dsTienNghi
-    }
     fun layDuLieuCacAnhCuaLoaiPhong(maLoaiPhong: Int): ArrayList<String>{
         var ds = ArrayList<String>()
         db.connect().use {conn ->
@@ -530,12 +526,102 @@ class MySQLite {
         return ds
     }
 
+
     fun parseDate(dateStr: String): Date? {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
         return dateFormat.parse(dateStr)
     }
+//    fun getThongKe(): ArrayList<RoomRating> {
+//        var arr = ArrayList<RoomRating>()
+//        db.connect().use { conn ->
+//            val sql = """
+//                SELECT
+//                    L.ma_loai_phong,
+//                    L.ten,
+//                    COALESCE(AVG(DG.danh_gia_sach_se), 0) AS avg_danh_gia_sach_se,
+//                    COALESCE(AVG(DG.danh_gia_chat_luong_phong), 0) AS avg_danh_gia_chat_luong_phong,
+//                    COALESCE(AVG(DG.danh_gia_nhan_vien_phuc_vu), 0) AS avg_danh_gia_nhan_vien_phuc_vu,
+//                    COALESCE(AVG(DG.danh_gia_tien_nghi), 0) AS avg_danh_gia_tien_nghi
+//                FROM CHI_TIET_DANH_GIA AS DG
+//                RIGHT JOIN DON AS D ON D.ma_don = DG.ma_don
+//                JOIN THUE AS T ON D.ma_don = T.ma_don
+//                JOIN PHONG AS P ON P.ma_phong = T.ma_phong
+//                JOIN LOAI_PHONG AS L ON L.ma_loai_phong = P.ma_loai_phong
+//                GROUP BY L.ma_loai_phong, L.ten;
+//            """
+//            val rows = conn.query(sql)
+//            rows.forEach { row ->
+//                arr.add(
+//                    RoomRating(
+//                        row.get(0).toString(),
+//                        row.get(1).toString(),
+//                        row.get(2).toString().toFloat(),
+//                        row.get(3).toString().toFloat(),
+//                        row.get(4).toString().toFloat(),
+//                        row.get(5).toString().toFloat()
+//                    )
+//                )
+//            }
+//        }
+//        return arr
+//    }
+
+//    fun layDuLieuTienNghi(maLoaiPhong: Int): ArrayList<TienNghi> {
+//        val dsTienNghi = ArrayList<TienNghi>()
+//        db.connect().use { conn ->
+//            val sql = """
+//            SELECT TN.ma_tien_nghi, TN.ten_tien_nghi, TN.ic_mo_ta
+//            FROM LOAI_PHONG AS L
+//            JOIN CO_TIEN_NGHI AS C ON L.ma_loai_phong = C.ma_loai_phong
+//            JOIN TIEN_NGHI AS TN ON C.ma_tien_nghi = TN.ma_tien_nghi
+//            WHERE L.ma_loai_phong = $maLoaiPhong;
+//        """
+//            val rows = conn.query(sql)
+//            rows.forEach { row ->
+//                dsTienNghi.add(
+//                    TienNghi(
+//                        row.get(2).toString(),//hinh
+//                        row.get(1).toString(),// ten
+//                        row.get(0).toString().toInt() //ma
+//                    )
+//                )
+//            }
+//        }
+//        return dsTienNghi
+//    }
+
+
+    fun layDuLieuTienNghi(maLoaiPhong: Int): ArrayList<TienNghi> {
+        val dsTienNghi = ArrayList<TienNghi>()
+        db.connect().use { conn ->
+            val sql = """
+        SELECT TN.ma_tien_nghi, TN.ten_tien_nghi, TN.ic_mo_ta
+        FROM LOAI_PHONG AS L
+        JOIN CO_TIEN_NGHI AS C ON L.ma_loai_phong = C.ma_loai_phong
+        JOIN TIEN_NGHI AS TN ON C.ma_tien_nghi = TN.ma_tien_nghi
+        WHERE L.ma_loai_phong = $maLoaiPhong;
+        """
+            val rows = conn.query(sql)
+
+            // Kiểm tra có dòng dữ liệu hay không
+            if (rows.iterator().hasNext()) {
+                Log.d("TienNghi", "Dữ liệu tiện nghi: Có dữ liệu")
+            } else {
+                Log.d("TienNghi", "Không có dữ liệu tiện nghi.")
+            }
+
+            rows.forEach { row ->
+                dsTienNghi.add(
+                    TienNghi(
+                        row.get(2).toString(),  // ic_mo_ta
+                        row.get(1).toString(),  // ten_tien_nghi
+                        row.get(0).toString().toInt() // ma_tien_nghi
+                    )
+                )
+            }
+        }
+        return dsTienNghi
+    }
+
+
 }
-//    var maDon: Int
-//    var ma_nguoi_dat: Int
-//    var checkIn: Date? = null
-//    var ngayLapPhieu: Date? = null

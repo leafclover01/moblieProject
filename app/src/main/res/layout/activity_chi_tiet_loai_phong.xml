@@ -79,16 +79,16 @@
             android:scaleType="centerCrop" />
 
 
+        <!-- Giá loại phòng -->
         <TextView
             android:id="@+id/tenLoaiPhong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="8dp"
             android:text="Tên phòng"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:paddingTop="8dp" />
+            android:textStyle="bold" />
 
-        <!-- Giá loại phòng -->
         <TextView
             android:id="@+id/giaLoaiPhong"
             android:layout_width="wrap_content"
@@ -112,9 +112,6 @@
             android:text="Mô tả"
             android:paddingTop="8dp" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/moTaChiTiet"
                 android:layout_width="wrap_content"
@@ -123,7 +120,19 @@
                 android:textSize="14sp"
                 android:textColor="#757575"
                 android:layout_marginBottom="16dp" />
-        </ScrollView>
+
+<!--        <ScrollView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+<!--            <TextView-->
+<!--                android:id="@+id/tvMoTaChiTiet"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Mô tả chi tiết: "-->
+<!--                android:textSize="14sp"-->
+<!--                android:textColor="#757575"-->
+<!--                android:layout_marginBottom="16dp" />-->
+<!--        </ScrollView>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

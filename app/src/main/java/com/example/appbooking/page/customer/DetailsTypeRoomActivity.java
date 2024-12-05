@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.appbooking.Database.MySQLite;
+import com.example.appbooking.Model.TienNghi;
 import com.example.appbooking.R;
 import com.example.appbooking.Model.Phong;
 
@@ -28,7 +29,7 @@ import java.util.Locale;
 //import androidx.recyclerview.widget.GridLayoutManager;
 public class DetailsTypeRoomActivity extends AppCompatActivity {
     private ImageView imageLoaiPhong;
-    private TextView tenLoaiPhong, giaLoaiPhong, soNguoiToiDa, moTa;
+    private TextView tenLoaiPhong, giaLoaiPhong, soNguoiToiDa, moTa, moTaChiTiet;
     private Button btnCheckIn, btnCheckOut, btnChonThoiGian;
     private RecyclerView recyclerViewPhongTrong;
 
@@ -37,7 +38,9 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
     MySQLite db1 = new MySQLite();
     private Button btnNext;
     public String maPhong = "";
-    TextView moTaChiTiet;
+    private RecyclerView recyclerViewTienNghi;
+    private TienNghiAdapter tienNghiAdapter;
+    private ArrayList<TienNghi> dsTienNghi = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,6 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
 //        recyclerViewPhongTrong.setLayoutManager(new GridLayoutManager(this, 2));
         // Ánh xạ các view
         ImageView imageLoaiPhong = findViewById(R.id.imageLoaiPhong);
-//        imageLoaiPhong = findViewById(R.id.imageLoaiPhong);
         tenLoaiPhong = findViewById(R.id.tenLoaiPhong);
         giaLoaiPhong = findViewById(R.id.giaLoaiPhong);
         soNguoiToiDa = findViewById(R.id.soNguoiToiDa);
@@ -103,6 +105,39 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         // Setup RecyclerView
         recyclerViewPhongTrong.setLayoutManager(new LinearLayoutManager(this));
 
+
+
+
+
+        // Kiểm tra và đảm bảo adapter đã được thiết lập cho RecyclerView
+        RecyclerView recyclerViewTienNghi = findViewById(R.id.recyclerViewTienNghi);
+        recyclerViewTienNghi.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        TienNghiAdapter tienNghiAdapter = new TienNghiAdapter(dsTienNghi); // dsTienNghi là danh sách tiện nghi từ SQL
+        recyclerViewTienNghi.setAdapter(tienNghiAdapter);
+
+        // Lấy mã loại phòng từ Intent
+        int maLoaiPhong = getIntent().getIntExtra("maLoaiPhong", -1);
+
+// Kiểm tra mã loại phòng và lấy dữ liệu tiện nghi
+        if (maLoaiPhong != -1) {
+            // Gọi hàm lấy dữ liệu tiện nghi từ SQL
+            dsTienNghi = layDuLieuTienNghi(maLoaiPhong);
+
+            // In ra log để kiểm tra danh sách tiện nghi
+            Log.d("TienNghi", "Số tiện nghi: " + dsTienNghi.size());
+
+            // Kiểm tra nếu danh sách tiện nghi không rỗng
+            if (!dsTienNghi.isEmpty()) {
+                // Gắn adapter vào RecyclerView
+                tienNghiAdapter = new TienNghiAdapter(dsTienNghi);
+                recyclerViewTienNghi.setAdapter(tienNghiAdapter);
+            } else {
+                // Nếu không có tiện nghi nào, hiển thị thông báo
+                Toast.makeText(this, "Không có tiện nghi cho loại phòng này!", Toast.LENGTH_SHORT).show();
+            }
+    }
+
         // Truyền thông tin phòng từ DetailsTypeRoomActivity
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +151,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
                     intent.putExtra("giaPhong", giaPhong);  // Cập nhật giá trị này
                     intent.putExtra("maPhong", maPhong);  // Mã phòng cần có giá trị hợp lệ
                     intent.putExtra("moTaPhong", moTaPhong);
-                    intent.putExtra("moTaChiTiet", moTaChiTietPhong);
+                    intent.putExtra("moTaChiTietPhong", moTaChiTietPhong);
                     intent.putExtra("timeCheckIn", timeCheckIn);
                     intent.putExtra("timeCheckOut", timeCheckOut);
 
@@ -128,92 +163,92 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
             }
         });
     }
-private void showDatePickerDialog(boolean isCheckIn) {
-    if (isCheckIn && !timeCheckIn.isEmpty()) {
-        Toast.makeText(this, "Vui lòng chọn ngày Check-in!", Toast.LENGTH_SHORT).show();
-    } else if (!isCheckIn && !timeCheckOut.isEmpty()) {
-        Toast.makeText(this, "Vui lòng chọn ngày Check-out!", Toast.LENGTH_SHORT).show();
-    }
-
-    Calendar calendar = Calendar.getInstance();
-    int year = calendar.get(Calendar.YEAR);
-    int month = calendar.get(Calendar.MONTH);
-    int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-    // Tạo một DatePickerDialog
-    new DatePickerDialog(this, (view, selectedYear, selectedMonth, selectedDay) -> {
-        // Chọn ngày từ DatePicker
-        String selectedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay);
-
-        // Tạo thời gian mặc định cho check-in và check-out
-        Calendar selectedCalendar = Calendar.getInstance();
-        selectedCalendar.set(selectedYear, selectedMonth, selectedDay);
-
-        String formattedDateTime;
-        if (isCheckIn) {
-            //  Check-in, giờ sẽ là 14:00 (mặc định)
-            selectedCalendar.set(Calendar.HOUR_OF_DAY, 14);
-            selectedCalendar.set(Calendar.MINUTE, 0);
-        } else {
-            //  Check-out, giờ sẽ là 10:00 (mặc định)
-            selectedCalendar.set(Calendar.HOUR_OF_DAY, 10);
-            selectedCalendar.set(Calendar.MINUTE, 0);
-        }
-        try {
-            SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
-            Calendar checkInCalendar = Calendar.getInstance();
-            if (!timeCheckIn.isEmpty()) {
-                checkInCalendar.setTime(dateFormatter.parse(timeCheckIn));
-            }
-
-            // Kiểm tra ngày Check-out (chỉ áp dụng khi chọn Check-out)
-            if (!isCheckIn) {
-                long diffInMillis = selectedCalendar.getTimeInMillis() - checkInCalendar.getTimeInMillis();
-
-                // Kiểm tra điều kiện cách nhau không quá 7 ngày
-                long diffInDays = diffInMillis / (1000 * 60 * 60 * 24); // Chuyển đổi khoảng cách thành số ngày
-                if (diffInDays > 7) {
-                    Toast.makeText(this, "Quý khách vui lòng liên hệ Room nếu muốn đặt trn 7 ngày", Toast.LENGTH_SHORT).show();
-                    btnChonThoiGian.setEnabled(false);
-                    btnNext.setEnabled(false);
-                    return;
-                }
-
-                // Kiểm tra nếu ngày Check-out trước ngày Check-in
-                if (diffInMillis < 0) {
-                    Toast.makeText(this, "Quý khách vui lòng đặt tổi thiếu 1 ngày", Toast.LENGTH_SHORT).show();
-                    btnChonThoiGian.setEnabled(false);
-                    btnNext.setEnabled(false);
-                    return;
-                }
-            }
-
-            // Bật nút nếu thời gian hợp lệ
-            btnChonThoiGian.setEnabled(true);
-            btnNext.setEnabled(true);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Đã xảy ra lỗi khi chọn ngày!", Toast.LENGTH_SHORT).show();
+    private void showDatePickerDialog(boolean isCheckIn) {
+        if (isCheckIn && !timeCheckIn.isEmpty()) {
+            Toast.makeText(this, "Vui lòng chọn ngày Check-in!", Toast.LENGTH_SHORT).show();
+        } else if (!isCheckIn && !timeCheckOut.isEmpty()) {
+            Toast.makeText(this, "Vui lòng chọn ngày Check-out!", Toast.LENGTH_SHORT).show();
         }
 
-        // Chuyển đổi lại thành định dạng yyyy-MM-dd HH:mm
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
-        formattedDateTime = sdf.format(selectedCalendar.getTime());
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        if (isCheckIn) {
-            timeCheckIn = formattedDateTime;
-            btnCheckIn.setText("Check-in: " + formattedDateTime);
+        // Tạo một DatePickerDialog
+        new DatePickerDialog(this, (view, selectedYear, selectedMonth, selectedDay) -> {
+            // Chọn ngày từ DatePicker
+            String selectedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay);
+
+            // Tạo thời gian mặc định cho check-in và check-out
+            Calendar selectedCalendar = Calendar.getInstance();
+            selectedCalendar.set(selectedYear, selectedMonth, selectedDay);
+
+            String formattedDateTime;
+            if (isCheckIn) {
+                //  Check-in, giờ sẽ là 14:00 (mặc định)
+                selectedCalendar.set(Calendar.HOUR_OF_DAY, 14);
+                selectedCalendar.set(Calendar.MINUTE, 0);
+            } else {
+                //  Check-out, giờ sẽ là 10:00 (mặc định)
+                selectedCalendar.set(Calendar.HOUR_OF_DAY, 10);
+                selectedCalendar.set(Calendar.MINUTE, 0);
+            }
+            try {
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                Calendar checkInCalendar = Calendar.getInstance();
+                if (!timeCheckIn.isEmpty()) {
+                    checkInCalendar.setTime(dateFormatter.parse(timeCheckIn));
+                }
+
+                // Kiểm tra ngày Check-out (chỉ áp dụng khi chọn Check-out)
+                if (!isCheckIn) {
+                    long diffInMillis = selectedCalendar.getTimeInMillis() - checkInCalendar.getTimeInMillis();
+
+                    // Kiểm tra điều kiện cách nhau không quá 7 ngày
+                    long diffInDays = diffInMillis / (1000 * 60 * 60 * 24); // Chuyển đổi khoảng cách thành số ngày
+                    if (diffInDays > 7) {
+                        Toast.makeText(this, "Quý khách vui lòng liên hệ Room nếu muốn đặt trn 7 ngày", Toast.LENGTH_SHORT).show();
+                        btnChonThoiGian.setEnabled(false);
+                        btnNext.setEnabled(false);
+                        return;
+                    }
+
+                    // Kiểm tra nếu ngày Check-out trước ngày Check-in
+                    if (diffInMillis < 0) {
+                        Toast.makeText(this, "Quý khách vui lòng đặt tổi thiếu 1 ngày", Toast.LENGTH_SHORT).show();
+                        btnChonThoiGian.setEnabled(false);
+                        btnNext.setEnabled(false);
+                        return;
+                    }
+                }
+
+                // Bật nút nếu thời gian hợp lệ
+                btnChonThoiGian.setEnabled(true);
+                btnNext.setEnabled(true);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Đã xảy ra lỗi khi chọn ngày!", Toast.LENGTH_SHORT).show();
+            }
+
+            // Chuyển đổi lại thành định dạng yyyy-MM-dd HH:mm
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+            formattedDateTime = sdf.format(selectedCalendar.getTime());
+
+            if (isCheckIn) {
+                timeCheckIn = formattedDateTime;
+                btnCheckIn.setText("Check-in: " + formattedDateTime);
 
 //            Toast.makeText(DetailsTypeRoomActivity.this, "Ngày Check-in: " + formattedDateTime, Toast.LENGTH_SHORT).show();
-        } else {
-            timeCheckOut = formattedDateTime;
-            btnCheckOut.setText("Check-out: " + formattedDateTime);
+            } else {
+                timeCheckOut = formattedDateTime;
+                btnCheckOut.setText("Check-out: " + formattedDateTime);
 //            Toast.makeText(DetailsTypeRoomActivity.this, "Ngày Check-out: " + formattedDateTime, Toast.LENGTH_SHORT).show();
-        }
+            }
 
-    }, year, month, day).show();
-}
+        }, year, month, day).show();
+    }
 
     // Hàm load danh sách phòng trống vào RecyclerView
     private void loadRoomList(ArrayList<Phong> dsPhongTrong) {
@@ -232,6 +267,10 @@ private void showDatePickerDialog(boolean isCheckIn) {
             recyclerViewPhongTrong.setAdapter(adapter);
         }
     }
-
+    public ArrayList<TienNghi> layDuLieuTienNghi(int maLoaiPhong) {
+        // Gọi hàm này trong lớp chứa hàm kết nối với database của bạn
+        // Ví dụ bạn đã định nghĩa hàm này trong lớp MySQLite:
+        return db1.layDuLieuTienNghi(maLoaiPhong);
+    }
 
 }

@@ -61,6 +61,8 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.core.ktx)
+    implementation(libs.viewpager2)
+    implementation(libs.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -69,6 +71,10 @@ dependencies {
     implementation ("com.google.android.material:material:1.9.0")
     implementation ("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+    implementation ("com.github.bumptech.glide:glide:4.11.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
+
 //    implementation 'com.android.support:design:26.1.0'
 //    implementation 'com.android.support:percent:26.1.0'
 //    implementation 'com.android.support:cardview-v7:26.1.0'

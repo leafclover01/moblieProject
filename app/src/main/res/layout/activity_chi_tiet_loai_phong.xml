@@ -50,27 +50,33 @@
         </LinearLayout>
 
         <!-- Tên loại phòng -->
-        <ImageView
-            android:id="@+id/imageLoaiPhong"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:layout_gravity="center"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/imageLoaiPhong"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            android:layout_gravity="center"/>-->
 
-<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--        <ViewPager2-->
 <!--            android:id="@+id/imageLoaiPhong"-->
 <!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:orientation="horizontal"/>-->
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/recyclerViewHinhAnh"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            android:orientation="horizontal" />-->
+<!--            android:layout_height="200dp"-->
+<!--            android:layout_gravity="center" />-->
 
+<!--        <ViewPager2-->
+<!--            android:id="@+id/imageLoaiPhongSlider"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:layout_gravity="center" />-->
+<!--        <RecyclerView-->
+<!--            android:id="@+id/recyclerViewImage"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="200dp"/>-->
+        <ImageView
+            android:id="@+id/imageLoaiPhong"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop" />
 
 
         <TextView
@@ -163,6 +169,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="16dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+
+            android:id="@+id/recyclerViewTienNghi"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            android:scrollbars="horizontal" />
+
         <Button
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"

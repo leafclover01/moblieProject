@@ -566,62 +566,32 @@ class MySQLite {
 //        return arr
 //    }
 
-//    fun layDuLieuTienNghi(maLoaiPhong: Int): ArrayList<TienNghi> {
-//        val dsTienNghi = ArrayList<TienNghi>()
-//        db.connect().use { conn ->
-//            val sql = """
-//            SELECT TN.ma_tien_nghi, TN.ten_tien_nghi, TN.ic_mo_ta
-//            FROM LOAI_PHONG AS L
-//            JOIN CO_TIEN_NGHI AS C ON L.ma_loai_phong = C.ma_loai_phong
-//            JOIN TIEN_NGHI AS TN ON C.ma_tien_nghi = TN.ma_tien_nghi
-//            WHERE L.ma_loai_phong = $maLoaiPhong;
-//        """
-//            val rows = conn.query(sql)
-//            rows.forEach { row ->
-//                dsTienNghi.add(
-//                    TienNghi(
-//                        row.get(2).toString(),//hinh
-//                        row.get(1).toString(),// ten
-//                        row.get(0).toString().toInt() //ma
-//                    )
-//                )
-//            }
-//        }
-//        return dsTienNghi
-//    }
-
-
     fun layDuLieuTienNghi(maLoaiPhong: Int): ArrayList<TienNghi> {
         val dsTienNghi = ArrayList<TienNghi>()
         db.connect().use { conn ->
             val sql = """
-        SELECT TN.ma_tien_nghi, TN.ten_tien_nghi, TN.ic_mo_ta
-        FROM LOAI_PHONG AS L
-        JOIN CO_TIEN_NGHI AS C ON L.ma_loai_phong = C.ma_loai_phong
-        JOIN TIEN_NGHI AS TN ON C.ma_tien_nghi = TN.ma_tien_nghi
-        WHERE L.ma_loai_phong = $maLoaiPhong;
+            SELECT TN.ma_tien_nghi, TN.ten_tien_nghi, TN.ic_mo_ta
+            FROM LOAI_PHONG AS L
+            JOIN CO_TIEN_NGHI AS C ON L.ma_loai_phong = C.ma_loai_phong
+            JOIN TIEN_NGHI AS TN ON C.ma_tien_nghi = TN.ma_tien_nghi
+            WHERE L.ma_loai_phong = $maLoaiPhong;
         """
             val rows = conn.query(sql)
-
-            // Kiểm tra có dòng dữ liệu hay không
-            if (rows.iterator().hasNext()) {
-                Log.d("TienNghi", "Dữ liệu tiện nghi: Có dữ liệu")
-            } else {
-                Log.d("TienNghi", "Không có dữ liệu tiện nghi.")
-            }
-
             rows.forEach { row ->
                 dsTienNghi.add(
                     TienNghi(
-                        row.get(2).toString(),  // ic_mo_ta
-                        row.get(1).toString(),  // ten_tien_nghi
-                        row.get(0).toString().toInt() // ma_tien_nghi
+                        row.get(2).toString(),//hinh
+                        row.get(1).toString(),// ten
+                        row.get(0).toString().toInt() //ma
                     )
                 )
             }
         }
         return dsTienNghi
     }
+
+
+
 
 
 }

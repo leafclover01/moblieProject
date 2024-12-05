@@ -10,13 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.appbooking.Database.MySQLite;
+import com.example.appbooking.Model.ChiTietLoaiPhong;
 import com.example.appbooking.R;
 import com.example.appbooking.Model.LoaiPhong;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class TypeRoomAdapter extends RecyclerView.Adapter<TypeRoomAdapter.LoaiPhongViewHolder> {
+    MySQLite db1 = new MySQLite();
 
     private final List<LoaiPhong> loaiPhongList;
     private final Context context;  // Thêm Context vào Adapter
@@ -54,13 +58,14 @@ public class TypeRoomAdapter extends RecyclerView.Adapter<TypeRoomAdapter.LoaiPh
             Date checkOut = new Date(System.currentTimeMillis() + 86400000);
             intent.putExtra("checkIn", checkIn.getTime());
             intent.putExtra("checkOut", checkOut.getTime());
-
-
             intent.putExtra("tenPhong", loaiPhong.getTen());
-            intent.putExtra("giaPhong", String.valueOf(loaiPhong.getGia()));
-            intent.putExtra("soNguoi", String.valueOf(loaiPhong.getSoNguoiToiDa()));
-            intent.putExtra("moTaPhong", loaiPhong.getMoTa());
-//            intent.putExtra("imageResource", loaiPhong.getImageResourceId()); // Giả sử bạn có id của ảnh trong model
+            intent.putExtra("giaPhong", "Giá Phòng: " + String.valueOf(loaiPhong.getGia()) +"VND");
+            intent.putExtra("soNguoi","Tối đa " + loaiPhong.getSoNguoiToiDa() + " người");
+            intent.putExtra("moTaPhong", "Loại Phòng: " + loaiPhong.getMoTa() );
+            intent.putExtra("imageResource", getchiTiet(loaiPhong.getMaLoaiPhong())); // intent gửi uri ảnh
+            intent.putExtra("moTaChiTiet", "Chi Tiết: " + getMoTaChiTiet(loaiPhong.getMaLoaiPhong()));
+
+
 
             // Khởi động ChiTietLoaiPhongActivity
             context.startActivity(intent);
@@ -86,4 +91,34 @@ public class TypeRoomAdapter extends RecyclerView.Adapter<TypeRoomAdapter.LoaiPh
             tvMoTa = itemView.findViewById(R.id.tvMoTa);
         }
     }
+
+    public String getchiTiet(int id){ // hàm lấy ảnh theo mã loại phòng chuyền mã loại phòng vào id
+        String str = "";
+        try{
+            List<List<Object>> anh = db1.executeQuery("select hinh from CHI_TIET_LOAI_PHONG where ma_loai_phong = " + id + " limit 1;");
+            for(List<Object> row: anh){
+                str = row.get(0).toString();
+            }
+        }catch (Exception e){
+            e.getMessage();
+        }
+        if(!str.isEmpty()){
+            return db1.getDrawableResourceUrl(context, str);
+        }else{
+            return db1.getDrawableResourceUrl(context, "ad_anh_clone_phong");
+        }
+    }
+    public String getMoTaChiTiet(int id) { // Lấy mô tả chi tiết theo mã loại phòng
+        String moTaChiTiet = "";
+        try {
+            List<List<Object>> result = db1.executeQuery("SELECT mo_ta_chi_tiet FROM LOAI_PHONG WHERE ma_loai_phong = " + id + " LIMIT 1;");
+            for (List<Object> row : result) {
+                moTaChiTiet = row.get(0).toString();
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Hiển thị lỗi nếu có
+        }
+        return moTaChiTiet.isEmpty() ? "Mô tả chi tiết không có sẵn" : moTaChiTiet;
+    }
+
 }

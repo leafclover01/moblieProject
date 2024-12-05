@@ -1,27 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- TextView để hiển thị tên tiện nghi -->
     <TextView
         android:id="@+id/tenTienNghi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tên tiện nghi"
+        android:text="Tên Tiện Nghi"
         android:textSize="16sp" />
 
+    <!-- TextView để hiển thị mô tả tiện nghi -->
     <TextView
         android:id="@+id/moTaTienNghi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mô tả tiện nghi"
+        android:text="Mô Tả Tiện Nghi"
         android:textSize="14sp" />
 
-    <ImageView
-        android:id="@+id/iconTienNghi"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_taxi" />
 </LinearLayout>

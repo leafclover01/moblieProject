@@ -2,6 +2,7 @@ package com.example.appbooking.page.customer;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -73,7 +74,8 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         String moTaPhong = getIntent().getStringExtra("moTaPhong");
         String moTaChiTietPhong = getIntent().getStringExtra("moTaChiTiet");
 
-        int imageResource = getIntent().getIntExtra("imageResource", R.drawable.anh_phong);
+        String imageResource = getIntent().getStringExtra("imageResource"); // cái này đổi thành String để nhận
+        Toast.makeText(this, imageResource + "", Toast.LENGTH_SHORT).show();
 
         // Cập nhật UI
         tenLoaiPhong.setText(tenPhong);
@@ -82,7 +84,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         moTa.setText(moTaPhong);
         moTaChiTiet.setText(moTaChiTietPhong);
 
-        imageLoaiPhong.setImageResource(imageResource);
+        imageLoaiPhong.setImageURI(Uri.parse(imageResource));  // cái này cũng suẳ thành như này là được
 
 ////        // Xử lý chọn ngày Check-in
         btnCheckIn.setOnClickListener(v -> showDatePickerDialog(true));

@@ -10,13 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.appbooking.Database.MySQLite;
+import com.example.appbooking.Model.ChiTietLoaiPhong;
 import com.example.appbooking.R;
 import com.example.appbooking.Model.LoaiPhong;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class TypeRoomAdapter extends RecyclerView.Adapter<TypeRoomAdapter.LoaiPhongViewHolder> {
+    MySQLite db1 = new MySQLite();
 
     private final List<LoaiPhong> loaiPhongList;
     private final Context context;  // Thêm Context vào Adapter
@@ -54,14 +58,11 @@ public class TypeRoomAdapter extends RecyclerView.Adapter<TypeRoomAdapter.LoaiPh
             Date checkOut = new Date(System.currentTimeMillis() + 86400000);
             intent.putExtra("checkIn", checkIn.getTime());
             intent.putExtra("checkOut", checkOut.getTime());
-
-
             intent.putExtra("tenPhong", loaiPhong.getTen());
             intent.putExtra("giaPhong", String.valueOf(loaiPhong.getGia()));
             intent.putExtra("soNguoi", String.valueOf(loaiPhong.getSoNguoiToiDa()));
             intent.putExtra("moTaPhong", loaiPhong.getMoTa());
-//            intent.putExtra("imageResource", loaiPhong.getImageResourceId()); // Giả sử bạn có id của ảnh trong model
-
+            intent.putExtra("imageResource", getchiTiet(loaiPhong.getMaLoaiPhong())); // intent gửi uri ảnh
             // Khởi động ChiTietLoaiPhongActivity
             context.startActivity(intent);
         });
@@ -84,6 +85,23 @@ public class TypeRoomAdapter extends RecyclerView.Adapter<TypeRoomAdapter.LoaiPh
             tvGiaPhong = itemView.findViewById(R.id.tvGiaPhong);
             tvSoNguoiToiDa = itemView.findViewById(R.id.tvSoNguoiToiDa);
             tvMoTa = itemView.findViewById(R.id.tvMoTa);
+        }
+    }
+
+    public String getchiTiet(int id){ // hàm lấy ảnh theo mã loại phòng chuyền mã loại phòng vào id
+        String str = "";
+        try{
+            List<List<Object>> anh = db1.executeQuery("select hinh from CHI_TIET_LOAI_PHONG where ma_loai_phong = " + id + " limit 1;");
+            for(List<Object> row: anh){
+                str = row.get(0).toString();
+            }
+        }catch (Exception e){
+            e.getMessage();
+        }
+        if(!str.isEmpty()){
+            return db1.getDrawableResourceUrl(context, str);
+        }else{
+            return db1.getDrawableResourceUrl(context, "ad_anh_clone_phong");
         }
     }
 }

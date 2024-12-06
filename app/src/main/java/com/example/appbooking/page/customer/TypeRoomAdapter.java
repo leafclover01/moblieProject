@@ -66,6 +66,7 @@ public class TypeRoomAdapter extends RecyclerView.Adapter<TypeRoomAdapter.LoaiPh
             intent.putExtra("imageResource", getchiTiet(loaiPhong.getMaLoaiPhong())); // intent gửi uri ảnh
             intent.putExtra("moTaChiTiet", "Chi Tiết: " + getMoTaChiTiet(loaiPhong.getMaLoaiPhong()));
 // Lấy danh sách tiện nghi từ cơ sở dữ liệu hoặc tạo danh sách tiện nghi
+
             List<String> tienNghiList = getTienNghi(loaiPhong.getMaLoaiPhong());
             intent.putExtra("tienNghi", new ArrayList<>(tienNghiList));  // Truyền danh sách vào Intent
 

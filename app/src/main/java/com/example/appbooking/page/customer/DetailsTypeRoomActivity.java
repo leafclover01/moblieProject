@@ -77,7 +77,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         String moTaPhong = getIntent().getStringExtra("moTaPhong");
         String moTaChiTietPhong = getIntent().getStringExtra("moTaChiTiet");
         String imageResource = getIntent().getStringExtra("imageResource"); // cái này đổi thành String để nhận
-//        Toast.makeText(this, imageResource + "", Toast.LENGTH_SHORT).show();
+//         Toast.makeText(this, imageResource + "", Toast.LENGTH_SHORT).show();
         // Nhận tiện nghi từ Intent
         ArrayList<String> tienNghiList = intent.getStringArrayListExtra("tienNghi");
         // Cập nhật UI
@@ -90,7 +90,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         imageLoaiPhong.setImageURI(Uri.parse(imageResource));  // cái này cũng suẳ thành như này là được
         TextView tvChiTietHienThi = findViewById(R.id.tvChiTietHienThi);
         tvChiTietHienThi.setText("Chi Tiết Hạng " + tenPhong);
-////        // Xử lý chọn ngày Check-in
+        // Xử lý chọn ngày Check-in
         btnCheckIn.setOnClickListener(v -> showDatePickerDialog(true));
 
         // Xử lý chọn ngày Check-out
@@ -122,7 +122,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(DetailsTypeRoomActivity.this, "Chắc chắn đi thì thanh toán", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailsTypeRoomActivity.this, "Tiến hành thanh toán!", Toast.LENGTH_SHORT).show();
                 // Kiểm tra xem người dùng đã chọn phòng chưa
                 if (maPhong != null && !maPhong.isEmpty()) {
                     // Truyền thông tin qua Intent
@@ -248,12 +248,5 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         }
     }
 
-    // Phương thức lấy chi tiết hạng phòng từ CSDL
-
-//    public ArrayList<TienNghi> layDuLieuTienNghi(int maLoaiPhong) {
-//        // Gọi hàm này trong lớp chứa hàm kết nối với database của bạn
-//        // Ví dụ bạn đã định nghĩa hàm này trong lớp MySQLite:
-//        return db1.layDuLieuTienNghi(maLoaiPhong);
-//    }
 
 }

@@ -10,7 +10,6 @@ import android.text.SpannableString;
 import android.text.method.PasswordTransformationMethod;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +25,6 @@ import com.example.appbooking.Model.TaiKhoan;
 import com.example.appbooking.page.DashboardActivity;
 import com.example.appbooking.page.admin.homeAdmin;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -61,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
         db = new MySQLite();
         sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        ArrayList<String> arr = db.layDuLieuCacAnhCuaLoaiPhong(1);
-        Toast.makeText(this, arr.toString(), Toast.LENGTH_SHORT).show();
-        // Chuyen trang khi da danh nhap truoc do
+        editor.clear().apply();
+
+        // Kiểm tra người dùng đã đăng nhập chưa
         int userId_kt = sharedPreferences.getInt("userId", -1);
         String username_kt = sharedPreferences.getString("username", "Guest");
         int role_kt = sharedPreferences.getInt("role", -1);
@@ -76,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 tk_name = row.get(0).toString();
             }
             if(tk_name.equals(username_kt)){
+                // Điều hướng theo role khi người dùng đã đăng nhập
                 if (role_kt == 0) {
                     Intent intentAdmin = new Intent(MainActivity.this, homeAdmin.class);
                     startActivity(intentAdmin);
@@ -87,8 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
-
 
         // Định dạng TextView "Đăng ký"
         String fullText = "Bạn chưa có tài khoản? Đăng ký";
@@ -118,65 +115,58 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnLogIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String username = edtUsername.getText().toString().trim();
-                String password = edtPassword.getText().toString().trim();
-
-                // Xử lý Validate
-                if (username.isEmpty() && password.isEmpty()) {
-                    edtUsername.setError("Vui lòng nhập tên đăng nhập!");
-                    edtPassword.setError("Vui lòng nhập mật khẩu!");
-                } else if (username.isEmpty()) {
-                    edtUsername.setError("Vui lòng nhập tên đăng nhập!");
-                    edtPassword.setError(null);
-                } else if (password.isEmpty()) {
-                    edtPassword.setError("Vui lòng nhập mật khẩu!");
-                    edtUsername.setError(null);
-                } else {
-                    edtUsername.setError(null);
-                    edtPassword.setError(null);
-
-                    // Kiểm tra đăng nhập trong CSDL
-                    TaiKhoan taiKhoan = db.kiemTraDangNhap(username, password);
-                    Log.d("MainActivity", "TaiKhoan: " + (taiKhoan != null ? taiKhoan.getId() : "null"));
-
-                    if (taiKhoan != null && taiKhoan.getId() >= 0) {
-                        // Lưu thông tin vào SharedPreferences
-                        editor.putInt("userId", taiKhoan.getId());
-                        editor.putString("username", username);
-                        editor.putString("email", taiKhoan.getEmail());
-                        editor.putString("ten", taiKhoan.getName());
-                        editor.putString("hinh", taiKhoan.getHinh());
-                        editor.putInt("role", taiKhoan.getRole());
-                        editor.apply();
-
-                        // Hiển thị thông báo với Toast
-                        Toast.makeText(MainActivity.this, "Đăng nhập thành công! User ID: " + taiKhoan.getId(), Toast.LENGTH_SHORT).show();
-
-                        // Log xem role của người dùng
-                        Log.d("MainActivity", "User Role: " + taiKhoan.getRole());
-
-                        // Điều hướng đến màn hình tiếp theo dựa trên role
-                        if (taiKhoan.getRole() == 0) {
-                            // Nếu là Admin
-                            Intent intentAdmin = new Intent(MainActivity.this, homeAdmin.class);
-                            startActivity(intentAdmin);
-                            finish(); // Đảm bảo đóng màn hình này
-                        } else if (taiKhoan.getRole() == 1) {
-                            // Nếu là User
-                            Intent intentUser = new Intent(MainActivity.this, DashboardActivity.class);
-                            startActivity(intentUser);
-                            finish(); // Đảm bảo đóng màn hình này
-                        }
-                    } else {
-                        // Nếu thông tin đăng nhập sai
-                        edtPassword.setError("Tên đăng nhập hoặc mật khẩu không đúng!");
-                    }
-                }
-            }
-        });
+//        btnLogIn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String username = edtUsername.getText().toString().trim();
+//                String password = edtPassword.getText().toString().trim();
+//
+//                // Xử lý Validate
+//                if (username.isEmpty() && password.isEmpty()) {
+//                    edtUsername.setError("Vui lòng nhập tên đăng nhập!");
+//                    edtPassword.setError("Vui lòng nhập mật khẩu!");
+//                } else if (username.isEmpty()) {
+//                    edtUsername.setError("Vui lòng nhập tên đăng nhập!");
+//                    edtPassword.setError(null);
+//                } else if (password.isEmpty()) {
+//                    edtPassword.setError("Vui lòng nhập mật khẩu!");
+//                    edtUsername.setError(null);
+//                } else {
+//                    edtUsername.setError(null);
+//                    edtPassword.setError(null);
+//
+//                    // Kiểm tra đăng nhập trong CSDL
+//                    TaiKhoan taiKhoan = db.kiemTraDangNhap(username, password);
+//
+//                    if (taiKhoan != null && taiKhoan.getId() >= 0) {
+//                        // Lưu thông tin vào SharedPreferences
+//                        editor.putInt("userId", taiKhoan.getId());
+//                        editor.putString("username", username);
+//                        editor.putString("email", taiKhoan.getEmail());
+//                        editor.putString("ten", taiKhoan.getName());
+//                        editor.putString("hinh", taiKhoan.getHinh());
+//                        editor.putInt("role", taiKhoan.getRole());
+//                        editor.apply();
+//
+//                        // Điều hướng đến màn hình tiếp theo dựa trên role
+//                        if (taiKhoan.getRole() == 0) {
+//                            // Nếu là Admin
+//                            Intent intentAdmin = new Intent(MainActivity.this, homeAdmin.class);
+//                            startActivity(intentAdmin);
+//                            finish(); // Đảm bảo đóng màn hình này
+//                        } else if (taiKhoan.getRole() == 1) {
+//                            // Nếu là User
+//                            Intent intentUser = new Intent(MainActivity.this, DashboardActivity.class);
+//                            startActivity(intentUser);
+//                            finish(); // Đảm bảo đóng màn hình này
+//                        }
+//                    } else {
+//                        // Nếu thông tin đăng nhập sai
+//                        Toast.makeText(MainActivity.this, "Tên đăng nhập hoặc mật khẩu không đúng!", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            }
+//        });
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -205,29 +195,22 @@ public class MainActivity extends AppCompatActivity {
                         editor.putInt("userId", taiKhoan.getId());
                         editor.putString("username", username);
                         editor.putString("email", taiKhoan.getEmail());
-                        editor.putString("ten", taiKhoan.getName());
+                        editor.putString("name", taiKhoan.getName());
                         editor.putString("hinh", taiKhoan.getHinh());
+                        editor.putString("address", taiKhoan.getAddress());
+                        editor.putString("cccd", taiKhoan.getCccd());
+                        editor.putString("password", password); // Lưu mật khẩu vào SharedPreferences
                         editor.putInt("role", taiKhoan.getRole());
                         editor.apply();
-
-                        // Kiểm tra lại dữ liệu đã lưu trong SharedPreferences và hiển thị Toast
-                        int savedUserId = sharedPreferences.getInt("userId", -1);  // Giá trị mặc định -1 nếu không có
-                        String savedUsername = sharedPreferences.getString("username", "");  // Giá trị mặc định là chuỗi rỗng
-                        int savedRole = sharedPreferences.getInt("role", -1);  // Giá trị mặc định -1 nếu không có
-
-                        // Hiển thị thông báo với Toast
-//                        Toast.makeText(MainActivity.this, "Đăng nhập thành công! User ID: " + savedUserId + ", Username: " + savedUsername + ", Role: " + savedRole, Toast.LENGTH_SHORT).show();
 
                         // Điều hướng đến màn hình tiếp theo dựa trên role
                         if (taiKhoan.getRole() == 0) {
                             // Nếu là Admin
-//                            Toast.makeText(MainActivity.this, "Chào mừng Admin!", Toast.LENGTH_SHORT).show();
                             Intent intentAdmin = new Intent(MainActivity.this, homeAdmin.class);
                             startActivity(intentAdmin);
                             finish(); // Đảm bảo đóng màn hình này
                         } else if (taiKhoan.getRole() == 1) {
                             // Nếu là User
-//                            Toast.makeText(MainActivity.this, "Chào mừng User!", Toast.LENGTH_SHORT).show();
                             Intent intentUser = new Intent(MainActivity.this, DashboardActivity.class);
                             startActivity(intentUser);
                             finish(); // Đảm bảo đóng màn hình này
@@ -244,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         // Sự kiện chuyển tới màn hình Đăng ký
         txvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,3 +237,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
+

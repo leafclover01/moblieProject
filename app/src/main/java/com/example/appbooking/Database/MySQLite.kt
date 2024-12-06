@@ -2,6 +2,7 @@ package com.example.appbooking.Database
 
 
 import android.content.Context
+import android.database.sqlite.SQLiteDatabase
 import com.example.appbooking.Model.Don
 import com.example.appbooking.Model.LoaiPhong
 import com.example.appbooking.Model.Phong
@@ -22,8 +23,16 @@ import java.util.Date
 import java.util.Locale
 
 class MySQLite {
+    val writableDatabase: SQLiteDatabase
+        get() {
+            TODO()
+        }
     var db: Database
     init {
+//        db = Libsql.open(
+//            url = "libsql://booking-hotel-haitrn.turso.io",
+//            authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzI2MTkyMTksImlkIjoiMDgzMTMzOTQtZmM5NS00NTlhLWI1YTktODQ0ODlhMzQ5OTg1In0.WjpH3E9Kj1zJ2EjDecqib53VpjbGBe1ynstH9Iorvonqo8jqfKvNLYb7Lpa9rk_2CGnaZZqAjotpFDKvPzuMBg"
+//        )
         db = Libsql.open(
             url = "libsql://booking-hotel-haitrn.turso.io",
             authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzMyMzE0ODQsImlkIjoiMDgzMTMzOTQtZmM5NS00NTlhLWI1YTktODQ0ODlhMzQ5OTg1In0.MrDrfaRdKQm6-ODnqMHKpsMWRPTQx3DWdvs2SFzJxj8lblklkjnz9Ppg9lbl4DNpY8hDn1eZaRC0Gz4p3yIcAQ"
@@ -36,7 +45,7 @@ class MySQLite {
     fun insertDataTaiKhoan(username: String, password: String, name: String, email: String, sdt: String, cccd: String, address: String, role: Int, tenAnh: String): String {
         val query = "Select * from TAI_KHOAN where username = '$username';"
         val rows = db.connect().query(query)
-        if(rows.firstOrNull() == null){
+        if (rows.firstOrNull() == null) {
             return try {
                 val sql = """
                     INSERT INTO TAI_KHOAN (id, username, password, name, email, sdt, cccd, address, role, hinh)
@@ -50,6 +59,7 @@ class MySQLite {
         }
         return "Tài khoản đã tồn tại"
     }
+
     fun insertCoTienNghi(maLoaiPhong: Int, maTienNghi: Int): String {
         return try {
             val sql = "INSERT INTO CO_TIEN_NGHI (ma_tien_nghi, ma_loai_phong) VALUES ($maTienNghi, $maLoaiPhong);"

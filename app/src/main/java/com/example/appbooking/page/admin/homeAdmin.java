@@ -52,12 +52,12 @@ public class homeAdmin extends AppCompatActivity {
         qlDanhGia = findViewById(R.id.qlDanhGia);
         qlMa = findViewById(R.id.qlMa);
         qlDon = findViewById(R.id.qlDon);
-        imgAvt = findViewById(R.id.imgAvt);
-        tvTenTK = findViewById(R.id.tvTenTK);
-        tvTenTK.setText(name);
+//        imgAvt = findViewById(R.id.imgAvt);
+//        tvTenTK = findViewById(R.id.tvTenTK);
+//        tvTenTK.setText(name);
         MySQLite db = new MySQLite();
         String anh = db.getDrawableResourceUrl(this, hinh);
-        imgAvt.setImageURI(Uri.parse(anh));
+//        imgAvt.setImageURI(Uri.parse(anh));
         qlUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

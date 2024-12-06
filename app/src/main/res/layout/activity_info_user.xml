@@ -6,13 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".Activities.InfoUserActivity">
 
+    <!-- Phần cố định: Ảnh đại diện và tên -->
     <RelativeLayout
         android:id="@+id/rellay1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/grad"
-        android:paddingBottom="20dp">
+        android:paddingBottom="0dp">
 
+        <!-- Ảnh đại diện -->
         <RelativeLayout
             android:id="@+id/imgUser"
             android:layout_width="wrap_content"
@@ -22,17 +24,20 @@
             android:background="@drawable/circle_border">
 
             <ImageView
+                android:id="@+id/imgAvatar"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_margin="9dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/circle"
                 android:padding="3dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/avatar" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/avatar"
+                android:clipToOutline="true" />
 
         </RelativeLayout>
-<!--        Họ và tên-->
+
+        <!-- Tên người dùng -->
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
@@ -40,91 +45,46 @@
             android:layout_below="@+id/imgUser"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15sp"
-            android:text="HOANG THI HUYEN"
+            android:text="Hoàng Thị Huyền"
+            android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="32sp"
             android:textStyle="bold" />
-<!--        Địa chỉ-->
-<!--        <TextView-->
-<!--            android:id="@+id/tv_address"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/tv_name"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:text="Thanh Liêm, Hà Nam"-->
-<!--            android:textAllCaps="true"-->
-<!--            android:textColor="@color/address"-->
-<!--            android:textSize="14sp"-->
-<!--            android:textStyle="bold"/>-->
-<!--        Icon logout-->
+
+        <!-- Nút quay lại -->
         <ImageView
-            android:id="@+id/btnLogOut"
+            android:id="@+id/btnBack"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="0dp"
-            android:layout_marginTop="0dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
-            android:src="@drawable/logout" />
-
+            android:src="@drawable/ic_back" />
 
     </RelativeLayout>
 
-    <!-- Add Info & Edit Info Buttons -->
-    <LinearLayout
-        android:id="@+id/linlay1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rellay1"
-        android:orientation="horizontal"
-        android:layout_marginTop="0dp">
-
-        <!-- Add Info Button -->
-        <Button
-            android:id="@+id/btnAddInfo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="BỔ SUNG THÔNG TIN"
-            android:background="@drawable/btn_add_info"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:gravity="center" />
-
-        <!-- Edit Info Button -->
-        <Button
-            android:id="@+id/btnEditInfo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="CHỈNH SỬA THÔNG TIN"
-            android:background="@drawable/btn_edit_info"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:gravity="center" />
-    </LinearLayout>
-
-    <RelativeLayout
+    <!-- Phần cuộn: Thông tin chi tiết -->
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/linlay1"
-        android:layout_marginTop="-50dp">
+        android:layout_below="@id/rellay1"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="30dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
+            <!-- Tên đăng nhập -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-            <!-- Tên đăng nhập -->
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -133,27 +93,28 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/tv_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="hoanghuyen25062004"
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="6dp"
                     android:background="@color/grey" />
-
             </LinearLayout>
 
+            <!-- Email -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:orientation="vertical">
-                <!-- Email -->
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -162,27 +123,28 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/tv_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="hoanghuyen@gmail.com"
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="6dp"
                     android:background="@color/grey" />
-
             </LinearLayout>
 
+            <!-- Số điện thoại -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:orientation="vertical">
-                <!-- SDT -->
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -191,27 +153,28 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/tv_sdt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="0339877303"
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="6dp"
                     android:background="@color/grey" />
-
             </LinearLayout>
 
+            <!-- Căn cước công dân -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:orientation="vertical">
-                <!-- CCCD -->
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -220,27 +183,28 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/tv_cccd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="123456789XXXX"
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="6dp"
                     android:background="@color/grey" />
-
             </LinearLayout>
 
+            <!-- Địa chỉ -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:orientation="vertical">
-                <!-- Địa ch -->
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -249,23 +213,35 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/tv_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="Liêm Túc, Thanh Liêm, Hà Nam"
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="6dp"
                     android:background="@color/grey" />
-
             </LinearLayout>
 
+            <!-- Nút chỉnh sửa thông tin -->
+            <Button
+                android:id="@+id/btnEdit"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/login_btn_background"
+                android:text="CHỈNH SỬA THÔNG TIN"
+                android:textColor="#ffffff"
+                android:textSize="20sp"/>
+
         </LinearLayout>
-        
-    </RelativeLayout>
+
+    </ScrollView>
+
 
 </RelativeLayout>

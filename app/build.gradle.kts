@@ -74,4 +74,7 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
     implementation("androidx.viewpager2:viewpager2:1.0.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
+    implementation ("com.google.android.gms:play-services-auth:20.4.1")// Để sử dụng xác thực Google
+    implementation ("com.google.android.gms:play-services-drive:17.0.0") // Google Drive API
 }

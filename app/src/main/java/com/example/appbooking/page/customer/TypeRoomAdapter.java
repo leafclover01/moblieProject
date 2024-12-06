@@ -15,9 +15,11 @@ import com.example.appbooking.Model.ChiTietLoaiPhong;
 import com.example.appbooking.R;
 import com.example.appbooking.Model.LoaiPhong;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class TypeRoomAdapter extends RecyclerView.Adapter<TypeRoomAdapter.LoaiPhongViewHolder> {
@@ -42,8 +44,13 @@ public class TypeRoomAdapter extends RecyclerView.Adapter<TypeRoomAdapter.LoaiPh
     @Override
     public void onBindViewHolder(@NonNull LoaiPhongViewHolder holder, int position) {
         LoaiPhong loaiPhong = loaiPhongList.get(position);
+        // Định dạng số thành dạng 7.000.000
+        NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+        String formattedGia = formatter.format(loaiPhong.getGia());
+
         holder.tvLoaiPhong.setText(loaiPhong.getTen());
-        holder.tvGiaPhong.setText("Giá: " + loaiPhong.getGia() + " VND");
+//        holder.tvGiaPhong.setText("Giá: " + loaiPhong.getGia() + " VND");
+        holder.tvGiaPhong.setText("Giá: " + formattedGia + " VND");
         holder.tvSoNguoiToiDa.setText("Tối đa: " + loaiPhong.getSoNguoiToiDa() + " người");
         holder.tvMoTa.setText(loaiPhong.getMoTa());
 
@@ -60,7 +67,8 @@ public class TypeRoomAdapter extends RecyclerView.Adapter<TypeRoomAdapter.LoaiPh
             intent.putExtra("checkIn", checkIn.getTime());
             intent.putExtra("checkOut", checkOut.getTime());
             intent.putExtra("tenPhong", loaiPhong.getTen());
-            intent.putExtra("giaPhong", "Giá Phòng: " + String.valueOf(loaiPhong.getGia()) +"VND");
+            intent.putExtra("giaPhong", "Giá Phòng: " + formattedGia + " VND");
+//            intent.putExtra("giaPhong", "Giá Phòng: " + String.valueOf(loaiPhong.getGia()) +"VND");
             intent.putExtra("soNguoi","Tối đa " + loaiPhong.getSoNguoiToiDa() + " người");
             intent.putExtra("moTaPhong", "Loại Phòng: " + loaiPhong.getMoTa() );
             intent.putExtra("imageResource", getchiTiet(loaiPhong.getMaLoaiPhong())); // intent gửi uri ảnh

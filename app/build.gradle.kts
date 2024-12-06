@@ -65,10 +65,15 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("tech.turso.libsql:libsql:0.1.0")
+//    implementation ("com.github.bumptech.glide:glide:4.13.0")
+//    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.0")
+    implementation ("com.github.bumptech.glide:glide:4.11.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
+    implementation ("com.google.android.gms:play-services-auth:20.4.1")// Để sử dụng xác thực Google
+    implementation ("com.google.android.gms:play-services-drive:17.0.0") // Google Drive API
 
-//    implementation 'com.android.support:design:26.1.0'
-//    implementation 'com.android.support:percent:26.1.0'
-//    implementation 'com.android.support:cardview-v7:26.1.0'
+
+
 }
 
 

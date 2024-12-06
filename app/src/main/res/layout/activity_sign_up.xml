@@ -8,6 +8,18 @@
     android:background="@drawable/background"
     tools:context=".Activities.SignUpActivity">
 
+    <!-- Nút Logout -->
+    <ImageView
+        android:id="@+id/imgLogout"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:src="@drawable/logout"
+        android:contentDescription="Logout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
     <!-- Logo -->
     <ImageView
         android:id="@+id/imgLogo"

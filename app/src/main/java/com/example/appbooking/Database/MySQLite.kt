@@ -1,47 +1,57 @@
 package com.example.appbooking.Database
 
+
+import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
-import com.example.appbooking.Model.ChiTietUuDai
-import com.example.appbooking.Model.TaiKhoan
+import com.example.appbooking.Model.Don
 import com.example.appbooking.Model.LoaiPhong
 import com.example.appbooking.Model.Phong
-import com.example.appbooking.Model.Don
+import com.example.appbooking.Model.TaiKhoan
 import tech.turso.libsql.Database
 import tech.turso.libsql.Libsql
 import tech.turso.libsql.Row
-
-import java.util.Date
-
 import java.text.SimpleDateFormat
-import java.util.ArrayList
-import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.temporal.ChronoUnit
+import java.util.Date
 import java.util.Locale
 
-
-import kotlin.time.Duration.Companion.days
-
 class MySQLite {
+    val writableDatabase: SQLiteDatabase
+        get() {
+            TODO()
+        }
     var db: Database
 
     init {
+//        db = Libsql.open(
+//            url = "libsql://booking-hotel-haitrn.turso.io",
+//            authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzI2MTkyMTksImlkIjoiMDgzMTMzOTQtZmM5NS00NTlhLWI1YTktODQ0ODlhMzQ5OTg1In0.WjpH3E9Kj1zJ2EjDecqib53VpjbGBe1ynstH9Iorvonqo8jqfKvNLYb7Lpa9rk_2CGnaZZqAjotpFDKvPzuMBg"
+//        )
         db = Libsql.open(
             url = "libsql://booking-hotel-haitrn.turso.io",
-            authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzI2MTkyMTksImlkIjoiMDgzMTMzOTQtZmM5NS00NTlhLWI1YTktODQ0ODlhMzQ5OTg1In0.WjpH3E9Kj1zJ2EjDecqib53VpjbGBe1ynstH9Iorvonqo8jqfKvNLYb7Lpa9rk_2CGnaZZqAjotpFDKvPzuMBg"
+            authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3MzMyMzA3ODEsImlkIjoiMDgzMTMzOTQtZmM5NS00NTlhLWI1YTktODQ0ODlhMzQ5OTg1In0.TJSqoSMGl0vitu_3WX0r1IA87oDMk3Oq1FOJkFa5JLoAgcVRTOvytNjCOz-Mu2W2Pbh8lZPFwvPGtkBqrrmWBQ"
         )
     }
 
-    fun insertDataTaiKhoan(username: String, password: String, name: String, email: String, sdt: String, cccd: String, address: String, role: Int, tenAnh: String): String {
+    fun insertDataTaiKhoan(
+        username: String,
+        password: String,
+        name: String,
+        email: String,
+        sdt: String,
+        cccd: String,
+        address: String,
+        role: Int,
+        tenAnh: String
+    ): String {
         val query = "Select * from TAI_KHOAN where username = '$username';"
         val rows = db.connect().query(query)
-        if(rows.firstOrNull() == null){
+        if (rows.firstOrNull() == null) {
             return try {
                 val sql = """
                     INSERT INTO TAI_KHOAN (id, username, password, name, email, sdt, cccd, address, role, hinh)
@@ -55,6 +65,7 @@ class MySQLite {
         }
         return "Tài khoản đã tồn tại"
     }
+
     fun insertCoTienNghi(maLoaiPhong: Int, maTienNghi: Int): String {
         return try {
             val sql = "INSERT INTO CO_TIEN_NGHI (ma_tien_nghi, ma_loai_phong) VALUES ($maTienNghi, $maLoaiPhong);"
@@ -476,6 +487,90 @@ class MySQLite {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
         return dateFormat.parse(dateStr)
     }
+    fun getTaiKhoantheoCCCD(cccd: String): TaiKhoan{
+        var taiKhoan = TaiKhoan()
+        db.connect().use { conn ->
+            val sql = "SELECT * FROM TAI_KHOAN WHERE cccd='$cccd';"
+            val rows = conn.query(sql)
+            rows.forEach { row ->
+                taiKhoan = TaiKhoan(
+                    row.get(0).toString().toInt(),
+                    row.get(8).toString().toInt(),
+                    row.get(1).toString(),
+                    row.get(2).toString(),
+                    row.get(4).toString(),
+                    row.get(7).toString(),
+                    row.get(5).toString(),
+                    row.get(6).toString(),
+                    row.get(3).toString(),
+                    row.get(9).toString()
+                )
+            }
+        }
+        return taiKhoan
+    }
+
+    fun getTaiKhoantheoSDT(sdt: String): TaiKhoan {
+        var taiKhoan = TaiKhoan()
+        db.connect().use { conn ->
+            val sql = "SELECT * FROM TAI_KHOAN WHERE sdt='$sdt';"
+            val rows = conn.query(sql)
+            rows.forEach { row ->
+                taiKhoan = TaiKhoan(
+                    row.get(0).toString().toInt(),
+                    row.get(8).toString().toInt(),
+                    row.get(1).toString(),
+                    row.get(2).toString(),
+                    row.get(4).toString(),
+                    row.get(7).toString(),
+                    row.get(5).toString(),
+                    row.get(6).toString(),
+                    row.get(3).toString(),
+                    row.get(9).toString()
+                )
+            }
+        }
+        return taiKhoan
+    }
+
+    fun updateUserInfo(
+        newUsername: String,
+        newName: String,
+        newPassword: String,
+        newEmail: String,
+        newSDT: String,
+        newCCCD: String,
+        newAddress: String,
+        avatarBase64: String?
+    ): Boolean {
+        // Lấy đối tượng WritableDatabase từ MySQLite
+        val db = writableDatabase
+
+        return try {
+            // Tạo đối tượng ContentValues để chèn dữ liệu
+            val contentValues = ContentValues().apply {
+                put("name", newName)
+                put("username", newUsername);
+                put("password", newPassword)
+                put("email", newEmail)
+                put("sdt", newSDT)
+                put("cccd", newCCCD)
+                put("address", newAddress)
+                avatarBase64?.let { put("hinh", it) }  // Chỉ lưu ảnh nếu không null
+            }
+
+            // Cập nhật dữ liệu trong cơ sở dữ liệu
+            val rowsAffected = db.update("TAI_KHOAN", contentValues, "username = ?", arrayOf(newUsername))
+
+            rowsAffected > 0 // Trả về true nếu có dòng bị ảnh hưởng
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false // Trả về false nếu xảy ra lỗi
+        } finally {
+            db.close() // Đảm bảo đóng kết nối
+        }
+    }
+
 }
 //    var maDon: Int
 //    var ma_nguoi_dat: Int

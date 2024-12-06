@@ -2,6 +2,7 @@ package com.example.appbooking.Database
 
 
 import android.content.Context
+import android.database.sqlite.SQLiteDatabase
 import com.example.appbooking.Model.Don
 import com.example.appbooking.Model.LoaiPhong
 import com.example.appbooking.Model.Phong
@@ -18,7 +19,6 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.temporal.ChronoUnit
-import java.util.Date
 import java.util.Date
 import java.util.Locale
 

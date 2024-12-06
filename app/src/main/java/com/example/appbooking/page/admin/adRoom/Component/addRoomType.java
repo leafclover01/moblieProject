@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -16,9 +17,10 @@ import com.example.appbooking.Database.MySQLite;
 import com.example.appbooking.R;
 
 public class addRoomType extends AppCompatActivity {
-    EditText edtTenLoaiPhong, edtGiaPhong, edtSoLuongNguoi, edtMoTaPhong;
+    EditText edtTenLoaiPhong, edtGiaPhong, edtSoLuongNguoi, edtMoTaPhong, ad_rt_mttt;
     Button btnLuuLoaiPhong;
     MySQLite db1 = new MySQLite();
+    ImageButton back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +36,15 @@ public class addRoomType extends AppCompatActivity {
         edtGiaPhong = findViewById(R.id.ad_rt_gia);
         edtSoLuongNguoi = findViewById(R.id.ad_rt_sl);
         edtMoTaPhong = findViewById(R.id.ad_rt_mt);
+        ad_rt_mttt = findViewById(R.id.ad_rt_mttt);
         btnLuuLoaiPhong = findViewById(R.id.rt_ad_btn);
-
+        back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         btnLuuLoaiPhong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,18 +76,23 @@ public class addRoomType extends AppCompatActivity {
                     Toast.makeText(addRoomType.this, "Số lượng người không được nhỏ hơn 0", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                // Kiểm tra mô tả phòng
-                String moTaPhong = edtMoTaPhong.getText().toString().trim();
-                if (moTaPhong.isEmpty()) {
+                String moTaPhongc = ad_rt_mttt.getText().toString().trim();
+                if (moTaPhongc.isEmpty()) {
                     Toast.makeText(addRoomType.this, "Hãy nhập mô tả phòng", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                // Gọi phương thức chèn dữ liệu
-                try{
-                    db1.insertDataLoaiPhong(tenLoaiPhong, giaPhong, soLuongNguoi, moTaPhong, "");
+                // Kiểm tra mô tả phòng
+                String moTaPhong = edtMoTaPhong.getText().toString().trim();
+                if (moTaPhong.isEmpty()) {
+                    Toast.makeText(addRoomType.this, "Hãy nhập mô tả chi tiết phòng", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                try {
+                    db1.insertDataLoaiPhong(tenLoaiPhong, giaPhong, soLuongNguoi, moTaPhongc, moTaPhong);
                     Toast.makeText(addRoomType.this, "Thêm loại phòng thành công!", Toast.LENGTH_SHORT).show();
                     finish();
-                }catch(Exception e){
+                } catch (Exception e) {
                     Toast.makeText(addRoomType.this, "Thêm loại phòng không thành công!", Toast.LENGTH_SHORT).show();
                 }
             }

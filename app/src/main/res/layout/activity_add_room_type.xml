@@ -5,27 +5,41 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".page.admin.adRoom.Component.addRoomType">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/back"
+                android:background="@color/gradStart"
+                android:src="@drawable/ad_back_left"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="back"/>
+        </LinearLayout>
         <TextView
             android:layout_marginTop="10dp"
             android:textSize="30dp"
             android:textAlignment="center"
-            android:textColor="#8496FD"
+            android:textColor="@color/brandBlue10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nhập Thông tin loại Phòng"/>
         <TextView
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="40dp"
             android:textSize="18sp"
-            android:textColor="#165F80"
+            android:textColor="@color/green10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nhập Thông tin loại Phòng"/>
         <EditText
+            android:textColor="@color/light"
             android:hint="Nhập tên"
             android:id="@+id/ad_rt_ten"
             android:layout_width="match_parent"
@@ -34,11 +48,12 @@
         <TextView
             android:layout_marginTop="20dp"
             android:textSize="18sp"
-            android:textColor="#165F80"
+            android:textColor="@color/green10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nhập Thông tin giá"/>
         <EditText
+            android:textColor="@color/light"
             android:hint="Nhập giá"
             android:inputType="number"
             android:id="@+id/ad_rt_gia"
@@ -51,13 +66,14 @@
             android:orientation="horizontal">
             <TextView
                 android:textSize="18sp"
-                android:textColor="#165F80"
+                android:textColor="@color/green10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nhập số lượng người tối đa"
                 android:layout_weight="1"/>
             <EditText
-                android:hint="Nhập giá"
+                android:textColor="@color/light"
+                android:hint="Số lượng"
                 android:inputType="number"
                 android:id="@+id/ad_rt_sl"
                 android:layout_width="150dp"
@@ -66,11 +82,26 @@
         <TextView
             android:layout_marginTop="20dp"
             android:textSize="18sp"
-            android:textColor="#165F80"
+            android:textColor="@color/green10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nhập Thông tin Mô tả"/>
+            android:text="Nhập Thông tin mô tả chi tiết"/>
         <EditText
+            android:textColor="@color/light"
+            android:id="@+id/ad_rt_mttt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Nhập văn bản mô tả..."
+            android:scrollbars="vertical"/>
+        <TextView
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"
+            android:textColor="@color/green10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nhập Thông tin mô tả chi tiết"/>
+        <EditText
+            android:textColor="@color/light"
             android:id="@+id/ad_rt_mt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

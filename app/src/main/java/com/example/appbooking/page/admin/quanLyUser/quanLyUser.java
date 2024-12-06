@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +28,7 @@ import tech.turso.libsql.proto.Row;
 public class quanLyUser extends AppCompatActivity {
 
     MySQLite db1;
-    ImageButton ad_btnLoad;
+    ImageButton ad_btnLoad, back;
     Spinner ad_dkLoc;
     ListView ad_listV;
     adAdpterUser taiKhoanAdapter;
@@ -50,14 +48,20 @@ public class quanLyUser extends AppCompatActivity {
         ad_btnLoad = findViewById(R.id.ad_btnLoad);
         ad_dkLoc = findViewById(R.id.ad_dkLoc);
         ad_listV = findViewById(R.id.ad_listV);
-
+        back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         // Khởi tạo MySQLite
         db1 = new MySQLite();
 //        db1.updateSQL("INSERT INTO TAI_KHOAN (username, password, name, email, sdt, cccd, address, role, hinh) " +
 //                "VALUES ('huynh', '1', 'vu dinh huynh', 'huynh@gamil.com','0125646464' , '4839309535', 'haiDuong', 0, 'anh_user');");
 //         Lấy dữ liệu ban đầu từ cơ sở dữ liệu
         listTK = new ArrayList<>();
-        Toast.makeText(this, listTK.size() + "", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, listTK.size() + "", Toast.LENGTH_SHORT).show();
         // Khởi tạo adapter và gán vào ListView
         taiKhoanAdapter = new adAdpterUser(this, R.layout.ad_item_user, listTK);
         ad_listV.setAdapter(taiKhoanAdapter);
@@ -105,9 +109,14 @@ public class quanLyUser extends AppCompatActivity {
             query = "SELECT * FROM TAI_KHOAN WHERE role = 0;";  // Only admins
         }
 
-        filteredList = getall(query); // Fetch the filtered list based on role
+        try{
+            filteredList = getall(query);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        // Fetch the filtered list based on role
 
-        Toast.makeText(this, filter + " data: " + filteredList.size(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, filter + " data: " + filteredList.size(), Toast.LENGTH_SHORT).show();
 
         return filteredList;
     }

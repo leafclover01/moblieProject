@@ -17,6 +17,9 @@ public class detalPhong implements Serializable {
         this.chiTietLoaiPhong = chiTietLoaiPhong;
     }
 
+    public detalPhong() {
+    }
+
     public Phong getPhong() {
         return phong;
     }

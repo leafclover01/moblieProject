@@ -5,18 +5,31 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".page.admin.adRoom.Component.AddRoom">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/back"
+                android:background="@color/gradStart"
+                android:src="@drawable/ad_back_left"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="back"/>
+        </LinearLayout>
         <TextView
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30dp"
-            android:textColor="#B57CBF"
+            android:textColor="@color/violet10"
             android:textStyle="bold"
             android:textAlignment="center"
             android:text="hãy nhập thông tin phòng"/>
@@ -34,14 +47,14 @@
             android:orientation="vertical">
             <TextView
                 android:textSize="18sp"
-                android:textColor="#7452AF"
+                android:textColor="@color/violet10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Vị trí phòng"
                 android:layout_weight="1"/>
             <EditText
+                android:textColor="@color/globalBackgroundDefault"
                 android:hint="Nhập vị trí phòng"
-                android:inputType="number"
                 android:id="@+id/ad_r_viTri"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"/>
@@ -53,14 +66,15 @@
             android:orientation="horizontal">
             <TextView
                 android:textSize="18sp"
-                android:textColor="#7452AF"
+                android:textColor="@color/violet10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Chọn Loại Phòng"
                 android:layout_weight="1"/>
             <Spinner
+                android:outlineAmbientShadowColor="@color/blue30"
                 android:id="@+id/ad_r_sp"
-                android:layout_width="150dp"
+                android:layout_width="220dp"
                 android:layout_height="50dp"/>
         </LinearLayout>
 

@@ -14,10 +14,6 @@
             android:icon="@drawable/drawer_hotel"
             android:title="Đặt phòng"/>
         <item
-            android:id="@+id/nav_bill"
-            android:icon="@drawable/drawer_hotel"
-            android:title="Lịch sử"/>
-        <item
             android:id="@+id/nav_account"
             android:icon="@drawable/drawer_account"
             android:title="Thông tin tài khoản"/>
@@ -29,6 +25,10 @@
             android:id="@+id/nav_settings"
             android:icon="@drawable/drawer_setting"
             android:title="Cài đặt"/>
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/drawer_logout"
+            android:title="Đăng xuất"/>
     </group>
 <!--    <item-->
 <!--        android:title="">-->

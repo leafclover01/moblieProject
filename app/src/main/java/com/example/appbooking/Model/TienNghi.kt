@@ -1,6 +1,8 @@
 package com.example.appbooking.Model
 
+
 class TienNghi {
+    val icMoTa: CharArray = charArrayOf()
     var ma_tien_nghi: Int = -1
     var tenTienNghi: String? = null
     var ic_mo_ta: String? = null
@@ -18,3 +20,5 @@ class TienNghi {
     }
 
 }
+
+

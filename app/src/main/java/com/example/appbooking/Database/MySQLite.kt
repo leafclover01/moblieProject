@@ -2,10 +2,11 @@ package com.example.appbooking.Database
 
 
 import android.content.Context
+import android.util.Log
 import com.example.appbooking.Model.Don
 import com.example.appbooking.Model.LoaiPhong
 import com.example.appbooking.Model.Phong
-import com.example.appbooking.Model.RoomRating
+//import com.example.appbooking.Model.RoomRating
 import com.example.appbooking.Model.TaiKhoan
 import com.example.appbooking.Model.TienNghi
 
@@ -474,7 +475,123 @@ class MySQLite {
         return ds
     }
 
-    fun layDuLieuPhongCoNguoiDatTuMaPhong(checkIn: String, checkOut: String, maLoaiPhong: Int): ArrayList<HashMap<String, Any>> {
+    fun layDuLieuCacAnhCuaLoaiPhong(maLoaiPhong: Int): ArrayList<String>{
+        var ds = ArrayList<String>()
+        db.connect().use {conn ->
+            var sql = """
+                        SELECT hinh from LOAI_PHONG AS L
+                            JOIN CHI_TIET_LOAI_PHONG AS C ON L.ma_loai_phong = C.ma_loai_phong
+                            WHERE L.ma_loai_phong = $maLoaiPhong;
+            """
+            var rows = conn.query(sql).forEach{ row ->
+                ds.add(
+                    row.get(0).toString()
+                )
+            }
+        }
+        return ds
+    }
+
+    fun traVeLoaiPhongTuMaDon(ma_don: Int): String {
+        var ds = ""
+        db.connect().use {conn ->
+            var sql = """
+                select ten from PHONG as P
+                    join LOAI_PHONG as L on P.ma_loai_phong = L.ma_loai_phong
+                    join THUE as D on D.ma_phong = P.ma_phong
+                    where D.ma_don = $ma_don
+            """
+            var rows = conn.query(sql).forEach{ row ->
+                ds = row.get(0).toString()
+            }
+        }
+        return ds
+    }
+    fun layDuLieuDonCuaUser(id: Int): ArrayList<Don> {
+        var ds = ArrayList<Don>()
+        db.connect().use {conn ->
+            var sql = """
+                    SELECT * from DON
+                        WHERE ma_nguoi_dat = $id
+            """
+            var rows = conn.query(sql).forEach{ row ->
+                ds.add(Don(
+                    row.get(0).toString().toInt(),
+                    parseDate(row.get(1).toString()),
+                    row.get(2).toString().toInt(),
+                    parseDate(row.get(3).toString())
+                ))
+            }
+        }
+        return ds
+    }
+
+
+    fun parseDate(dateStr: String): Date? {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+        return dateFormat.parse(dateStr)
+    }
+//    fun getThongKe(): ArrayList<RoomRating> {
+//        var arr = ArrayList<RoomRating>()
+//        db.connect().use { conn ->
+//            val sql = """
+//                SELECT
+//                    L.ma_loai_phong,
+//                    L.ten,
+//                    COALESCE(AVG(DG.danh_gia_sach_se), 0) AS avg_danh_gia_sach_se,
+//                    COALESCE(AVG(DG.danh_gia_chat_luong_phong), 0) AS avg_danh_gia_chat_luong_phong,
+//                    COALESCE(AVG(DG.danh_gia_nhan_vien_phuc_vu), 0) AS avg_danh_gia_nhan_vien_phuc_vu,
+//                    COALESCE(AVG(DG.danh_gia_tien_nghi), 0) AS avg_danh_gia_tien_nghi
+//                FROM CHI_TIET_DANH_GIA AS DG
+//                RIGHT JOIN DON AS D ON D.ma_don = DG.ma_don
+//                JOIN THUE AS T ON D.ma_don = T.ma_don
+//                JOIN PHONG AS P ON P.ma_phong = T.ma_phong
+//                JOIN LOAI_PHONG AS L ON L.ma_loai_phong = P.ma_loai_phong
+//                GROUP BY L.ma_loai_phong, L.ten;
+//            """
+//            val rows = conn.query(sql)
+//            rows.forEach { row ->
+//                arr.add(
+//                    RoomRating(
+//                        row.get(0).toString(),
+//                        row.get(1).toString(),
+//                        row.get(2).toString().toFloat(),
+//                        row.get(3).toString().toFloat(),
+//                        row.get(4).toString().toFloat(),
+//                        row.get(5).toString().toFloat()
+//                    )
+//                )
+//            }
+//        }
+//        return arr
+//    }
+
+    fun layDuLieuTienNghi(maLoaiPhong: Int): ArrayList<TienNghi> {
+        val dsTienNghi = ArrayList<TienNghi>()
+        db.connect().use { conn ->
+            val sql = """
+            SELECT TN.ma_tien_nghi, TN.ten_tien_nghi, TN.ic_mo_ta
+            FROM LOAI_PHONG AS L
+            JOIN CO_TIEN_NGHI AS C ON L.ma_loai_phong = C.ma_loai_phong
+            JOIN TIEN_NGHI AS TN ON C.ma_tien_nghi = TN.ma_tien_nghi
+            WHERE L.ma_loai_phong = $maLoaiPhong;
+        """
+            val rows = conn.query(sql)
+            rows.forEach { row ->
+                dsTienNghi.add(
+                    TienNghi(
+                        row.get(2).toString(),//hinh
+                        row.get(1).toString(),// ten
+                        row.get(0).toString().toInt() //ma
+                    )
+                )
+            }
+        }
+        return dsTienNghi
+    }
+
+
+fun layDuLieuPhongCoNguoiDatTuMaPhong(checkIn: String, checkOut: String, maLoaiPhong: Int): ArrayList<HashMap<String, Any>> {
         val ds = ArrayList<HashMap<String, Any>>()
 
         db.connect().use { conn ->
@@ -588,119 +705,5 @@ class MySQLite {
     }
 
 
-    fun layDuLieuCacAnhCuaLoaiPhong(maLoaiPhong: Int): ArrayList<String>{
-        var ds = ArrayList<String>()
-        db.connect().use {conn ->
-            var sql = """
-                        SELECT hinh from LOAI_PHONG AS L
-                            JOIN CHI_TIET_LOAI_PHONG AS C ON L.ma_loai_phong = C.ma_loai_phong
-                            WHERE L.ma_loai_phong = $maLoaiPhong;
-            """
-            var rows = conn.query(sql).forEach{ row ->
-                ds.add(
-                    row.get(0).toString()
-                )
-            }
-        }
-        return ds
-    }
-
-    fun traVeLoaiPhongTuMaDon(ma_don: Int): String {
-        var ds = ""
-        db.connect().use {conn ->
-            var sql = """
-                select ten from PHONG as P
-                    join LOAI_PHONG as L on P.ma_loai_phong = L.ma_loai_phong
-                    join THUE as D on D.ma_phong = P.ma_phong
-                    where D.ma_don = $ma_don
-            """
-            var rows = conn.query(sql).forEach{ row ->
-                ds = row.get(0).toString()
-            }
-        }
-        return ds
-    }
-    fun layDuLieuDonCuaUser(id: Int): ArrayList<Don> {
-        var ds = ArrayList<Don>()
-        db.connect().use {conn ->
-            var sql = """
-                    SELECT * from DON
-                        WHERE ma_nguoi_dat = $id
-            """
-            var rows = conn.query(sql).forEach{ row ->
-                ds.add(Don(
-                    row.get(0).toString().toInt(),
-                    parseDate(row.get(1).toString()),
-                    row.get(2).toString().toInt(),
-                    parseDate(row.get(3).toString())
-                ))
-            }
-        }
-        return ds
-    }
-
-
-    fun parseDate(dateStr: String): Date? {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
-        return dateFormat.parse(dateStr)
-    }
-    fun getThongKe(): ArrayList<RoomRating> {
-        var arr = ArrayList<RoomRating>()
-        db.connect().use { conn ->
-            val sql = """
-                SELECT 
-                    L.ma_loai_phong, 
-                    L.ten, 
-                    COALESCE(AVG(DG.danh_gia_sach_se), 0) AS avg_danh_gia_sach_se,
-                    COALESCE(AVG(DG.danh_gia_chat_luong_phong), 0) AS avg_danh_gia_chat_luong_phong,
-                    COALESCE(AVG(DG.danh_gia_nhan_vien_phuc_vu), 0) AS avg_danh_gia_nhan_vien_phuc_vu,
-                    COALESCE(AVG(DG.danh_gia_tien_nghi), 0) AS avg_danh_gia_tien_nghi
-                FROM CHI_TIET_DANH_GIA AS DG
-                RIGHT JOIN DON AS D ON D.ma_don = DG.ma_don
-                JOIN THUE AS T ON D.ma_don = T.ma_don
-                JOIN PHONG AS P ON P.ma_phong = T.ma_phong
-                JOIN LOAI_PHONG AS L ON L.ma_loai_phong = P.ma_loai_phong
-                GROUP BY L.ma_loai_phong, L.ten;
-            """
-            val rows = conn.query(sql)
-            rows.forEach { row ->
-                arr.add(
-                    RoomRating(
-                        row.get(0).toString(),
-                        row.get(1).toString(),
-                        row.get(2).toString().toFloat(),
-                        row.get(3).toString().toFloat(),
-                        row.get(4).toString().toFloat(),
-                        row.get(5).toString().toFloat()
-                    )
-                )
-            }
-        }
-        return arr
-    }
-
-    fun layDuLieuTienNghi(maLoaiPhong: Int): ArrayList<TienNghi> {
-        val dsTienNghi = ArrayList<TienNghi>()
-        db.connect().use { conn ->
-            val sql = """
-            SELECT TN.ma_tien_nghi, TN.ten_tien_nghi, TN.ic_mo_ta
-            FROM LOAI_PHONG AS L
-            JOIN CO_TIEN_NGHI AS C ON L.ma_loai_phong = C.ma_loai_phong
-            JOIN TIEN_NGHI AS TN ON C.ma_tien_nghi = TN.ma_tien_nghi
-            WHERE L.ma_loai_phong = $maLoaiPhong;
-        """
-            val rows = conn.query(sql)
-            rows.forEach { row ->
-                dsTienNghi.add(
-                    TienNghi(
-                        row.get(2).toString(),//hinh
-                        row.get(1).toString(),// ten
-                        row.get(0).toString().toInt() //ma
-                    )
-                )
-            }
-        }
-        return dsTienNghi
-    }
 
 }

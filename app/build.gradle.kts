@@ -54,7 +54,7 @@ buildscript {
     }
     dependencies {
         // Gradle plugin compatible with compileSdk 35
-        classpath("com.android.tools.build:gradle:8.7.2")
+        classpath("com.android.tools.build:gradle:8.9.2")
 
     }
 }
@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
+    implementation(libs.annotation)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

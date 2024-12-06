@@ -33,11 +33,9 @@ class ThongKeDanhGiaActivity : AppCompatActivity() {
         val role = sharedPreferences.getInt("role", -1)
         val imageBack = findViewById<ImageView>(R.id.arrow_back_ios)
         imageBack.setOnClickListener { finish() }
-//        var list = db.getThongKe()
-//        val adapterThongKe = ThongKeAdapter(this, R.layout.admin_thong_ke, list)
-//        lvDanhGia.adapter = adapterThongKe
+        var list = db.getThongKe()
+        val adapterThongKe = ThongKeAdapter(this, R.layout.admin_thong_ke, list)
+        lvDanhGia.adapter = adapterThongKe
     }
-
-
 
 }

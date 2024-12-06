@@ -2,11 +2,10 @@ package com.example.appbooking.Database
 
 
 import android.content.Context
-import android.util.Log
 import com.example.appbooking.Model.Don
 import com.example.appbooking.Model.LoaiPhong
 import com.example.appbooking.Model.Phong
-//import com.example.appbooking.Model.RoomRating
+import com.example.appbooking.Model.RoomRating
 import com.example.appbooking.Model.TaiKhoan
 import com.example.appbooking.Model.TienNghi
 
@@ -531,40 +530,40 @@ class MySQLite {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
         return dateFormat.parse(dateStr)
     }
-//    fun getThongKe(): ArrayList<RoomRating> {
-//        var arr = ArrayList<RoomRating>()
-//        db.connect().use { conn ->
-//            val sql = """
-//                SELECT
-//                    L.ma_loai_phong,
-//                    L.ten,
-//                    COALESCE(AVG(DG.danh_gia_sach_se), 0) AS avg_danh_gia_sach_se,
-//                    COALESCE(AVG(DG.danh_gia_chat_luong_phong), 0) AS avg_danh_gia_chat_luong_phong,
-//                    COALESCE(AVG(DG.danh_gia_nhan_vien_phuc_vu), 0) AS avg_danh_gia_nhan_vien_phuc_vu,
-//                    COALESCE(AVG(DG.danh_gia_tien_nghi), 0) AS avg_danh_gia_tien_nghi
-//                FROM CHI_TIET_DANH_GIA AS DG
-//                RIGHT JOIN DON AS D ON D.ma_don = DG.ma_don
-//                JOIN THUE AS T ON D.ma_don = T.ma_don
-//                JOIN PHONG AS P ON P.ma_phong = T.ma_phong
-//                JOIN LOAI_PHONG AS L ON L.ma_loai_phong = P.ma_loai_phong
-//                GROUP BY L.ma_loai_phong, L.ten;
-//            """
-//            val rows = conn.query(sql)
-//            rows.forEach { row ->
-//                arr.add(
-//                    RoomRating(
-//                        row.get(0).toString(),
-//                        row.get(1).toString(),
-//                        row.get(2).toString().toFloat(),
-//                        row.get(3).toString().toFloat(),
-//                        row.get(4).toString().toFloat(),
-//                        row.get(5).toString().toFloat()
-//                    )
-//                )
-//            }
-//        }
-//        return arr
-//    }
+    fun getThongKe(): ArrayList<RoomRating> {
+        var arr = ArrayList<RoomRating>()
+        db.connect().use { conn ->
+            val sql = """
+                SELECT 
+                    L.ma_loai_phong, 
+                    L.ten, 
+                    COALESCE(AVG(DG.danh_gia_sach_se), 0) AS avg_danh_gia_sach_se,
+                    COALESCE(AVG(DG.danh_gia_chat_luong_phong), 0) AS avg_danh_gia_chat_luong_phong,
+                    COALESCE(AVG(DG.danh_gia_nhan_vien_phuc_vu), 0) AS avg_danh_gia_nhan_vien_phuc_vu,
+                    COALESCE(AVG(DG.danh_gia_tien_nghi), 0) AS avg_danh_gia_tien_nghi
+                FROM CHI_TIET_DANH_GIA AS DG
+                RIGHT JOIN DON AS D ON D.ma_don = DG.ma_don
+                JOIN THUE AS T ON D.ma_don = T.ma_don
+                JOIN PHONG AS P ON P.ma_phong = T.ma_phong
+                JOIN LOAI_PHONG AS L ON L.ma_loai_phong = P.ma_loai_phong
+                GROUP BY L.ma_loai_phong, L.ten;
+            """
+            val rows = conn.query(sql)
+            rows.forEach { row ->
+                arr.add(
+                    RoomRating(
+                        row.get(0).toString(),
+                        row.get(1).toString(),
+                        row.get(2).toString().toFloat(),
+                        row.get(3).toString().toFloat(),
+                        row.get(4).toString().toFloat(),
+                        row.get(5).toString().toFloat()
+                    )
+                )
+            }
+        }
+        return arr
+    }
 
     fun layDuLieuTienNghi(maLoaiPhong: Int): ArrayList<TienNghi> {
         val dsTienNghi = ArrayList<TienNghi>()
@@ -590,12 +589,12 @@ class MySQLite {
         return dsTienNghi
     }
 
-
+    
 fun layDuLieuPhongCoNguoiDatTuMaPhong(checkIn: String, checkOut: String, maLoaiPhong: Int): ArrayList<HashMap<String, Any>> {
-        val ds = ArrayList<HashMap<String, Any>>()
+    val ds = ArrayList<HashMap<String, Any>>()
 
-        db.connect().use { conn ->
-            val sql = """
+    db.connect().use { conn ->
+        val sql = """
         SELECT 
             P.ma_phong, 
             P.vi_tri, 
@@ -619,41 +618,41 @@ fun layDuLieuPhongCoNguoiDatTuMaPhong(checkIn: String, checkOut: String, maLoaiP
         GROUP BY P.ma_phong
         """
 
-            val rows = conn.query(sql)
-            rows.forEach { row ->
-                val resultMap = HashMap<String, Any>()
+        val rows = conn.query(sql)
+        rows.forEach { row ->
+            val resultMap = HashMap<String, Any>()
 
-                val maPhong = row.get(0).toString().toInt()
-                val viTri = row.get(1).toString()
-                val maLoaiPhong = row.get(2).toString().toInt()
-                val maDon = row.get(3).toString()
-                val checkInDb = row.get(4).toString()
-                val checkOutDb = row.get(5).toString()
-                val username = row.get(6).toString()
-                val id = row.get(7).toString()
+            val maPhong = row.get(0).toString().toInt()
+            val viTri = row.get(1).toString()
+            val maLoaiPhong = row.get(2).toString().toInt()
+            val maDon = row.get(3).toString()
+            val checkInDb = row.get(4).toString()
+            val checkOutDb = row.get(5).toString()
+            val username = row.get(6).toString()
+            val id = row.get(7).toString()
 
-                resultMap["ma_phong"] = maPhong
-                resultMap["vi_tri"] = viTri
-                resultMap["ma_loai_phong"] = maLoaiPhong
-                resultMap["ma_don"] = maDon
-                resultMap["check_in"] = checkInDb
-                resultMap["check_out"] = checkOutDb
-                resultMap["username"] = username
-                resultMap["id"] = id
+            resultMap["ma_phong"] = maPhong
+            resultMap["vi_tri"] = viTri
+            resultMap["ma_loai_phong"] = maLoaiPhong
+            resultMap["ma_don"] = maDon
+            resultMap["check_in"] = checkInDb
+            resultMap["check_out"] = checkOutDb
+            resultMap["username"] = username
+            resultMap["id"] = id
 
-                    ds.add(resultMap)
-            }
+            ds.add(resultMap)
         }
-
-        return ds
     }
 
+    return ds
+}
 
-    fun layDuLieuPhongCoNguoiDat(checkIn: String, checkOut: String): ArrayList<HashMap<String, Any>> {
-        val ds = ArrayList<HashMap<String, Any>>()
 
-        db.connect().use { conn ->
-            val sql = """
+fun layDuLieuPhongCoNguoiDat(checkIn: String, checkOut: String): ArrayList<HashMap<String, Any>> {
+    val ds = ArrayList<HashMap<String, Any>>()
+
+    db.connect().use { conn ->
+        val sql = """
         SELECT 
             P.ma_phong, 
             P.vi_tri, 
@@ -676,34 +675,33 @@ fun layDuLieuPhongCoNguoiDatTuMaPhong(checkIn: String, checkOut: String, maLoaiP
         GROUP BY P.ma_phong
         """
 
-            conn.query(sql).forEach { row ->
-                val maPhong = row.get(0).toString().toInt()
-                val viTri = row.get(1).toString()
-                val maLoaiPhong = row.get(2).toString().toInt()
-                val maDon = row.get(3).toString()
-                val checkInDb = row.get(4).toString()
-                val checkOutDb = row.get(5).toString()
-                val username = row.get(6).toString()
-                val id = row.get(7).toString()
+        conn.query(sql).forEach { row ->
+            val maPhong = row.get(0).toString().toInt()
+            val viTri = row.get(1).toString()
+            val maLoaiPhong = row.get(2).toString().toInt()
+            val maDon = row.get(3).toString()
+            val checkInDb = row.get(4).toString()
+            val checkOutDb = row.get(5).toString()
+            val username = row.get(6).toString()
+            val id = row.get(7).toString()
 
-                val resultMap = HashMap<String, Any>().apply {
-                    put("ma_phong", maPhong)
-                    put("vi_tri", viTri)
-                    put("ma_loai_phong", maLoaiPhong)
-                    put("ma_don", maDon)
-                    put("check_in", checkInDb)
-                    put("check_out", checkOutDb)
-                    put("username", username)
-                    put("id", id)
-                }
-
-                    ds.add(resultMap)
+            val resultMap = HashMap<String, Any>().apply {
+                put("ma_phong", maPhong)
+                put("vi_tri", viTri)
+                put("ma_loai_phong", maLoaiPhong)
+                put("ma_don", maDon)
+                put("check_in", checkInDb)
+                put("check_out", checkOutDb)
+                put("username", username)
+                put("id", id)
             }
-        }
 
-        return ds
+            ds.add(resultMap)
+        }
     }
 
+    return ds
+}
 
 
 }

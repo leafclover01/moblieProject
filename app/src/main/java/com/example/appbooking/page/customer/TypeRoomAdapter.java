@@ -15,6 +15,7 @@ import com.example.appbooking.Model.ChiTietLoaiPhong;
 import com.example.appbooking.R;
 import com.example.appbooking.Model.LoaiPhong;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -64,6 +65,9 @@ public class TypeRoomAdapter extends RecyclerView.Adapter<TypeRoomAdapter.LoaiPh
             intent.putExtra("moTaPhong", "Loại Phòng: " + loaiPhong.getMoTa() );
             intent.putExtra("imageResource", getchiTiet(loaiPhong.getMaLoaiPhong())); // intent gửi uri ảnh
             intent.putExtra("moTaChiTiet", "Chi Tiết: " + getMoTaChiTiet(loaiPhong.getMaLoaiPhong()));
+// Lấy danh sách tiện nghi từ cơ sở dữ liệu hoặc tạo danh sách tiện nghi
+            List<String> tienNghiList = getTienNghi(loaiPhong.getMaLoaiPhong());
+            intent.putExtra("tienNghi", new ArrayList<>(tienNghiList));  // Truyền danh sách vào Intent
 
 
 
@@ -119,6 +123,22 @@ public class TypeRoomAdapter extends RecyclerView.Adapter<TypeRoomAdapter.LoaiPh
             e.printStackTrace(); // Hiển thị lỗi nếu có
         }
         return moTaChiTiet.isEmpty() ? "Mô tả chi tiết không có sẵn" : moTaChiTiet;
+    }
+
+
+    public List<String> getTienNghi(int maLoaiPhong) {
+        List<String> tienNghiList = new ArrayList<>();
+        try {
+            List<List<Object>> result = db1.executeQuery("SELECT ten_tien_nghi FROM TIEN_NGHI " +
+                    "JOIN CO_TIEN_NGHI ON TIEN_NGHI.ma_tien_nghi = CO_TIEN_NGHI.ma_tien_nghi " +
+                    "WHERE ma_loai_phong = " + maLoaiPhong + ";");
+            for (List<Object> row : result) {
+                tienNghiList.add(row.get(0).toString());  // Lấy tên tiện nghi
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tienNghiList;
     }
 
 }

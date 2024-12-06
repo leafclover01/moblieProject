@@ -5,19 +5,26 @@
     android:padding="16dp">
 
     <!-- TextView để hiển thị tên tiện nghi -->
-    <TextView
-        android:id="@+id/tenTienNghi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tên Tiện Nghi"
-        android:textSize="16sp" />
+<!--    <TextView-->
+<!--        android:id="@+id/tenTienNghi"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Tên Tiện Nghi"-->
+<!--        android:textSize="16sp" />-->
 
-    <!-- TextView để hiển thị mô tả tiện nghi -->
+<!--    &lt;!&ndash; TextView để hiển thị mô tả tiện nghi &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/moTaTienNghi"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Mô Tả Tiện Nghi"-->
+<!--        android:textSize="14sp" />-->
     <TextView
-        android:id="@+id/moTaTienNghi"
+        android:id="@+id/tvTienNghi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mô Tả Tiện Nghi"
-        android:textSize="14sp" />
+        android:text="Tiện Nghi"
+        android:padding="8dp"
+        android:textSize="16sp" />
 
 </LinearLayout>

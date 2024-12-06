@@ -19,19 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TienNghiAdapter extends RecyclerView.Adapter<TienNghiAdapter.TienNghiViewHolder> {
-    private ArrayList<TienNghi> dsTienNghi;
+    private final List<String> tienNghiList;
 
-    public static class TienNghiViewHolder extends RecyclerView.ViewHolder {
-        public TextView tenTienNghi;
-        public TextView moTaTienNghi; // Đã bỏ comment ở đây
-
-        public TienNghiViewHolder(View itemView) {
-            super(itemView);
-            tenTienNghi = itemView.findViewById(R.id.tenTienNghi);
-            moTaTienNghi = itemView.findViewById(R.id.moTaTienNghi); // Đảm bảo có id trong layout
-        }
+    public TienNghiAdapter(List<String> tienNghiList) {
+        this.tienNghiList = tienNghiList;
     }
-
 
     @NonNull
     @Override
@@ -42,43 +34,20 @@ public class TienNghiAdapter extends RecyclerView.Adapter<TienNghiAdapter.TienNg
 
     @Override
     public void onBindViewHolder(@NonNull TienNghiViewHolder holder, int position) {
-        TienNghi tienNghi = dsTienNghi.get(position);
-        holder.tenTienNghi.setText(tienNghi.getTenTienNghi());
-        holder.moTaTienNghi.setText(tienNghi.getIc_mo_ta());
-
-        // Thêm sự kiện click để chuyển đến DetailsTypeRoomActivity
-        holder.itemView.setOnClickListener(v -> {
-            // Tạo intent để chuyển đến DetailsTypeRoomActivity
-            Intent intent = new Intent(holder.itemView.getContext(), DetailsTypeRoomActivity.class);
-
-            // Truyền dữ liệu tiện nghi vào Intent
-            intent.putExtra("tenTienNghi", tienNghi.getTenTienNghi());
-            intent.putExtra("moTaTienNghi", tienNghi.getIc_mo_ta());
-
-            // Nếu có icon hoặc hình ảnh tiện nghi, bạn có thể truyền vào
-            // intent.putExtra("iconTienNghi", tienNghi.getIcMoTa());
-
-            // Khởi động activity mới
-            holder.itemView.getContext().startActivity(intent);
-        });
+        holder.tvTienNghi.setText(tienNghiList.get(position));
     }
-
 
     @Override
     public int getItemCount() {
-        return dsTienNghi.size();
+        return tienNghiList.size();
     }
 
-//    public static class TienNghiViewHolder extends RecyclerView.ViewHolder {
-//        public TextView tenTienNghi;
-//        public TextView moTaTienNghi;
-//        // public ImageView iconTienNghi;
-//
-//        public TienNghiViewHolder(View itemView) {
-//            super(itemView);
-//            tenTienNghi = itemView.findViewById(R.id.tenTienNghi);
-////            moTaTienNghi = itemView.findViewById(R.id.moTaTienNghi);
-//            // iconTienNghi = itemView.findViewById(R.id.iconTienNghi);
-//        }
-//    }
+    public static class TienNghiViewHolder extends RecyclerView.ViewHolder {
+        TextView tvTienNghi;
+
+        public TienNghiViewHolder(View itemView) {
+            super(itemView);
+            tvTienNghi = itemView.findViewById(R.id.tvTienNghi);
+        }
+    }
 }

@@ -25,6 +25,7 @@ import com.example.appbooking.Model.Phong;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 //import androidx.recyclerview.widget.GridLayoutManager;
@@ -66,17 +67,19 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
             // Quay lại màn hình trước đó
             onBackPressed();
         });
-
+        RecyclerView recyclerViewTienNghi = findViewById(R.id.recyclerViewTienNghi);
         // Nhận dữ liệu từ Intent
+
+        Intent intent = getIntent();
         String tenPhong = getIntent().getStringExtra("tenPhong");
         String giaPhong = getIntent().getStringExtra("giaPhong");
         String soNguoi = getIntent().getStringExtra("soNguoi");
         String moTaPhong = getIntent().getStringExtra("moTaPhong");
         String moTaChiTietPhong = getIntent().getStringExtra("moTaChiTiet");
-
         String imageResource = getIntent().getStringExtra("imageResource"); // cái này đổi thành String để nhận
 //        Toast.makeText(this, imageResource + "", Toast.LENGTH_SHORT).show();
-
+        // Nhận tiện nghi từ Intent
+        ArrayList<String> tienNghiList = intent.getStringArrayListExtra("tienNghi");
         // Cập nhật UI
         tenLoaiPhong.setText(tenPhong);
         giaLoaiPhong.setText(giaPhong);
@@ -107,39 +110,13 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         });
         // Setup RecyclerView
         recyclerViewPhongTrong.setLayoutManager(new LinearLayoutManager(this));
+        // Hiển thị tiện nghi
+        TienNghiAdapter tienNghiAdapter = new TienNghiAdapter(tienNghiList);
+        recyclerViewTienNghi.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerViewTienNghi.setAdapter(tienNghiAdapter);
 
 
 
-
-
-//        // Kiểm tra và đảm bảo adapter đã được thiết lập cho RecyclerView
-//        RecyclerView recyclerViewTienNghi = findViewById(R.id.recyclerViewTienNghi);
-//        recyclerViewTienNghi.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-//
-//        TienNghiAdapter tienNghiAdapter = new TienNghiAdapter(dsTienNghi); // dsTienNghi là danh sách tiện nghi từ SQL
-//        recyclerViewTienNghi.setAdapter(tienNghiAdapter);
-//
-//        // Lấy mã loại phòng từ Intent
-//        int maLoaiPhong = getIntent().getIntExtra("maLoaiPhong", -1);
-//
-//// Kiểm tra mã loại phòng và lấy dữ liệu tiện nghi
-//        if (maLoaiPhong != -1) {
-//            // Gọi hàm lấy dữ liệu tiện nghi từ SQL
-//            dsTienNghi = layDuLieuTienNghi(maLoaiPhong);
-//
-//            // In ra log để kiểm tra danh sách tiện nghi
-//            Log.d("TienNghi", "Số tiện nghi: " + dsTienNghi.size());
-//
-//            // Kiểm tra nếu danh sách tiện nghi không rỗng
-//            if (!dsTienNghi.isEmpty()) {
-//                // Gắn adapter vào RecyclerView
-//                tienNghiAdapter = new TienNghiAdapter(dsTienNghi);
-//                recyclerViewTienNghi.setAdapter(tienNghiAdapter);
-//            } else {
-//                // Nếu không có tiện nghi nào, hiển thị thông báo
-//                Toast.makeText(this, "Không có tiện nghi cho loại phòng này!", Toast.LENGTH_SHORT).show();
-//            }
-//        }
 
         // Truyền thông tin phòng từ DetailsTypeRoomActivity
         btnNext.setOnClickListener(new View.OnClickListener() {

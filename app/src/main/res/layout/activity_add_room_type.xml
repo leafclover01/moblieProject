@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/light"
     tools:context=".page.admin.adRoom.Component.addRoomType">
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,6 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/gradStart"
             android:orientation="horizontal">
             <ImageButton
                 android:id="@+id/back"
@@ -22,57 +23,70 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="back"/>
+            <TextView
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:text="Thêm Phòng Mới"
+                android:textColor="#000000"
+                android:paddingTop="10dp"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
         <TextView
-            android:layout_marginTop="10dp"
-            android:textSize="30dp"
-            android:textAlignment="center"
-            android:textColor="@color/brandBlue10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nhập Thông tin loại Phòng"/>
-        <TextView
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="40dp"
             android:textSize="18sp"
-            android:textColor="@color/green10"
+            android:textColor="#000000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nhập Thông tin loại Phòng"/>
         <EditText
-            android:textColor="@color/light"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
             android:hint="Nhập tên"
             android:id="@+id/ad_rt_ten"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
-
         <TextView
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="20dp"
             android:textSize="18sp"
-            android:textColor="@color/green10"
+            android:textColor="#000000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nhập Thông tin giá"/>
         <EditText
-            android:textColor="@color/light"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
             android:hint="Nhập giá"
             android:inputType="number"
             android:id="@+id/ad_rt_gia"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
         <LinearLayout
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
                 android:textSize="18sp"
-                android:textColor="@color/green10"
+                android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nhập số lượng người tối đa"
                 android:layout_weight="1"/>
             <EditText
-                android:textColor="@color/light"
+                android:textColor="#000000"
+                android:textStyle="bold"
                 android:hint="Số lượng"
                 android:inputType="number"
                 android:id="@+id/ad_rt_sl"
@@ -80,28 +94,38 @@
                 android:layout_height="50dp"/>
         </LinearLayout>
         <TextView
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="20dp"
             android:textSize="18sp"
-            android:textColor="@color/green10"
+            android:textColor="#000000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nhập Thông tin mô tả chi tiết"/>
         <EditText
-            android:textColor="@color/light"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
             android:id="@+id/ad_rt_mttt"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="Nhập văn bản mô tả..."
             android:scrollbars="vertical"/>
         <TextView
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="20dp"
             android:textSize="18sp"
-            android:textColor="@color/green10"
+            android:textColor="#000000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nhập Thông tin mô tả chi tiết"/>
         <EditText
-            android:textColor="@color/light"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
             android:id="@+id/ad_rt_mt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -112,7 +136,12 @@
             android:scrollbars="vertical"/>
 
         <Button
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="40dp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:backgroundTint="#0288D1"
             android:text="Lưu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

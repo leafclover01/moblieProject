@@ -3,11 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="0dp"
-    android:scrollbars="none"
-    android:background="@color/white">
+    android:background="#FFFFFF"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:background="@color/gradStart"
             android:padding="8dp">
 
             <!-- Tiêu Đề -->
@@ -41,11 +38,10 @@
                 android:id="@+id/tvChiTietHienThi"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:paddingTop="6dp"
                 android:text="Chi Tiết Hạng Phòng Stand"
-                android:textColor="@color/blue70"
+                android:textColor="#000000"
                 android:textSize="20dp"
-                android:paddingLeft="10dp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -81,6 +77,8 @@
 
         <!-- Giá loại phòng -->
         <TextView
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:id="@+id/tenLoaiPhong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,6 +89,8 @@
             android:textColor="@color/red60"/>
 
         <TextView
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:id="@+id/giaLoaiPhong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -99,6 +99,8 @@
 
         <!-- Số người tối đa -->
         <TextView
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:id="@+id/soNguoiToiDa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -107,22 +109,26 @@
 
         <!-- Mô tả -->
         <TextView
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:id="@+id/moTa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mô tả"
             android:paddingTop="8dp" />
         <TextView
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:id="@+id/moTaChiTiet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mô tả chi tiết: "
             android:textSize="14sp"
-
             android:layout_marginBottom="16dp" />
 
-
         <LinearLayout
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -137,8 +143,10 @@
                 android:layout_weight="1"
                 android:text="Ngày nhận phòng"
                 android:layout_marginEnd="8dp"
+                android:textStyle="bold"
+                android:backgroundTint="#0288D1"
                 android:drawableLeft="@drawable/ic_calendar"
-                android:background="@drawable/login_btn_background"/>
+         />
 
             <!-- Chọn ngày Check-out -->
             <Button
@@ -148,27 +156,34 @@
                 android:layout_weight="1"
                 android:text="Ngày trả phòng"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/login_btn_background"
+                android:textStyle="bold"
+                android:backgroundTint="#0288D1"
                 android:drawableLeft="@drawable/ic_calendar"/>
             <!-- Tiếp theo Button -->
         </LinearLayout>
         <Button
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:id="@+id/btnChonThoiGian"
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:text="Tìm phòng"
-            android:background="@drawable/login_btn_background" />
+            android:backgroundTint="#0288D1" />
 
         <!-- RecyclerView để hiển thị danh sách phòng trống -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewPhongTrong"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:layout_marginTop="16dp" />
         <!-- Tiêu đề các tiện nghi được ưa chuộng -->
         <TextView
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:id="@+id/tvTieuDeTienNghi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -177,13 +192,13 @@
             android:textStyle="bold"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
-            android:paddingLeft="7dp"
             android:gravity="left"
             android:textColor="@color/brandOrange70"/>
+
         <androidx.recyclerview.widget.RecyclerView
-
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:id="@+id/recyclerViewTienNghi"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -192,9 +207,13 @@
             android:scrollbars="horizontal" />
 
         <Button
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:backgroundTint="#0288D1"
             android:text="Tiếp theo"
             android:layout_marginTop="16dp"
             android:layout_gravity="center" />

@@ -1,21 +1,35 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="#E3F2FD">
-
+    android:background="#FFFFFF"
+>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chỉnh sửa thông tin khách hàng"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:paddingBottom="16dp" />
+            android:background="@color/gradStart"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/back"
+                android:background="@color/gradStart"
+                android:src="@drawable/ad_back_left"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="back"/>
+            <TextView
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:text="Chỉnh sửa thông tin khách hàng"
+                android:paddingTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
 
         <EditText
             android:id="@+id/etCustomerName"

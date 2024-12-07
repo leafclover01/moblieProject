@@ -13,6 +13,15 @@
             android:id="@+id/nav_hotel"
             android:icon="@drawable/drawer_hotel"
             android:title="Đặt phòng"/>
+
+<!--        <item-->
+<!--            android:id="@+id/nav_hotel"-->
+<!--            android:icon="@drawable/drawer_home"-->
+<!--            android:title="Trang chủ"/>-->
+<!--        <item-->
+<!--            android:id="@+id/nav_home"-->
+<!--            android:icon="@drawable/drawer_hotel"-->
+<!--            android:title="Đặt phòng"/>-->
         <item
             android:id="@+id/nav_account"
             android:icon="@drawable/drawer_account"

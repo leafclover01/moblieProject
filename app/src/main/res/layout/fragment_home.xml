@@ -9,7 +9,6 @@
 
     <!-- RecyclerView để hiển thị danh sách loại phòng -->
 
-    <!--    Hình nền đáy-->
 
     <!--    Hình nền đáy-->
     <androidx.recyclerview.widget.RecyclerView

@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
+//import com.bumptech.glide.Glide;
 import com.example.appbooking.Database.MySQLite;
 import com.example.appbooking.Model.TienNghi;
 import com.example.appbooking.R;
@@ -30,7 +30,7 @@ import java.util.Locale;
 
 //import androidx.recyclerview.widget.GridLayoutManager;
 public class DetailsTypeRoomActivity extends AppCompatActivity {
-    // private ImageView imageLoaiPhong;
+//    private ImageView imageLoaiPhong;
     private TextView tenLoaiPhong, giaLoaiPhong, soNguoiToiDa, moTa, moTaChiTiet;
     private Button btnCheckIn, btnCheckOut, btnChonThoiGian;
     private RecyclerView recyclerViewPhongTrong;
@@ -48,7 +48,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_loai_phong);
-        // recyclerViewPhongTrong.setLayoutManager(new GridLayoutManager(this, 2));
+//        recyclerViewPhongTrong.setLayoutManager(new GridLayoutManager(this, 2));
         // Ánh xạ các view
         ImageView imageLoaiPhong = findViewById(R.id.imageLoaiPhong);
         tenLoaiPhong = findViewById(R.id.tenLoaiPhong);
@@ -77,7 +77,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         String moTaPhong = getIntent().getStringExtra("moTaPhong");
         String moTaChiTietPhong = getIntent().getStringExtra("moTaChiTiet");
         String imageResource = getIntent().getStringExtra("imageResource"); // cái này đổi thành String để nhận
-        // Toast.makeText(this, imageResource + "", Toast.LENGTH_SHORT).show();
+//         Toast.makeText(this, imageResource + "", Toast.LENGTH_SHORT).show();
         // Nhận tiện nghi từ Intent
         ArrayList<String> tienNghiList = intent.getStringArrayListExtra("tienNghi");
         // Cập nhật UI
@@ -87,7 +87,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         moTa.setText(moTaPhong);
         moTaChiTiet.setText(moTaChiTietPhong);
 
-        imageLoaiPhong.setImageURI(Uri.parse(imageResource)); // cái này cũng suẳ thành như này là được
+        imageLoaiPhong.setImageURI(Uri.parse(imageResource));  // cái này cũng suẳ thành như này là được
         TextView tvChiTietHienThi = findViewById(R.id.tvChiTietHienThi);
         tvChiTietHienThi.setText("Chi Tiết Hạng " + tenPhong);
         // Xử lý chọn ngày Check-in
@@ -96,21 +96,16 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         // Xử lý chọn ngày Check-out
         btnCheckOut.setOnClickListener(v -> showDatePickerDialog(false));
 
+
         btnChonThoiGian.setOnClickListener(v -> {
             if (timeCheckIn.isEmpty() || timeCheckOut.isEmpty()) {
                 Toast.makeText(this, "Vui lòng chọn ngày Check-in và Check-out!", Toast.LENGTH_SHORT).show();
             } else {
                 // Sử dụng thời gian đã được thêm giờ
 
-                ArrayList<Phong> dsPhongTrong = db1.layDuLieuPhongKhongCoNguoiDat(timeCheckIn, timeCheckOut, 1); // Ví
-                                                                                                                 // dụ
-                                                                                                                 // mã
-                                                                                                                 // loại
-                                                                                                                 // phòng
-                                                                                                                 // =
-                                                                                                                 // "1"
+                ArrayList<Phong> dsPhongTrong = db1.layDuLieuPhongKhongCoNguoiDat(timeCheckIn, timeCheckOut, 1); // Ví dụ mã loại phòng = "1"
                 loadRoomList(dsPhongTrong);
-                // Toast.makeText(this, dsPhongTrong.toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, dsPhongTrong.toString(), Toast.LENGTH_SHORT).show();
             }
         });
         // Setup RecyclerView
@@ -119,6 +114,9 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         TienNghiAdapter tienNghiAdapter = new TienNghiAdapter(tienNghiList);
         recyclerViewTienNghi.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerViewTienNghi.setAdapter(tienNghiAdapter);
+
+
+
 
         // Truyền thông tin phòng từ DetailsTypeRoomActivity
         btnNext.setOnClickListener(new View.OnClickListener() {
@@ -129,9 +127,9 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
                 if (maPhong != null && !maPhong.isEmpty()) {
                     // Truyền thông tin qua Intent
                     Intent intent = new Intent(DetailsTypeRoomActivity.this, PayMentHouse.class);
-                    intent.putExtra("tenPhong", tenPhong); // Cập nhật giá trị này
-                    intent.putExtra("giaPhong", giaPhong); // Cập nhật giá trị này
-                    intent.putExtra("maPhong", maPhong); // Mã phòng cần có giá trị hợp lệ
+                    intent.putExtra("tenPhong", tenPhong);  // Cập nhật giá trị này
+                    intent.putExtra("giaPhong", giaPhong);  // Cập nhật giá trị này
+                    intent.putExtra("maPhong", maPhong);  // Mã phòng cần có giá trị hợp lệ
                     intent.putExtra("moTaPhong", moTaPhong);
                     intent.putExtra("moTaChiTietPhong", moTaChiTietPhong);
                     intent.putExtra("timeCheckIn", timeCheckIn);
@@ -145,7 +143,6 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
             }
         });
     }
-
     private void showDatePickerDialog(boolean isCheckIn) {
         if (isCheckIn && !timeCheckIn.isEmpty()) {
             Toast.makeText(this, "Vui lòng chọn ngày Check-in!", Toast.LENGTH_SHORT).show();
@@ -169,11 +166,11 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
 
             String formattedDateTime;
             if (isCheckIn) {
-                // Check-in, giờ sẽ là 14:00 (mặc định)
+                //  Check-in, giờ sẽ là 14:00 (mặc định)
                 selectedCalendar.set(Calendar.HOUR_OF_DAY, 14);
                 selectedCalendar.set(Calendar.MINUTE, 0);
             } else {
-                // Check-out, giờ sẽ là 10:00 (mặc định)
+                //  Check-out, giờ sẽ là 10:00 (mặc định)
                 selectedCalendar.set(Calendar.HOUR_OF_DAY, 10);
                 selectedCalendar.set(Calendar.MINUTE, 0);
             }
@@ -191,8 +188,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
                     // Kiểm tra điều kiện cách nhau không quá 7 ngày
                     long diffInDays = diffInMillis / (1000 * 60 * 60 * 24); // Chuyển đổi khoảng cách thành số ngày
                     if (diffInDays > 7) {
-                        Toast.makeText(this, "Quý khách vui lòng liên hệ Room nếu muốn đặt trn 7 ngày",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Quý khách vui lòng liên hệ Room nếu muốn đặt trn 7 ngày", Toast.LENGTH_SHORT).show();
                         btnChonThoiGian.setEnabled(false);
                         btnNext.setEnabled(false);
                         return;
@@ -224,13 +220,11 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
                 timeCheckIn = formattedDateTime;
                 btnCheckIn.setText("Check-in: " + formattedDateTime);
 
-                // Toast.makeText(DetailsTypeRoomActivity.this, "Ngày Check-in: " +
-                // formattedDateTime, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(DetailsTypeRoomActivity.this, "Ngày Check-in: " + formattedDateTime, Toast.LENGTH_SHORT).show();
             } else {
                 timeCheckOut = formattedDateTime;
                 btnCheckOut.setText("Check-out: " + formattedDateTime);
-                // Toast.makeText(DetailsTypeRoomActivity.this, "Ngày Check-out: " +
-                // formattedDateTime, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(DetailsTypeRoomActivity.this, "Ngày Check-out: " + formattedDateTime, Toast.LENGTH_SHORT).show();
             }
 
         }, year, month, day).show();
@@ -244,7 +238,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
 
             RoomAdapter adapter = new RoomAdapter(dsPhongTrong, phong -> {
                 // Lấy mã phòng từ đối tượng phong
-                maPhong = String.valueOf(phong.getMaPhong()); // Lưu mã phòng vào biến maPhong
+                maPhong = String.valueOf(phong.getMaPhong());  // Lưu mã phòng vào biến maPhong
 
                 // Cập nhật giao diện hoặc làm gì đó khi người dùng chọn phòng
                 Toast.makeText(DetailsTypeRoomActivity.this, "Chọn phòng: " + maPhong, Toast.LENGTH_SHORT).show();
@@ -253,5 +247,6 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
             recyclerViewPhongTrong.setAdapter(adapter);
         }
     }
+
 
 }

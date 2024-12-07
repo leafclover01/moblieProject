@@ -18,7 +18,7 @@ public class RoomDetailDon extends AppCompatActivity {
         setContentView(R.layout.activity_room_detail_don);
 
         // Initialize views
-        roomName = findViewById(R.id.roomName);
+//        roomName = findViewById(R.id.roomName);
         roomType = findViewById(R.id.roomType);
         roomDetails = findViewById(R.id.roomDetails);
         price = findViewById(R.id.price);

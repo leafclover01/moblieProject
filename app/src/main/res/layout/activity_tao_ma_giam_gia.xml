@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="Tạo Mã Giảm Giá"
+        android:text=""
         android:textColor="@color/brandBlue30"
         android:textSize="35sp"
         android:textStyle="bold"
@@ -58,6 +58,7 @@
                     android:id="@+id/edtTenMaUuDai"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+
                     android:layout_marginBottom="12dp"
                     android:background="@drawable/edttext_background"
                     android:drawablePadding="12dp"
@@ -66,7 +67,7 @@
                     android:inputType="text"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
-                    android:textColor="@color/brandBlue30"
+                    android:textColor="#000000"
                     android:textColorHint="#cccccc"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -76,6 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginBottom="12dp"
+                    android:textColor="#000000"
                     android:background="@drawable/edttext_background"
                     android:drawablePadding="12dp"
                     android:gravity="center_vertical"
@@ -83,7 +85,6 @@
                     android:inputType="numberDecimal"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
-                    android:textColor="@color/brandBlue30"
                     android:textColorHint="#cccccc"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -100,7 +101,7 @@
                     android:inputType="number"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
-                    android:textColor="@color/brandBlue30"
+                    android:textColor="#000000"
                     android:textColorHint="#cccccc"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -119,6 +120,9 @@
                         <Button
                             android:id="@+id/bntThoiGianBatDau"
                             android:layout_width="173dp"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:backgroundTint="#0288D1"
                             android:layout_height="wrap_content"
                             android:text="Ngày bắt đầu" />
 
@@ -141,6 +145,9 @@
                             android:id="@+id/bntThoiGianKetThuc"
                             android:layout_width="165dp"
                             android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:backgroundTint="#0288D1"
                             android:text="Ngày kết thúc" />
 
                         <TextView
@@ -162,9 +169,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/login_btn_background"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:backgroundTint="#0288D1"
                     android:text="Tạo Mã"
-                    android:textColor="@color/white"
                     android:textSize="20sp" />
             </LinearLayout>
         </ScrollView>
@@ -189,9 +197,8 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
         android:layout_weight="1"
-        android:gravity="center"
         android:text="Tạo Mã Giảm Giá"
-        android:textColor="#605be5"
+        android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imgBack"

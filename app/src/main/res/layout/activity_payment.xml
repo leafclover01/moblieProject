@@ -1,16 +1,39 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="#E3F2FD">
-
+    android:background="#ffffff">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gradStart"
+            android:padding="10dp"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/back"
+                android:background="@color/gradStart"
+                android:src="@drawable/ad_back_left"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="back"/>
+            <TextView
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:text="Thanh Toán"
+                android:paddingTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvCustomerName"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tên khách hàng"
@@ -22,6 +45,9 @@
             android:id="@+id/tvCustomerContact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:text="Số điện thoại"
             android:textSize="16sp"
             android:paddingBottom="16dp" />
@@ -30,6 +56,9 @@
         <LinearLayout
             android:id="@+id/roomContainer"
             android:layout_width="match_parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="8dp"
@@ -39,6 +68,8 @@
         <!-- Payment details -->
         <TextView
             android:id="@+id/tvSubtotal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tạm tính"
@@ -48,6 +79,9 @@
             android:id="@+id/tvDiscount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:text="Giảm giá"
             android:paddingTop="8dp" />
 
@@ -56,6 +90,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tổng thanh toán"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:textStyle="bold"
             android:paddingTop="8dp" />
 
@@ -66,16 +103,22 @@
             android:layout_height="wrap_content"
             android:text="Chỉnh sửa thông tin"
             android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:padding="16dp"
             android:backgroundTint="#0288D1"
-            android:textColor="#FFFFFF" />
+            android:textColor="#000000" />
 
         <Button
             android:id="@+id/btnPay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:text="Thanh toán"
             android:layout_marginTop="8dp"
             android:backgroundTint="#FF5722"
-            android:textColor="#FFFFFF" />
+            android:padding="16dp"
+            android:textColor="#000000" />
     </LinearLayout>
 </ScrollView>

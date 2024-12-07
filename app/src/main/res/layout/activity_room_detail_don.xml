@@ -4,39 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="#FFFFFF"
     tools:context=".page.admin.QuanLyDon.RoomDetailDon">
-
     <LinearLayout
-        android:id="@+id/header"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:background="@color/gradStart"
         android:padding="10dp"
-        android:gravity="center_vertical"
-        android:background="@color/brandBlue30"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ImageView
-            android:id="@+id/arrow_back_ios"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="Quay lại"
-            android:src="@drawable/arrow_back_ios" />
-
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+        <ImageButton
+            android:id="@+id/back"
+            android:background="@color/gradStart"
+            android:src="@drawable/ad_back_left"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="back"/>
         <TextView
-            android:id="@+id/roomName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Ten Phong"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
+            android:textSize="20dp"
             android:textStyle="bold"
-            android:gravity="center" />
+            android:textColor="#000000"
+            android:text="Phòng"
+            android:paddingTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <!-- TextView for displaying room type -->
@@ -125,16 +121,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
-
-    <!-- ImageView for background at the bottom of the layout -->
-    <ImageView
-        android:id="@+id/imgBackgroundBottom"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@mipmap/back_bottom" />
-
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

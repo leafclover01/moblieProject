@@ -38,7 +38,7 @@
         app:layout_constraintTop_toBottomOf="@id/imgLogo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="ĐĂNG KÝ"
+        android:text=" "
         android:textColor="#FFFFFF"
         android:textSize="35sp"
         android:textStyle="bold"

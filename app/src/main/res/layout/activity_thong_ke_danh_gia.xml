@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".page.admin.QuanLyDanhGia.Component.ThongKeDanhGiaActivity">
     <LinearLayout
         android:id="@+id/main"
@@ -15,9 +16,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="10dp"
-            android:background="@color/light"
+            android:background="@color/gradStart"
             android:gravity="center_vertical"
-            android:weightSum="3">
+            android:weightSum="5">
 
             <ImageView
                 android:id="@+id/arrow_back_ios"
@@ -33,19 +34,23 @@
                 android:layout_height="wrap_content"
                 android:text="Thống Kê"
                 android:id="@+id/tvTitle"
-                android:textColor="#605be5"
-                android:textSize="18sp"
+                android:textColor="#000000"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:layout_weight="1"
-                android:gravity="center"/>
+                android:layout_weight="1" />
 
         </LinearLayout>
 
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="10dp"
             android:id="@+id/lvDanhGia"
             />
 

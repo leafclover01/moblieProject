@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
@@ -12,6 +13,7 @@
         tools:ignore="MissingConstraints">
         <TextView
             android:paddingLeft="5dp"
+            android:padding="10dp"
             android:text="tên"
             android:textSize="30dp"
             android:textColor="#2F204A"
@@ -28,7 +30,7 @@
             <ImageView
                 android:layout_marginLeft="5dp"
                 android:src="@drawable/ad_anh_clone_phong"
-                android:background="@drawable/border_shadow"
+
                 android:id="@+id/rtImg"
                 android:layout_width="160dp"
                 android:layout_height="120dp"/>
@@ -40,14 +42,14 @@
                 android:orientation="vertical">
                 <TextView
                     android:textColor="#1F2517"
-                    android:textSize="23dp"
+                    android:textSize="20dp"
                     android:id="@+id/ad_gia_sl"
                     android:text="giá / số lượng tối đa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:maxLength="100"
-                    android:textColor="#1B2015"
+                    android:textColor="@color/red20"
                     android:id="@+id/ad_mo_ta"
                     android:textSize="20dp"
                     android:text="mô tả"
@@ -61,14 +63,20 @@
                         android:layout_marginLeft="10dp"
                         android:layout_width="wrap_content"
                         android:id="@+id/ad_btnDetal"
-                        android:text="chi tiết"
+                        android:textStyle="bold"
+                        android:textColor="#000000"
+                        android:backgroundTint="#0288D1"
+                        android:text="Chi tiết"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"/>
                     <Button
                         android:layout_marginLeft="10dp"
                         android:layout_width="wrap_content"
                         android:id="@+id/ad_btnFix"
-                        android:text="sửa"
+                        android:textStyle="bold"
+                        android:textColor="#000000"
+                        android:backgroundTint="#0288D1"
+                        android:text="Sửa"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
             </LinearLayout>

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="10dp"
+    android:background="@color/light"
     android:layout_marginEnd="10dp">
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -41,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textColor="#25152C"
-                android:textSize="16sp" />
+                android:textSize="17sp" />
             <TextView
                 android:text="3"
                 android:id="@+id/ad_tv3"
@@ -50,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textColor="#101D22"
-                android:textSize="19sp"/>
+                android:textSize="17sp"/>
             <LinearLayout
                 android:layout_marginLeft="30sp"
                 android:layout_width="wrap_content"
@@ -60,6 +61,9 @@
                 <Button
                     android:text="Sửa"
                     android:id="@+id/ad_btnEdit"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:backgroundTint="#0288D1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
@@ -68,6 +72,9 @@
                     android:layout_marginLeft="20dp"
                     android:text="Xóa"
                     android:layout_width="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:backgroundTint="#0288D1"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>

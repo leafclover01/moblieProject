@@ -2,6 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
+    android:paddingBottom="8dp"
     >
 
     <!-- Phần tiêu đề cố định -->
@@ -11,8 +12,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="8dp"
-        android:background="@color/light"
+        android:padding="10dp"
+        android:background="@color/gradStart"
         android:weightSum="3"
         android:elevation="4dp"> <!-- Đảm bảo phần tiêu đề không bị đè bởi nội dung -->
 
@@ -29,11 +30,11 @@
             android:id="@+id/tvChiTietHienThi"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:textColor="#000000"
             android:text="Chi Tiết Hạng Phòng Stand"
-            android:textColor="@color/blue70"
             android:textSize="20sp"
             android:paddingLeft="10dp"
+            android:paddingTop="5dp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -168,7 +169,9 @@
                     android:text="Ngày nhận phòng"
                     android:layout_marginEnd="8dp"
                     android:drawableLeft="@drawable/ic_calendar"
-                    android:background="@drawable/login_btn_background"/>
+                    android:backgroundTint="#0288D1"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginBottom="8dp"/>
 
                 <Button
                     android:id="@+id/btnCheckOut"
@@ -177,7 +180,9 @@
                     android:layout_weight="1"
                     android:text="Ngày trả phòng"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/login_btn_background"
+                    android:backgroundTint="#0288D1"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginBottom="8dp"
                     android:drawableLeft="@drawable/ic_calendar"/>
             </LinearLayout>
 
@@ -223,7 +228,8 @@
                 android:drawableLeft="@drawable/ic_sreach"
                 android:drawablePadding="8dp"
                 android:text="Tìm phòng"
-                android:background="@drawable/login_btn_background"
+                android:backgroundTint="#0288D1"
+                android:textColor="#FFFFFF"
                 android:gravity="center_vertical" />
 
 
@@ -265,8 +271,9 @@
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="Tiếp tục"
+                android:backgroundTint="#0288D1"
                 android:textColor="#FFFFFF"
-                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
                 android:textSize="16sp"/>
 
             <LinearLayout

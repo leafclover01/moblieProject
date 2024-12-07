@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".page.customer.HomeFragment"
-    android:background="@drawable/background">
+    android:background="@color/light">
 
     <!-- RecyclerView để hiển thị danh sách loại phòng -->
 

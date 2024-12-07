@@ -89,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="TÊN ĐĂNG NHẬP"
-                    android:textColor="@color/headings"
+                    android:textColor="#000000"
                     android:textSize="13sp" />
 
                 <TextView
@@ -119,7 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="EMAIL"
-                    android:textColor="@color/headings"
+                    android:textColor="#000000"
                     android:textSize="13sp" />
 
                 <TextView
@@ -149,7 +149,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SỐ ĐIỆN THOẠI"
-                    android:textColor="@color/headings"
+                    android:textColor="#000000"
                     android:textSize="13sp" />
 
                 <TextView
@@ -179,7 +179,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="CĂN CƯỚC CÔNG DÂN"
-                    android:textColor="@color/headings"
+                    android:textColor="#000000"
                     android:textSize="13sp" />
 
                 <TextView
@@ -209,7 +209,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ĐỊA CHỈ"
-                    android:textColor="@color/headings"
+                    android:textColor="#000000"
                     android:textSize="13sp" />
 
                 <TextView
@@ -233,10 +233,13 @@
                 android:id="@+id/btnEdit"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/login_btn_background"
+                android:layout_height="match_parent"
                 android:text="CHỈNH SỬA THÔNG TIN"
-                android:textColor="#ffffff"
+                android:layout_marginRight="16dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:backgroundTint="#0288D1"
+                android:padding="16dp"
                 android:textSize="20sp"/>
 
         </LinearLayout>

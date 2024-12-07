@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/gradStart"
+            android:padding="10dp"
             android:orientation="horizontal">
             <ImageButton
                 android:id="@+id/back"
@@ -88,8 +89,8 @@
             android:textStyle="bold"
             android:textColor="#000000"
             android:backgroundTint="#0288D1"
-            android:id="@+id/ad_r_btn"
             android:padding="16dp"
+            android:id="@+id/ad_r_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

@@ -204,6 +204,28 @@ public class MainActivity extends AppCompatActivity {
                         editor.apply();
 
                         // Điều hướng đến màn hình tiếp theo dựa trên role
+//                        if (taiKhoan.getRole() == 0) {
+//                            // Nếu là Admin
+//                            Intent intentAdmin = new Intent(MainActivity.this, homeAdmin.class);
+//                            startActivity(intentAdmin);
+//                            finish(); // Đảm bảo đóng màn hình này
+//                        } else if (taiKhoan.getRole() == 1) {
+//                            // Nếu là User
+//                            Intent intentUser = new Intent(MainActivity.this, DashboardActivity.class);
+//                            startActivity(intentUser);
+//                            finish(); // Đảm bảo đóng màn hình này
+//                        }
+//                        if (taiKhoan.getRole() == 0) {
+//                            // Nếu là Admin
+//                            Intent intentAdmin = new Intent(MainActivity.this, homeAdmin.class);
+//                            startActivity(intentAdmin);
+//                            finish(); // Đảm bảo đóng màn hình này
+//                        } else if (taiKhoan.getRole() == 1) {
+//                            // Nếu là User
+//                            Intent intentUser = new Intent(MainActivity.this, DashboardActivity.class);
+//                            startActivity(intentUser);
+//                            finish(); // Đảm bảo đóng màn hình này
+//                        }
                         if (taiKhoan.getRole() == 0) {
                             // Nếu là Admin
                             Intent intentAdmin = new Intent(MainActivity.this, homeAdmin.class);

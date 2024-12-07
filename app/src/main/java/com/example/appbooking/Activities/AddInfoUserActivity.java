@@ -306,31 +306,87 @@ public class AddInfoUserActivity extends AppCompatActivity {
                 String cccd = edtCCCD.getText().toString().trim();
                 String address = edtAddress.getText().toString().trim();
 
+//                // Kiểm tra xem có trường nào bị bỏ trống
+//                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) ||
+//                        TextUtils.isEmpty(phone) || TextUtils.isEmpty(cccd) ||
+//                        TextUtils.isEmpty(address)) {
+//                    Toast.makeText(AddInfoUserActivity.this, "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//
+//                // Kiểm tra định dạng email
+//                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+//                    Toast.makeText(AddInfoUserActivity.this, "Email không hợp lệ!", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//
+//                // Kiểm tra số điện thoại (đảm bảo chỉ có số và đủ độ dài)
+//                if (!phone.matches("\\d{10,11}")) {
+//                    Toast.makeText(AddInfoUserActivity.this, "Số điện thoại phải có 10-11 chữ số!", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//
+//                // Kiểm tra nếu CCCD không hợp lệ
+//                if (!cccd.matches("\\d{12}")) {
+//                    Toast.makeText(AddInfoUserActivity.this, "CCCD phải có đúng 12 chữ số!", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+                // Biến trạng thái để kiểm tra xem có trường nào bị bỏ trống
+                boolean hasEmptyField = false;
+
                 // Kiểm tra xem có trường nào bị bỏ trống
-                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) ||
-                        TextUtils.isEmpty(phone) || TextUtils.isEmpty(cccd) ||
-                        TextUtils.isEmpty(address)) {
-                    Toast.makeText(AddInfoUserActivity.this, "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(name)) {
+                    edtName.setError("Vui lòng nhập tên đầy đủ!");
+                    hasEmptyField = true;
+                }
+                if (TextUtils.isEmpty(email)) {
+                    edtEmail.setError("Vui lòng nhập email!");
+                    hasEmptyField = true;
+                }
+                if (TextUtils.isEmpty(phone)) {
+                    edtSDT.setError("Vui lòng nhập số điện thoại!");
+                    hasEmptyField = true;
+                }
+                if (TextUtils.isEmpty(cccd)) {
+                    edtCCCD.setError("Vui lòng nhập CCCD!");
+                    hasEmptyField = true;
+                }
+                if (TextUtils.isEmpty(address)) {
+                    edtAddress.setError("Vui lòng nhập địa chỉ!");
+                    hasEmptyField = true;
+                }
+
+                // Nếu phát hiện bất kỳ trường nào trống, dừng lại và thông báo lỗi
+                if (hasEmptyField) {
                     return;
                 }
 
                 // Kiểm tra định dạng email
                 if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(AddInfoUserActivity.this, "Email không hợp lệ!", Toast.LENGTH_SHORT).show();
+                    edtEmail.setError("Email không hợp lệ!");
                     return;
                 }
 
                 // Kiểm tra số điện thoại (đảm bảo chỉ có số và đủ độ dài)
                 if (!phone.matches("\\d{10,11}")) {
-                    Toast.makeText(AddInfoUserActivity.this, "Số điện thoại phải có 10-11 chữ số!", Toast.LENGTH_SHORT).show();
+                    edtSDT.setError("Số điện thoại phải có 10-11 chữ số!");
                     return;
                 }
 
                 // Kiểm tra nếu CCCD không hợp lệ
                 if (!cccd.matches("\\d{12}")) {
-                    Toast.makeText(AddInfoUserActivity.this, "CCCD phải có đúng 12 chữ số!", Toast.LENGTH_SHORT).show();
+                    edtCCCD.setError("CCCD phải có đúng 12 chữ số!");
                     return;
                 }
+
+
+                // Nếu tất cả thông tin hợp lệ, xoá lỗi
+                edtName.setError(null);
+                edtEmail.setError(null);
+                edtSDT.setError(null);
+                edtCCCD.setError(null);
+                edtAddress.setError(null);
+
 
                 // Lưu thông tin vào SharedPreferences
                 SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
@@ -342,7 +398,7 @@ public class AddInfoUserActivity extends AppCompatActivity {
                 editor.putString("phone", phone);
                 editor.putString("cccd", cccd);
                 editor.putString("address", address);
-                editor.putString("avatar", "ic_avt"); // Lưu avatar cố định
+                editor.putString("avatar", "ic_avt");
                 editor.apply(); // Áp dụng thay đổi
 
                 // Lưu thông tin vào cơ sở dữ liệu

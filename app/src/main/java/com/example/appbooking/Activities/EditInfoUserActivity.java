@@ -91,7 +91,7 @@ public class EditInfoUserActivity extends AppCompatActivity {
             edtAddress.setText(address);
         }
         // Đặt avatar cố định
-        imgAvatar.setImageResource(R.drawable.avatar); // Sử dụng ảnh trong drawable
+        imgAvatar.setImageResource(R.drawable.ic_avt); // Sử dụng ảnh trong drawable
 
         // Set ẩn hiện mật khẩu
         ivTogglePassword.setOnClickListener(new View.OnClickListener() {

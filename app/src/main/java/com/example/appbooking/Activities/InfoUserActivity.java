@@ -94,7 +94,7 @@ public class InfoUserActivity extends AppCompatActivity {
             imgAvatar.setImageURI(Uri.parse(hinh));
         } else {
             // Nếu không, hiển thị ảnh mặc định
-            imgAvatar.setImageResource(R.drawable.avatar);
+            imgAvatar.setImageResource(R.drawable.ic_avt);
         }
         // Set sự kiện cho ic_back
         btnBack.setOnClickListener(new View.OnClickListener() {

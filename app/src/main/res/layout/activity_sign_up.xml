@@ -9,15 +9,15 @@
     tools:context=".Activities.SignUpActivity">
 
     <!-- Nút Logout -->
-    <ImageView
-        android:id="@+id/imgLogout"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="16dp"
-        android:src="@drawable/logout"
-        android:contentDescription="Logout"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imgLogout"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_margin="16dp"-->
+<!--        android:src="@drawable/logout"-->
+<!--        android:contentDescription="Logout"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" />-->
 
 
     <!-- Logo -->
@@ -25,6 +25,7 @@
         android:id="@+id/imgLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -164,6 +165,18 @@
             android:text="ĐĂNG KÝ"
             android:textColor="#ffffff"
             android:textSize="20sp"/>
+
+        <!--        Liên kết đăng ký-->
+        <TextView
+            android:id="@+id/txvSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Bạn đã có tài khoản? Đăng nhập."
+            android:textStyle="italic"
+            android:textColor="#ffffff"
+            android:textSize="15sp"/>
     </LinearLayout>
     <!--    Hình nền đáy-->
     <ImageView

@@ -76,7 +76,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         if (hinh != null && !hinh.isEmpty()) {
             if (hinh.equals("ic_avt")) {
                 // Nếu đường dẫn là "ic_avt", đặt ảnh mặc định
-                avatarImageView.setImageResource(R.drawable.avatar);
+                avatarImageView.setImageResource(R.drawable.ic_avt);
             } else {
                 // Nếu đường dẫn không phải "ic_avt", tải ảnh từ đường dẫn
                 try {
@@ -87,12 +87,12 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
                 } catch (Exception e) {
                     // Nếu có lỗi khi tải ảnh, đặt ảnh mặc định
-                    avatarImageView.setImageResource(R.drawable.avatar);
+                    avatarImageView.setImageResource(R.drawable.ic_avt);
                 }
             }
         } else {
             // Nếu không có ảnh, đặt ảnh mặc định
-            avatarImageView.setImageResource(R.drawable.avatar);
+            avatarImageView.setImageResource(R.drawable.ic_avt);
         }
 
 //        if (hinh != null && !hinh.equals("default.jpg")) {

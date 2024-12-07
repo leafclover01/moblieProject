@@ -5,8 +5,13 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.method.PasswordTransformationMethod;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +30,8 @@ import com.example.appbooking.R;
 
 public class SignUpActivity extends AppCompatActivity {
     EditText edtName, edtUsername, edtPassword, edtConfirmPassword;
-    ImageView imgLogout, ivTogglePassword, ivToggleConfirmPassword;
+    ImageView ivTogglePassword, ivToggleConfirmPassword;
+    TextView txvSignIn;
     Button btnSignUp;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -43,15 +49,38 @@ public class SignUpActivity extends AppCompatActivity {
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
         edtConfirmPassword = findViewById(R.id.edtConfirmPassword);
-        imgLogout = findViewById(R.id.imgLogout);
+//        imgLogout = findViewById(R.id.imgLogout);
         ivTogglePassword = findViewById(R.id.ivTogglePassword);
         ivToggleConfirmPassword = findViewById(R.id.ivToggleConfirmPassword);
         btnSignUp = findViewById(R.id.btnSignUp);
+        txvSignIn = findViewById(R.id.txvSignIn);
 
         // Khởi tạo SharedPreferences
         db = new MySQLite();
         sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
         editor = sharedPreferences.edit();
+
+        // Định dạng TextView "Đăng ký"
+        String fullText = "Bạn đã có tài khoản? Đăng nhập.";
+        String highlightText = "Đăng nhập";
+        int startIndex = fullText.indexOf(highlightText);
+        int endIndex = startIndex + highlightText.length();
+        SpannableString spannableString = new SpannableString(fullText);
+        // Gạch chân
+        spannableString.setSpan(new UnderlineSpan(), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        // Đổi màu
+        spannableString.setSpan(new ForegroundColorSpan(Color.RED), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        // Gán chuỗi vào TextView
+        txvSignIn.setText(spannableString);
+
+        // Sự kiện chuyển tới màn hình Đăng ký
+        txvSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentSignUp = new Intent(SignUpActivity.this, MainActivity.class);
+                startActivity(intentSignUp);
+            }
+        });
 
         // Sự kiện ẩn/hiện mật khẩu cho edtPassword
         ivTogglePassword.setOnClickListener(new View.OnClickListener() {
@@ -84,15 +113,15 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
 //         Set sự kiện khi ấn Logout
-        imgLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editor.clear().apply();
-                Intent intetLogIn = new Intent(SignUpActivity.this, MainActivity.class);
-                startActivity(intetLogIn);
-                finish();
-            }
-        });
+//        imgLogout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                editor.clear().apply();
+//                Intent intetLogIn = new Intent(SignUpActivity.this, MainActivity.class);
+//                startActivity(intetLogIn);
+//                finish();
+//            }
+//        });
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override

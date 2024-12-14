@@ -30,7 +30,7 @@ import java.util.Locale;
 
 //import androidx.recyclerview.widget.GridLayoutManager;
 public class DetailsTypeRoomActivity extends AppCompatActivity {
-//    private ImageView imageLoaiPhong;
+    //    private ImageView imageLoaiPhong;
     private TextView tenLoaiPhong, giaLoaiPhong, soNguoiToiDa, moTa, moTaChiTiet;
     private Button btnCheckIn, btnCheckOut, btnChonThoiGian;
     private RecyclerView recyclerViewPhongTrong;
@@ -40,6 +40,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
     MySQLite db1 = new MySQLite();
     private Button btnNext;
     public String maPhong = "";
+
     private RecyclerView recyclerViewTienNghi;
     private TienNghiAdapter tienNghiAdapter;
     private ArrayList<TienNghi> dsTienNghi = new ArrayList<>();
@@ -77,6 +78,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         String moTaPhong = getIntent().getStringExtra("moTaPhong");
         String moTaChiTietPhong = getIntent().getStringExtra("moTaChiTiet");
         String imageResource = getIntent().getStringExtra("imageResource"); // cái này đổi thành String để nhận
+        String viTri = getIntent().getStringExtra("viTri");
 //         Toast.makeText(this, imageResource + "", Toast.LENGTH_SHORT).show();
         // Nhận tiện nghi từ Intent
         ArrayList<String> tienNghiList = intent.getStringArrayListExtra("tienNghi");
@@ -134,6 +136,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
                     intent.putExtra("moTaChiTietPhong", moTaChiTietPhong);
                     intent.putExtra("timeCheckIn", timeCheckIn);
                     intent.putExtra("timeCheckOut", timeCheckOut);
+                    intent.putExtra("viTri", viTri);
 
                     // Chuyển sang màn hình tiếp theo
                     startActivity(intent);
@@ -239,9 +242,9 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
             RoomAdapter adapter = new RoomAdapter(dsPhongTrong, phong -> {
                 // Lấy mã phòng từ đối tượng phong
                 maPhong = String.valueOf(phong.getMaPhong());  // Lưu mã phòng vào biến maPhong
-
+                String viTri = phong.getViTri();
                 // Cập nhật giao diện hoặc làm gì đó khi người dùng chọn phòng
-                Toast.makeText(DetailsTypeRoomActivity.this, "Chọn phòng: " + maPhong, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailsTypeRoomActivity.this, "Chọn phòng: " + maPhong + " vị trí: " + viTri, Toast.LENGTH_SHORT).show();
             });
 
             recyclerViewPhongTrong.setAdapter(adapter);

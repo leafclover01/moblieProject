@@ -2,123 +2,132 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <!-- Header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/gradStart"
             android:padding="10dp"
             android:orientation="horizontal">
+
             <ImageButton
                 android:id="@+id/back"
-                android:background="@color/gradStart"
-                android:src="@drawable/ad_back_left"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:contentDescription="back"/>
+                android:background="@color/gradStart"
+                android:src="@drawable/ad_back_left"
+                android:contentDescription="back" />
+
             <TextView
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:text="Thanh Toán"
-                android:paddingTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:text="Thanh Toán"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:background="@drawable/border_shadow"
+        android:layout_margin="20px"
+        android:orientation="vertical">
+        <!-- Customer Details -->
         <TextView
             android:id="@+id/tvCustomerName"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:text="Tên khách hàng"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:paddingBottom="8dp" />
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvCustomerContact"
+            android:id="@+id/tvCustomerCCCD"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="Số điện thoại"
-            android:textSize="16sp"
-            android:paddingBottom="16dp" />
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="CCCD"
+            android:textSize="16sp" />
 
-        <!-- Room container -->
-        <LinearLayout
-            android:id="@+id/roomContainer"
-            android:layout_width="match_parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="8dp"
-            android:background="#FFFFFF"
-            android:elevation="4dp" />
-
-        <!-- Payment details -->
         <TextView
-            android:id="@+id/tvSubtotal"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:id="@+id/tvCustomerSdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tạm tính"
-            android:layout_marginTop="16dp" />
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="CCCD"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+
+    <!-- Room Details -->
+    <TextView
+        android:id="@+id/roomContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/red80"
+        android:orientation="vertical">
+    </TextView>
+
+        <!-- Discount Spinner -->
+        <Spinner
+            android:id="@+id/spnMgg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
 
         <TextView
             android:id="@+id/tvDiscount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="Giảm giá"
-            android:paddingTop="8dp" />
+            android:layout_margin="16dp"
+            android:textStyle="bold"
+            android:text="Giảm giá" />
 
         <TextView
             android:id="@+id/tvTotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:text="Tổng thanh toán"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:textStyle="bold"
-            android:paddingTop="8dp" />
+            android:textStyle="bold" />
 
         <!-- Buttons -->
         <Button
             android:id="@+id/btnEditCustomerInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chỉnh sửa thông tin"
-            android:layout_marginTop="16dp"
+            android:layout_margin="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:padding="16dp"
             android:backgroundTint="#0288D1"
-            android:textColor="#000000" />
+            android:textColor="#ffffff"
+            android:text="Chỉnh sửa thông tin" />
 
         <Button
             android:id="@+id/btnPay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:text="Thanh toán"
-            android:layout_marginTop="8dp"
             android:backgroundTint="#FF5722"
-            android:padding="16dp"
-            android:textColor="#000000" />
+            android:textColor="#ffffff"
+            android:text="Thanh toán" />
     </LinearLayout>
 </ScrollView>

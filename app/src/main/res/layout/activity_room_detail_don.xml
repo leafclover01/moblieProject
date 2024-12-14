@@ -1,125 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     tools:context=".page.admin.QuanLyDon.RoomDetailDon">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+
+    <!-- AppBar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:background="@color/gradStart"
         android:padding="10dp"
-        android:orientation="horizontal"
         tools:ignore="MissingConstraints">
+
         <ImageButton
             android:id="@+id/back"
-            android:background="@color/gradStart"
-            android:src="@drawable/ad_back_left"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:contentDescription="back"/>
+            android:src="@drawable/ad_back_left"
+            android:background="@color/gradStart"
+            android:contentDescription="back" />
+
         <TextView
-            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="Chi Tiết Đơn Đặt Phòng"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="#000000"
-            android:text="Phòng"
-            android:paddingTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:paddingStart="16dp" />
     </LinearLayout>
 
-    <!-- TextView for displaying room type -->
-    <TextView
-        android:id="@+id/roomType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Loại phòng: VIP"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
-
-    <!-- TextView for displaying room details -->
-    <TextView
-        android:id="@+id/roomDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Chi tiết phòng: Phòng có tiện nghi đầy đủ."
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/roomType"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
-
-    <!-- TextView for displaying room price -->
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Giá: 500.000 VND"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/roomDetails"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
-
-    <!-- TextView for displaying the person who booked -->
-    <TextView
-        android:id="@+id/bookedBy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Đặt bởi: Nguyễn Văn A"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/price"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
-
-    <!-- TextView for displaying booking date -->
-    <TextView
-        android:id="@+id/bookedAt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Đặt vào: 12/12/2024"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/bookedBy"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
-
-    <!-- Button for checking out the room -->
-    <Button
-        android:id="@+id/btnCheckout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Checkout"
-        app:layout_constraintTop_toBottomOf="@id/bookedAt"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/login_btn_background"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp">
 
-    <!-- TextView for displaying the image description (room label) -->
-    <TextView
-        android:id="@+id/roomImageLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hình ảnh phòng"
-        android:textSize="16sp"
-        android:textStyle="italic"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Phòng -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_room"
+                    android:contentDescription="icon room" />
+
+                <TextView
+                    android:id="@+id/roomType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Loại phòng: Deluxe"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:paddingStart="8dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/roomDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chi tiết phòng:\nĐầy đủ tiện nghi với tầm nhìn đẹp và giường êm ái."
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:background="#F4F4F4"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"
+                />
+
+            <!-- Giá phòng -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+
+                    android:contentDescription="icon price" />
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giá phòng/ngày: 500.000 VNĐ"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#007BFF"
+                    android:paddingStart="8dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/bookedBy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đặt bởi: Nguyễn Văn A"
+                android:textSize="16sp"
+                android:textColor="#333333"
+                android:drawablePadding="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Ngày đặt -->
+            <TextView
+                android:id="@+id/bookedAt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ngày đặt: 12/12/2024"
+                android:textSize="16sp"
+                android:textColor="#333333"
+                android:drawableStart="@drawable/ic_calendar"
+                android:drawablePadding="8dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Nút Check-in -->
+            <Button
+                android:id="@+id/btnCheckin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Check-in"
+                android:textStyle="bold"
+                android:backgroundTint="#0288D1"
+                android:padding="16dp"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="16dp"
+                android:elevation="4dp" />
+
+            <!-- Nút Check-out -->
+            <Button
+                android:id="@+id/btnCheckout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Check-out"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:backgroundTint="#0288D1"
+                android:padding="16dp"
+                android:elevation="4dp" />
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

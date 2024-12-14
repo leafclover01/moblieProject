@@ -1,9 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:paddingBottom="8dp"
-    >
+    android:layout_height="match_parent">
 
     <!-- Phần tiêu đề cố định -->
     <LinearLayout
@@ -30,15 +27,15 @@
             android:id="@+id/tvChiTietHienThi"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textColor="#000000"
+            android:gravity="center"
             android:text="Chi Tiết Hạng Phòng Stand"
+            android:textColor="#000000"
             android:textSize="20sp"
             android:paddingLeft="10dp"
-            android:paddingTop="5dp"
             android:textStyle="bold" />
     </LinearLayout>
 
-        <!-- Scrollable content -->
+    <!-- Scrollable content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -108,49 +105,49 @@
                 android:layout_marginBottom="16dp" />
 
             <!-- Chọn ngày Check-in -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="right">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right">
 
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:src="@drawable/tag2"
-                        />
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/tag2"
+                    />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Chúng Tôi Luôn Khớp Giá!"
-                        android:textColor="@color/blue50"
-                        android:textStyle="italic" />
-                </LinearLayout>
                 <TextView
-                    android:id="@+id/tvRoomAvailable"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Phòng Trống"
-                    android:gravity="left"
-                    android:textSize="26sp"
-                    android:textStyle="bold" />
-                <LinearLayout
+                    android:text="Chúng Tôi Luôn Khớp Giá!"
+                    android:textColor="@color/blue50"
+                    android:textStyle="italic" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tvRoomAvailable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Phòng Trống"
+                android:gravity="left"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/error"
+                    />
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp">
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/error"
-                        />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Chọn ngày để xem phòng trống tại chỗ nghỉ này!"
-                        android:textColor="@color/red70"
-                        android:paddingLeft="10dp"/>
-                </LinearLayout>
+                    android:text="Chọn ngày để xem phòng trống tại chỗ nghỉ này!"
+                    android:textColor="@color/red70"
+                    android:paddingLeft="10dp"/>
+            </LinearLayout>
 
 
 
@@ -169,9 +166,7 @@
                     android:text="Ngày nhận phòng"
                     android:layout_marginEnd="8dp"
                     android:drawableLeft="@drawable/ic_calendar"
-                    android:backgroundTint="#0288D1"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginBottom="8dp"/>
+                    android:background="@drawable/login_btn_background"/>
 
                 <Button
                     android:id="@+id/btnCheckOut"
@@ -180,45 +175,43 @@
                     android:layout_weight="1"
                     android:text="Ngày trả phòng"
                     android:layout_marginEnd="8dp"
-                    android:backgroundTint="#0288D1"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/login_btn_background"
                     android:drawableLeft="@drawable/ic_calendar"/>
             </LinearLayout>
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:weightSum="2"-->
-<!--                android:layout_marginTop="16dp">-->
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                android:weightSum="2"-->
+            <!--                android:layout_marginTop="16dp">-->
 
-<!--                <Button-->
-<!--                    android:id="@+id/btnCheckIn"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="48dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:layout_marginEnd="8dp"-->
-<!--                    android:drawableStart="@drawable/ic_calendar"-->
-<!--                    android:drawablePadding="8dp"-->
-<!--                    android:text="Ngày nhận phòng"-->
-<!--                    android:textColor="#FFFFFF"-->
-<!--                    android:textSize="16sp"-->
-<!--                    android:background="@color/blue40" />-->
+            <!--                <Button-->
+            <!--                    android:id="@+id/btnCheckIn"-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="48dp"-->
+            <!--                    android:layout_weight="1"-->
+            <!--                    android:layout_marginEnd="8dp"-->
+            <!--                    android:drawableStart="@drawable/ic_calendar"-->
+            <!--                    android:drawablePadding="8dp"-->
+            <!--                    android:text="Ngày nhận phòng"-->
+            <!--                    android:textColor="#FFFFFF"-->
+            <!--                    android:textSize="16sp"-->
+            <!--                    android:background="@color/blue40" />-->
 
-<!--                <Button-->
-<!--                    android:id="@+id/btnCheckOut"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="48dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:layout_marginStart="8dp"-->
-<!--                    android:drawableStart="@drawable/ic_calendar"-->
-<!--                    android:drawablePadding="8dp"-->
-<!--                    android:text="Ngày trả phòng"-->
-<!--                    android:textColor="#FFFFFF"-->
-<!--                    android:textSize="16sp"-->
-<!--                    android:background="@color/blue40" />-->
-<!--            </LinearLayout>-->
+            <!--                <Button-->
+            <!--                    android:id="@+id/btnCheckOut"-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="48dp"-->
+            <!--                    android:layout_weight="1"-->
+            <!--                    android:layout_marginStart="8dp"-->
+            <!--                    android:drawableStart="@drawable/ic_calendar"-->
+            <!--                    android:drawablePadding="8dp"-->
+            <!--                    android:text="Ngày trả phòng"-->
+            <!--                    android:textColor="#FFFFFF"-->
+            <!--                    android:textSize="16sp"-->
+            <!--                    android:background="@color/blue40" />-->
+            <!--            </LinearLayout>-->
 
             <Button
                 android:id="@+id/btnChonThoiGian"
@@ -228,8 +221,7 @@
                 android:drawableLeft="@drawable/ic_sreach"
                 android:drawablePadding="8dp"
                 android:text="Tìm phòng"
-                android:backgroundTint="#0288D1"
-                android:textColor="#FFFFFF"
+                android:background="@drawable/login_btn_background"
                 android:gravity="center_vertical" />
 
 
@@ -271,9 +263,8 @@
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="Tiếp tục"
-                android:backgroundTint="#0288D1"
                 android:textColor="#FFFFFF"
-                android:layout_marginBottom="8dp"
+                android:textStyle="bold"
                 android:textSize="16sp"/>
 
             <LinearLayout
@@ -581,7 +572,7 @@
                         android:paddingLeft="40dp"/>
                 </LinearLayout>
 
-<!--                 phương thức thanh toán-->
+                <!--                 phương thức thanh toán-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -95,7 +95,6 @@ public class homeAdmin extends AppCompatActivity {
                 Intent qlDonThanhToan = new Intent(homeAdmin.this, QuanLyDonThanhToan.class);
                 startActivity(qlDonThanhToan);
             }
-
         });
 
     }

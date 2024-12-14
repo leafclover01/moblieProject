@@ -1,51 +1,58 @@
 package com.example.appbooking.page.admin.QuanLyDon;
 
-
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.appbooking.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class RoomDetailDon extends AppCompatActivity {
 
-    TextView roomName, roomType, roomDetails, price, bookedBy, bookedAt;
-    Button btnCheckout;
+    private TextView roomType, roomDetails, price, bookedBy, bookedAt;
+    private Button btnCheckin, btnCheckout;
+    private ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_detail_don);
 
-        // Initialize views
-//        roomName = findViewById(R.id.roomName);
+        // Ánh xạ các view
         roomType = findViewById(R.id.roomType);
         roomDetails = findViewById(R.id.roomDetails);
         price = findViewById(R.id.price);
         bookedBy = findViewById(R.id.bookedBy);
         bookedAt = findViewById(R.id.bookedAt);
+        btnCheckin = findViewById(R.id.btnCheckin);
         btnCheckout = findViewById(R.id.btnCheckout);
+        backButton = findViewById(R.id.back);
 
-        // Retrieve the data passed from the previous activity
-        String roomNameText = getIntent().getStringExtra("roomName");
-        String roomTypeText = getIntent().getStringExtra("roomType");
-        String roomDetailsText = getIntent().getStringExtra("roomDetails");
-        String priceText = getIntent().getStringExtra("price");
-        String bookedByText = getIntent().getStringExtra("bookedBy");
-        String bookedAtText = getIntent().getStringExtra("bookedAt");
+        // Xử lý nút Back
+        backButton.setOnClickListener(view -> finish());
 
-        // Set the data to the views
-        roomName.setText(roomNameText);
-        roomType.setText("Loại phòng: " + roomTypeText);
-        roomDetails.setText("Chi tiết phòng: " + roomDetailsText);
-        price.setText("Giá: " + priceText);
-        bookedBy.setText("Đặt bởi: " + bookedByText);
-        bookedAt.setText("Đặt vào: " + bookedAtText);
-
-        // Set button click listener (checkout logic can be implemented)
-        btnCheckout.setOnClickListener(v -> {
-            // Implement checkout logic here, for example, updating the database
-            // For now, you can display a message or perform other actions
+        // Xử lý Check-in
+        btnCheckin.setOnClickListener(view -> {
+            String currentTime = getCurrentTime();
+            Toast.makeText(RoomDetailDon.this, "Đã Check-in thành công!\nThời gian: " + currentTime, Toast.LENGTH_LONG).show();
         });
+
+        // Xử lý Check-out
+        btnCheckout.setOnClickListener(view -> {
+            String currentTime = getCurrentTime();
+            Toast.makeText(RoomDetailDon.this, "Đã Check-out thành công!\nThời gian: " + currentTime, Toast.LENGTH_LONG).show();
+        });
+    }
+
+    // Hàm lấy thời gian hiện tại
+    private String getCurrentTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy", Locale.getDefault());
+        return sdf.format(new Date());
     }
 }

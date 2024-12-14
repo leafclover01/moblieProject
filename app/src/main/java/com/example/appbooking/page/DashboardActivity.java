@@ -133,7 +133,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         if (id == R.id.nav_home) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, new OrderHotelFragment())
+                    .replace(R.id.fragment_container, new HomeFragment())
 //                    .replace(R.id.fragment_container, new HomeFragment())
                     .commit();
         } else if (id == R.id.nav_settings) {
@@ -144,7 +144,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         } else if (id == R.id.nav_hotel) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, new HomeFragment())
+                    .replace(R.id.fragment_container, new OrderHotelFragment())
 
 //                    .replace(R.id.fragment_container, new OrderHotelFragment())
                     .commit();

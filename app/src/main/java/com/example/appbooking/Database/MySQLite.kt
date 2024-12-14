@@ -149,7 +149,7 @@ class MySQLite {
     }
     fun insertDataDon(ma_nguoi_dat: Int, ngayLapPhieu: String, checkIn: String): String {
         return try {
-            val sql = """
+            val sql = """ 
             INSERT INTO DON (ma_don, check_in, ma_nguoi_dat, ngay_lap_phieu)
             VALUES (NULL, '$checkIn', $ma_nguoi_dat, '$ngayLapPhieu');
         """

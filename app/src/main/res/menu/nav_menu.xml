@@ -6,11 +6,11 @@
     <group
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/nav_hotel"
             android:icon="@drawable/drawer_home"
             android:title="Trang chủ"/>
         <item
-            android:id="@+id/nav_hotel"
+            android:id="@+id/nav_home"
             android:icon="@drawable/drawer_hotel"
             android:title="Đặt phòng"/>
 

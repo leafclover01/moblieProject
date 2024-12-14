@@ -215,20 +215,25 @@ public class PayMentHouse extends AppCompatActivity {
 
         String currentTime = getCurrentTimeFormatted();
         try {
-            db.insertDataDon(maUser, currentTime, checkIn);
-            db.insertDataThue(maDon, Integer.parseInt(maPhong), checkOut);
-            Toast.makeText(this, "Thanh toán thành công!", Toast.LENGTH_SHORT).show();
+            int maDon = Integer.parseInt(db.insertDataDon(maUser, currentTime, checkIn));  // assuming insertDataDon returns int or Integer
 
-            // Chuyển sang màn hình xác nhận
-            Intent intent = new Intent(PayMentHouse.this, DashboardActivity.class);
-            intent.putExtra("totalAmount", totalAmount);
-            startActivity(intent);
-            finish();
+            if (maDon > 0) {
+                db.insertDataThue(maDon, Integer.parseInt(maPhong), checkOut);
+                Toast.makeText(this, "Thanh toán thành công!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(PayMentHouse.this, DashboardActivity.class);
+                intent.putExtra("totalAmount", totalAmount);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(this, "Lỗi khi tạo mã đơn!", Toast.LENGTH_SHORT).show();
+            }
         } catch (Exception e) {
             Toast.makeText(this, "Lỗi khi lưu thông tin thanh toán!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
+
 
     ArrayList<UuDai> getall(String sql) {
         ArrayList<UuDai> listMa = new ArrayList<>();

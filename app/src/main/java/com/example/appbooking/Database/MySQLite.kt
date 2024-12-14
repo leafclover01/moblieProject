@@ -149,16 +149,28 @@ class MySQLite {
     }
     fun insertDataDon(ma_nguoi_dat: Int, ngayLapPhieu: String, checkIn: String): String {
         return try {
-            val sql = """ 
-            INSERT INTO DON (ma_don, check_in, ma_nguoi_dat, ngay_lap_phieu)
-            VALUES (NULL, '$checkIn', $ma_nguoi_dat, '$ngayLapPhieu');
+            val sql = """  
+        INSERT INTO DON (ma_don, check_in, ma_nguoi_dat, ngay_lap_phieu)
+        VALUES (NULL, '$checkIn', $ma_nguoi_dat, '$ngayLapPhieu');
         """
             db.connect().execute(sql)
-            "Thêm thành công"
+
+            var ma_don: Int? = null
+            db.connect().use { conn ->
+                val sql = "SELECT MAX(ma_don) AS max_ma_don FROM DON;"
+                val rows = conn.query(sql)
+                rows.forEach { row ->
+                    ma_don = row.get(0).toString().toInt()
+                }
+            }
+            ma_don?.let {
+                "Thêm thành công, mã đơn: $it"
+            } ?: "Thêm không thành công, không thể lấy mã đơn."
         } catch (e: Exception) {
             "Thêm không thành công: ${e.message}"
         }
     }
+
     fun insertDataThue(maDon: Int, maPhong: Int, checkOut: String): String {
         return try {
             val sql = "INSERT INTO THUE VALUES ($maDon, $maPhong, '$checkOut');"

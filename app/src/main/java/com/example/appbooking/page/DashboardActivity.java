@@ -186,8 +186,12 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             startActivity(intent);
             finish();
             Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_history_survey) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new HistoryFragment())
+                    .commit();
         }
-
         // Đóng Navigation Drawer khi chọn mục
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

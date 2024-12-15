@@ -326,7 +326,6 @@ class MySQLite {
         db.connect().use { conn ->
             val rows = conn.query(sql)
             rows.forEach { row ->
-                // Thêm từng Row vào danh sách resultList
                 resultList.add(row)
             }
         }
@@ -605,9 +604,11 @@ fun layDuLieuPhongCoNguoiDatTuMaPhong( maLoaiPhong: Int): ArrayList<HashMap<Stri
         LEFT JOIN THUE AS T ON P.ma_phong = T.ma_phong
         LEFT JOIN DON AS D ON D.ma_don = T.ma_don
         LEFT JOIN TAI_KHOAN AS N ON N.id = D.ma_nguoi_dat
+        LEFT JOIN QUAN_LY AS QL ON QL.ma_don = D.ma_don 
         WHERE 
             T.ma_don IS NOT NULL
             AND D.ma_don IS NOT NULL
+            AND QL.is_thanh_toan = 0
         AND P.ma_loai_phong = $maLoaiPhong
         GROUP BY P.ma_phong;
 
@@ -667,9 +668,11 @@ fun layDuLieuPhongCoNguoiDat(): ArrayList<HashMap<String, Any>> {
         LEFT JOIN THUE AS T ON P.ma_phong = T.ma_phong
         LEFT JOIN DON AS D ON D.ma_don = T.ma_don
         LEFT JOIN TAI_KHOAN AS N ON N.id = D.ma_nguoi_dat
+        LEFT JOIN QUAN_LY AS QL ON QL.ma_don = D.ma_don 
         WHERE 
         T.ma_don IS NOT NULL
         AND D.ma_don IS NOT NULL
+        AND QL.is_thanh_toan = 0
         GROUP BY P.ma_phong;
         """
 
@@ -704,6 +707,66 @@ fun layDuLieuPhongCoNguoiDat(): ArrayList<HashMap<String, Any>> {
 
     return ds
 }
+
+    fun layDuLieuPhongDaThanhToan(): ArrayList<HashMap<String, Any>> {
+        val ds = ArrayList<HashMap<String, Any>>()
+
+        db.connect().use { conn ->
+            val sql = """
+        SELECT 
+            P.ma_phong, 
+            P.vi_tri, 
+            P.ma_loai_phong, 
+            D.ma_don, 
+            D.check_in,
+            T.check_out,
+            N.name, 
+            N.id,
+            N.sdt,
+            N.cccd
+        FROM PHONG AS P
+        LEFT JOIN THUE AS T ON P.ma_phong = T.ma_phong
+        LEFT JOIN DON AS D ON D.ma_don = T.ma_don
+        LEFT JOIN TAI_KHOAN AS N ON N.id = D.ma_nguoi_dat
+        LEFT JOIN QUAN_LY AS QL ON QL.ma_don = D.ma_don 
+        WHERE 
+        T.ma_don IS NOT NULL
+        AND D.ma_don IS NOT NULL
+        AND QL.is_thanh_toan = 1
+        GROUP BY P.ma_phong;
+        """
+
+            conn.query(sql).forEach { row ->
+                val maPhong = row.get(0).toString().toInt()
+                val viTri = row.get(1).toString()
+                val maLoaiPhong = row.get(2).toString().toInt()
+                val maDon = row.get(3).toString()
+                val checkInDb = row.get(4).toString()
+                val checkOutDb = row.get(5).toString()
+                val name = row.get(6).toString()
+                val id = row.get(7).toString()
+                val sdt = row.get(8).toString()
+                val cccd = row.get(9).toString()
+
+                val resultMap = HashMap<String, Any>().apply {
+                    put("ma_phong", maPhong)
+                    put("vi_tri", viTri)
+                    put("ma_loai_phong", maLoaiPhong)
+                    put("ma_don", maDon)
+                    put("check_in", checkInDb)
+                    put("check_out", checkOutDb)
+                    put("name", name)
+                    put("id", id)
+                    put("sdt", sdt)
+                    put("cccd", cccd)
+                }
+
+                ds.add(resultMap)
+            }
+        }
+
+        return ds
+    }
 
     fun layDuLieuTienCuaPhongDo(ma_don: Int): String {
         var ds = ""
@@ -752,7 +815,7 @@ fun layDuLieuPhongCoNguoiDat(): ArrayList<HashMap<String, Any>> {
         return try {
             var sql = """
             INSERT INTO QUAN_LY (ma_nhan_vien, ma_don, is_thanh_toan, is_duyet,check_in_thuc_te,check_out_thuc_te, check_in_fee, check_out_fee)
-            VALUES ($ma_nhan_vien, '$ma_don', '1', '0', '$check_in_thuc_te' , '$check_out_thuc_te', '$dat_phong_fee', '$tra_phong_fee');
+            VALUES ($ma_nhan_vien, '$ma_don', '1', '1', '$check_in_thuc_te' , '$check_out_thuc_te', '$dat_phong_fee', '$tra_phong_fee');
         """
             db.connect().execute(sql)
             "Thêm thành công"
@@ -820,37 +883,47 @@ fun layDuLieuPhongCoNguoiDat(): ArrayList<HashMap<String, Any>> {
 
     fun hamlaycheckinthuc(ma_don: Int): String {
         return try {
-            var ma_hoa_don = -1
+            var check_in_thuc_te = "-1"
             db.connect().use { conn ->
                 val sql = """
-                SELECT * FROM QUAN_LY
+                SELECT check_in_thuc_te FROM QUAN_LY
                 WHERE ma_don = $ma_don
             """
                 conn.query(sql).forEach { row ->
-                    ma_hoa_don = row.get(5).toString().toInt()
+                    val rowCheckIn = row.get(0).toString()
+                    if (rowCheckIn.isNotEmpty()) {
+                        check_in_thuc_te = rowCheckIn
+                    }
                 }
             }
-            ma_hoa_don.toString()
+            check_in_thuc_te
         } catch (e: Exception) {
             "No 6: ${e.message}"
         }
     }
 
+
     fun hamlaycheckoutthuc(ma_don: Int): String {
         return try {
-            var ma_hoa_don = -1
+            var check_out_thuc_te = "-1" // Giá trị mặc định nếu không tìm thấy
             db.connect().use { conn ->
                 val sql = """
-                SELECT * FROM QUAN_LY
+                SELECT check_out_thuc_te FROM QUAN_LY
                 WHERE ma_don = $ma_don
             """
                 conn.query(sql).forEach { row ->
-                    ma_hoa_don = row.get(6).toString().toInt()
+                    // Kiểm tra dữ liệu tồn tại và lấy giá trị cột đúng
+                    val rowValue = row.get(0)?.toString()
+                    if (!rowValue.isNullOrEmpty()) {
+                        check_out_thuc_te = rowValue
+                    }
                 }
             }
-            ma_hoa_don.toString()
+            check_out_thuc_te // Trả về giá trị lấy được
         } catch (e: Exception) {
-            "No 7: ${e.message}"
+            "No 7: ${e.message}" // Trả về thông báo lỗi nếu có ngoại lệ
         }
     }
+
+
 }

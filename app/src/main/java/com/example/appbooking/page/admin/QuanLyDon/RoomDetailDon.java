@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -38,6 +40,8 @@ public class RoomDetailDon extends AppCompatActivity {
     MySQLite db;
     private ImageButton backButton;
     double giaTien = 0;
+    Integer kiemtratontai;
+    Integer ma_don;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +78,7 @@ public class RoomDetailDon extends AppCompatActivity {
         String cccdValue = intent.getStringExtra("cccd");
         String ma_loai_phong = intent.getStringExtra("ma_loai_phong");
         String doi_ten_loai_phong = getmaTenPhong(ma_loai_phong);
-        Integer ma_don = Integer.parseInt(intent.getStringExtra("ma_don"));
+        ma_don = Integer.parseInt(intent.getStringExtra("ma_don"));
         String check_in = intent.getStringExtra("check_in");
         String check_out = intent.getStringExtra("check_out");
 
@@ -87,21 +91,9 @@ public class RoomDetailDon extends AppCompatActivity {
         bookedOut.setText("Ngày trả phòng: " + check_out);
         phone.setText("Số điện thoại: " + sdt);
         cccd.setText("CCCD: " + cccdValue);
-
+        kiemtratontai = Integer.parseInt(db.hamlaymadon(ma_don));
         setupListeners(ma_don, check_in, check_out);
         layThongTinThuc(ma_don);
-
-        if (startTimeInMillis != -1) {
-            SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());
-            String formattedStartTime = dateTimeFormat.format(new Date(startTimeInMillis));  // Đổi tên biến thành formattedStartTime
-            tvNgayBatDau.setText(formattedStartTime);
-        }
-
-        if (endTimeInMillis != -1) {
-            SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());
-            String formattedEndTime = dateTimeFormat.format(new Date(endTimeInMillis));  // Sử dụng endTimeInMillis đúng
-            tvNgayHetHan.setText(formattedEndTime);
-        }
     }
 
     private void setupListeners(Integer ma_don, String bookedAt, String bookedOut) {
@@ -130,7 +122,7 @@ public class RoomDetailDon extends AppCompatActivity {
             timePicker.addOnPositiveButtonClickListener(view -> {
                 calendar.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
                 calendar.set(Calendar.MINUTE, timePicker.getMinute());
-                SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());
+                SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
                 String selectedDateTime = dateTimeFormat.format(calendar.getTime());
 
                 if (isStartTime) {
@@ -145,9 +137,14 @@ public class RoomDetailDon extends AppCompatActivity {
                     } else {
                         endTimeInMillis = selectedEndTime;
                         tvNgayHetHan.setText(selectedDateTime);
+                        SimpleDateFormat now = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                        String currentTime = now.format(calendar.getTime()); // Định dạng thời gian hiện tại
+                        db.updateDataHoaDon(kiemtratontai, ma_don, currentTime);
+                        giaTien = Double.parseDouble(db.layDuLieuTienCuaPhongDo((ma_don)));
+                        price.setText("Gía cần thanh toán: " + giaTien);
+
                         Luu.setText("Thanh Toan");
                         tvNgayHetHan.setTextColor(ContextCompat.getColor(this, R.color.brandBlue30));
-
                     }
                 }
             });
@@ -158,45 +155,58 @@ public class RoomDetailDon extends AppCompatActivity {
         datePicker.show(getSupportFragmentManager(), isStartTime ? "START_DATE_PICKER" : "END_DATE_PICKER");
     }
 
-    private String getCurrentTime() {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy", Locale.getDefault());
-        return sdf.format(new Date());
-    }
 
-    public String layThongTinThuc(int maDon) {
+    private void layThongTinThuc(int maDon) {
         try {
-            // Lấy giá trị check-in
-            db = new MySQLite();
-            long checkIn = Long.parseLong(db.hamlaycheckinthuc(maDon));
-            startTimeInMillis = checkIn != -1 ? checkIn : -1;
+            // Khai báo SimpleDateFormat một lần duy nhất
+            SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 
-            // Lấy giá trị check-out
-            long checkOut = Long.parseLong(db.hamlaycheckoutthuc(maDon));
-            endTimeInMillis = checkOut != -1 ? checkOut : -1;
-
-            // Trả về thông tin
-            if (startTimeInMillis != -1 || endTimeInMillis != -1) {
-                return "Dữ liệu: startTimeInMillis = " + startTimeInMillis + ", endTimeInMillis = " + endTimeInMillis;
+            // Lấy và chuyển đổi giá trị check-in
+            String checkInString = db.hamlaycheckinthuc(maDon);
+            if (!checkInString.equals("-1")) {
+                Date checkInDate = dateTimeFormat.parse(checkInString); // Chuyển chuỗi thành Date
+                startTimeInMillis = checkInDate.getTime(); // Chuyển Date sang millis
             } else {
-                return "Không tìm thấy dữ liệu. startTimeInMillis = -1, endTimeInMillis = -1";
+                startTimeInMillis = -1; // Giá trị mặc định nếu không có dữ liệu
             }
+
+            // Lấy và chuyển đổi giá trị check-out
+            String checkOutString = db.hamlaycheckoutthuc(maDon);
+            if (!checkOutString.equals("-1")) {
+                Date checkOutDate = dateTimeFormat.parse(checkOutString); // Chuyển chuỗi thành Date
+                endTimeInMillis = checkOutDate.getTime(); // Chuyển Date sang millis
+            } else {
+                endTimeInMillis = -1; // Giá trị mặc định nếu không có dữ liệu
+            }
+
+            // Hiển thị thời gian đã lấy (nếu có)
+            if (startTimeInMillis != -1) {
+                String formattedStartTime = dateTimeFormat.format(new Date(startTimeInMillis));
+                tvNgayBatDau.setText(formattedStartTime); // Đưa vào TextView
+            }
+
+            if (endTimeInMillis != -1) {
+                String formattedEndTime = dateTimeFormat.format(new Date(endTimeInMillis));
+                tvNgayHetHan.setText(formattedEndTime); // Đưa vào TextView
+            }
+
         } catch (Exception e) {
-            return "Lỗi: " + e.getMessage();
+            Toast.makeText(this, "Lỗi A: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
 
+
+
     private void luuduLieu(Integer ma_don, String bookedAt, String bookedOut) {
         try {
-            Integer kiemtratontai = Integer.parseInt(db.hamlaymadon(ma_don));
 
             // Kiểm tra xem thời gian bắt đầu có hợp lệ hay không
             if (startTimeInMillis != -1) {
-                SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());
+                SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
                 String start = dateTimeFormat.format(new Date(startTimeInMillis));
 
-                if (kiemtratontai == -1) { // Trường hợp đơn hàng chưa tồn tại
-                    // Kiểm tra thời gian kết thúc
+                if (kiemtratontai == -1) {
                     if (endTimeInMillis != -1) {
                         String end = dateTimeFormat.format(new Date(endTimeInMillis));
                         String info = db.insertDataQuanLyNCaHai(userId, ma_don, start, end, bookedAt, bookedOut);
@@ -207,15 +217,24 @@ public class RoomDetailDon extends AppCompatActivity {
                     }
                 } else {
                     db.updateThoigianCheckInThuc(ma_don, start);
-                    // Nếu có thời gian kết thúc thì cập nhật và chốt hóa đơn
                     if (endTimeInMillis != -1) {
                         String end = dateTimeFormat.format(new Date(endTimeInMillis));
-                        String info =  db.insertDataCheckOutThuc(ma_don, bookedAt, bookedOut);
-                        db.updateDataHoaDon(kiemtratontai, ma_don, end);
-                        Toast.makeText(this, "Đã chốt hóa đơn và lưu dữ liệu check-out", Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setTitle("Xác nhận thanh toán")
+                                .setMessage("Bạn có chắc chắn muốn chốt hóa đơn không?")
+                                .setPositiveButton("OK", (dialog, which) -> {
+                                    String info = db.insertDataCheckOutThuc(ma_don, bookedAt, bookedOut);
+                                    db.updateDataHoaDon(kiemtratontai, ma_don, end);
+                                    Toast.makeText(this, "Đã chốt hóa đơn và lưu dữ liệu check-out", Toast.LENGTH_SHORT).show();
+                                })
+                                .setNegativeButton("Hủy", (dialog, which) -> {
+                                    dialog.dismiss();
+                                })
+                                .show();
                     } else {
                         Toast.makeText(this, "Chưa có thời gian kết thúc, chỉ cập nhật thời gian check-in", Toast.LENGTH_SHORT).show();
                     }
+
                 }
             } else {
                 Toast.makeText(this, "Bạn cần chọn thời gian bắt đầu", Toast.LENGTH_SHORT).show();

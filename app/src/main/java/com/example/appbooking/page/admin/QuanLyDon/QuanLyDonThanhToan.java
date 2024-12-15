@@ -87,11 +87,12 @@ public class QuanLyDonThanhToan extends AppCompatActivity {
     private void setupFilterSpinner() {
         // Options for the spinner
         List<String> filterOptions = new ArrayList<>();
-        filterOptions.add("Tất cả");
+        filterOptions.add("Đang Thuê");
         filterOptions.add("Standard");
         filterOptions.add("Superior");
         filterOptions.add("Deluxe");
         filterOptions.add("Suite");
+        filterOptions.add("Đã Thuê");
 
         // Set up adapter for spinner
         ArrayAdapter<String> filterAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, filterOptions);
@@ -105,8 +106,10 @@ public class QuanLyDonThanhToan extends AppCompatActivity {
                 String selectedItem = parentView.getItemAtPosition(position).toString();
 
                 ArrayList<HashMap<String, Object>> filteredList;
-                if ("Tất cả".equals(selectedItem)) {
+                if ("Đang Thuê".equals(selectedItem)) {
                     filteredList = db.layDuLieuPhongCoNguoiDat();
+                }else if("Đã Thuê".equals(selectedItem)){
+                    filteredList = db.layDuLieuPhongDaThanhToan();
                 } else {
                     int roomTypeCode = getRoomTypeCode(selectedItem);
                     filteredList = db.layDuLieuPhongCoNguoiDatTuMaPhong(roomTypeCode);
@@ -155,9 +158,12 @@ public class QuanLyDonThanhToan extends AppCompatActivity {
         String selectedFilter = spinnerFilter.getSelectedItem().toString();
 
         ArrayList<HashMap<String, Object>> filteredList = new ArrayList<>();
-        if ("Tất cả".equals(selectedFilter)) {
+        if ("Đang Thuê".equals(selectedFilter)) {
             filteredList = db.layDuLieuPhongCoNguoiDat();
-        } else {
+        } else if("Đã Thuê".equals(selectedFilter)){
+            filteredList = db.layDuLieuPhongDaThanhToan();
+        }
+        else {
             int roomTypeCode = getRoomTypeCode(selectedFilter);
             filteredList = db.layDuLieuPhongCoNguoiDatTuMaPhong(roomTypeCode);
         }

@@ -1,4 +1,5 @@
 package com.example.appbooking.page.admin.QuanLyDon;
+
 import androidx.appcompat.widget.SearchView;
 import android.os.Bundle;
 import android.view.View;
@@ -102,15 +103,13 @@ public class QuanLyDonThanhToan extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 String selectedItem = parentView.getItemAtPosition(position).toString();
-                String checkIn = "2024-12-01";  // Example check-in date
-                String checkOut = "2024-12-05"; // Example check-out date
 
                 ArrayList<HashMap<String, Object>> filteredList;
                 if ("Tất cả".equals(selectedItem)) {
-                    filteredList = db.layDuLieuPhongCoNguoiDat(checkIn, checkOut);
+                    filteredList = db.layDuLieuPhongCoNguoiDat();
                 } else {
                     int roomTypeCode = getRoomTypeCode(selectedItem);
-                    filteredList = db.layDuLieuPhongCoNguoiDatTuMaPhong(checkIn, checkOut, roomTypeCode);
+                    filteredList = db.layDuLieuPhongCoNguoiDatTuMaPhong(roomTypeCode);
                 }
 
                 updateRoomList(filteredList);
@@ -133,17 +132,20 @@ public class QuanLyDonThanhToan extends AppCompatActivity {
                 Toast.makeText(this, "Đã cập nhật danh sách phòng!", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(this, "Có lỗi xảy ra khi cập nhật dữ liệu", Toast.LENGTH_SHORT).show();
-                e.printStackTrace();  // In lỗi chi tiết ra Logcat để debug
+                e.printStackTrace();
             }
         }
     }
 
     private void reloadData() {
-        spinnerFilter.setSelection(0);  // Reset filter to "Tất cả"
-        String checkIn = "2024-12-01";  // Example check-in date
-        String checkOut = "2024-12-05"; // Example check-out date
+        if (spinnerFilter.getAdapter() == null || spinnerFilter.getAdapter().getCount() == 0) {
+            Toast.makeText(this, "Không có tùy chọn nào trong Spinner!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        ArrayList<HashMap<String, Object>> allRooms = db.layDuLieuPhongCoNguoiDat(checkIn, checkOut);
+        spinnerFilter.setSelection(0);
+
+        ArrayList<HashMap<String, Object>> allRooms = db.layDuLieuPhongCoNguoiDat();
         updateRoomList(allRooms);
 
         Toast.makeText(this, "Đã load lại danh sách phòng", Toast.LENGTH_SHORT).show();
@@ -151,21 +153,20 @@ public class QuanLyDonThanhToan extends AppCompatActivity {
 
     private void filterRooms(String query) {
         String selectedFilter = spinnerFilter.getSelectedItem().toString();
-        String checkIn = "2024-12-01";  // Example check-in date
-        String checkOut = "2024-12-05"; // Example check-out date
 
         ArrayList<HashMap<String, Object>> filteredList = new ArrayList<>();
         if ("Tất cả".equals(selectedFilter)) {
-            filteredList = db.layDuLieuPhongCoNguoiDat(checkIn, checkOut);
+            filteredList = db.layDuLieuPhongCoNguoiDat();
         } else {
             int roomTypeCode = getRoomTypeCode(selectedFilter);
-            filteredList = db.layDuLieuPhongCoNguoiDatTuMaPhong(checkIn, checkOut, roomTypeCode);
+            filteredList = db.layDuLieuPhongCoNguoiDatTuMaPhong(roomTypeCode);
         }
 
         // Apply query filter
         ArrayList<HashMap<String, Object>> resultList = new ArrayList<>();
         for (HashMap<String, Object> room : filteredList) {
-            if (room.get("vi_tri").toString().toLowerCase().contains(query.toLowerCase())) {
+            Object viTri = room.get("vi_tri");
+            if (viTri != null && viTri.toString().toLowerCase().contains(query.toLowerCase())) {
                 resultList.add(room);
             }
         }
@@ -194,7 +195,12 @@ public class QuanLyDonThanhToan extends AppCompatActivity {
         for (HashMap<String, Object> originalMap : originalList) {
             HashMap<String, String> stringMap = new HashMap<>();
             for (String key : originalMap.keySet()) {
-                stringMap.put(key, String.valueOf(originalMap.get(key)));
+                Object value = originalMap.get(key);
+                if (value != null) {
+                    stringMap.put(key, String.valueOf(value));
+                } else {
+                    stringMap.put(key, "");
+                }
             }
             convertedList.add(stringMap);
         }

@@ -207,44 +207,7 @@ class MySQLite {
             "Thêm không thành công: ${e} }"
         }
     }
-    fun insertDataHoaDon(ma_don: Int, ngay_thanh_toan: String): String {
-        return try {
-            var tien: Any? = tinhGiaPhong(ma_don).get("tongTien")
-            val sql = """
-            INSERT INTO HOA_DON (ma_hoa_don, ma_don, ngay_thanh_toan, so_tien_thanh_toan)
-            VALUES (NULL, $ma_don, '$ngay_thanh_toan', $tien);
-        """
-            db.connect().execute(sql)
-            "Thêm thành công"
-        } catch (e: Exception) {
-            "Thêm không thành công: ${e} }"
-        }
-    }
-    fun insertDataQuanLy(ma_nhan_vien: Int, ma_don: Int): String {
-        return try {
-            var is_ma_don = -1
-            db.connect().use { conn ->
-                var sql1 = """
-                     select D.ma_don, H.ma_hoa_don from DON AS D
-                            left join HOA_DON AS H ON D.ma_don = H.ma_don
-                            where H.ma_hoa_don is null and D.ma_don = $ma_don;
-                        """
-                val rows = conn.query(sql1)
-                rows.forEach { row ->
-                    is_ma_don = row.get(0).toString().toInt()
-                }
-            }
 
-            var sql = """
-            INSERT INTO QUAN_LY (ma_nhan_vien, ma_don, is_thanh_toan, is_duyet)
-            VALUES ($ma_nhan_vien, '$ma_don', ${ma_don != is_ma_don}, '0');
-        """
-            db.connect().execute(sql)
-            "Thêm thành công"
-        } catch (e: Exception) {
-            "Thêm không thành công: ${e.message}"
-        }
-    }
     fun kiemTraDangNhap(username: String, password: String): TaiKhoan{
         var taiKhoan = TaiKhoan()
         db.connect().use { conn ->
@@ -397,8 +360,6 @@ class MySQLite {
             .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
     }
-
-
 
     fun tinhGiaPhong(ma_don: Int): HashMap<String, Any> {
         var map = HashMap<String, Any>()
@@ -624,35 +585,32 @@ class MySQLite {
     }
 
     
-fun layDuLieuPhongCoNguoiDatTuMaPhong(checkIn: String, checkOut: String, maLoaiPhong: Int): ArrayList<HashMap<String, Any>> {
+fun layDuLieuPhongCoNguoiDatTuMaPhong( maLoaiPhong: Int): ArrayList<HashMap<String, Any>> {
     val ds = ArrayList<HashMap<String, Any>>()
 
     db.connect().use { conn ->
         val sql = """
-        SELECT 
+       SELECT 
             P.ma_phong, 
             P.vi_tri, 
             P.ma_loai_phong, 
             D.ma_don, 
             D.check_in, 
             T.check_out, 
-            N.username, 
+            N.name, 
             N.id,
             N.sdt,
             N.cccd
-           
         FROM PHONG AS P
         LEFT JOIN THUE AS T ON P.ma_phong = T.ma_phong
         LEFT JOIN DON AS D ON D.ma_don = T.ma_don
-        LEFT JOIN QUAN_LY AS Q ON Q.ma_don = D.ma_don
         LEFT JOIN TAI_KHOAN AS N ON N.id = D.ma_nguoi_dat
-        WHERE (
-            (D.check_in <= '$checkOut' AND T.check_out >= '$checkIn')
-            OR
-            (Q.check_in_thuc_te <= '$checkOut' AND Q.check_out_thuc_te >= '$checkIn')
-        )
-        AND ma_loai_phong = $maLoaiPhong
-        GROUP BY P.ma_phong
+        WHERE 
+            T.ma_don IS NOT NULL
+            AND D.ma_don IS NOT NULL
+        AND P.ma_loai_phong = $maLoaiPhong
+        GROUP BY P.ma_phong;
+
         """
 
         val rows = conn.query(sql)
@@ -665,7 +623,7 @@ fun layDuLieuPhongCoNguoiDatTuMaPhong(checkIn: String, checkOut: String, maLoaiP
             val maDon = row.get(3).toString()
             val checkInDb = row.get(4).toString()
             val checkOutDb = row.get(5).toString()
-            val username = row.get(6).toString()
+            val name = row.get(6).toString()
             val id = row.get(7).toString()
             val sdt = row.get(8).toString()
             val cccd = row.get(9).toString()
@@ -676,7 +634,7 @@ fun layDuLieuPhongCoNguoiDatTuMaPhong(checkIn: String, checkOut: String, maLoaiP
             resultMap["ma_don"] = maDon
             resultMap["check_in"] = checkInDb
             resultMap["check_out"] = checkOutDb
-            resultMap["username"] = username
+            resultMap["name"] = name
             resultMap["id"] = id
             resultMap["sdt"] = sdt
             resultMap["cccd"] = cccd
@@ -689,7 +647,7 @@ fun layDuLieuPhongCoNguoiDatTuMaPhong(checkIn: String, checkOut: String, maLoaiP
 }
 
 
-fun layDuLieuPhongCoNguoiDat(checkIn: String, checkOut: String): ArrayList<HashMap<String, Any>> {
+fun layDuLieuPhongCoNguoiDat(): ArrayList<HashMap<String, Any>> {
     val ds = ArrayList<HashMap<String, Any>>()
 
     db.connect().use { conn ->
@@ -699,23 +657,20 @@ fun layDuLieuPhongCoNguoiDat(checkIn: String, checkOut: String): ArrayList<HashM
             P.vi_tri, 
             P.ma_loai_phong, 
             D.ma_don, 
-            D.check_in, 
-            T.check_out, 
-            N.username, 
+            D.check_in,
+            T.check_out,
+            N.name, 
             N.id,
             N.sdt,
             N.cccd
         FROM PHONG AS P
         LEFT JOIN THUE AS T ON P.ma_phong = T.ma_phong
         LEFT JOIN DON AS D ON D.ma_don = T.ma_don
-        LEFT JOIN QUAN_LY AS Q ON Q.ma_don = D.ma_don
         LEFT JOIN TAI_KHOAN AS N ON N.id = D.ma_nguoi_dat
-        WHERE (
-            (D.check_in <= '$checkOut' AND T.check_out >= '$checkIn')
-            OR
-            (Q.check_in_thuc_te <= '$checkOut' AND Q.check_out_thuc_te >= '$checkIn')
-        )
-        GROUP BY P.ma_phong
+        WHERE 
+        T.ma_don IS NOT NULL
+        AND D.ma_don IS NOT NULL
+        GROUP BY P.ma_phong;
         """
 
         conn.query(sql).forEach { row ->
@@ -725,7 +680,7 @@ fun layDuLieuPhongCoNguoiDat(checkIn: String, checkOut: String): ArrayList<HashM
             val maDon = row.get(3).toString()
             val checkInDb = row.get(4).toString()
             val checkOutDb = row.get(5).toString()
-            val username = row.get(6).toString()
+            val name = row.get(6).toString()
             val id = row.get(7).toString()
             val sdt = row.get(8).toString()
             val cccd = row.get(9).toString()
@@ -737,7 +692,7 @@ fun layDuLieuPhongCoNguoiDat(checkIn: String, checkOut: String): ArrayList<HashM
                 put("ma_don", maDon)
                 put("check_in", checkInDb)
                 put("check_out", checkOutDb)
-                put("username", username)
+                put("name", name)
                 put("id", id)
                 put("sdt", sdt)
                 put("cccd", cccd)
@@ -764,4 +719,138 @@ fun layDuLieuPhongCoNguoiDat(checkIn: String, checkOut: String): ArrayList<HashM
         return ds
     }
 
+    fun updateDataHoaDon(ma_hoa_don:Int, ma_don: Int, ngay_thanh_toan: String): String {
+        return try {
+            var tien: Any? = tinhGiaPhong(ma_don).get("tongTien")
+            val sql = """
+            UPDATE HOA_DON
+            SET ngay_thanh_toan = '$ngay_thanh_toan', so_tien_thanh_toan = $tien
+            WHERE ma_hoa_don = $ma_hoa_don;
+        """
+            db.connect().execute(sql)
+            "Thêm thành công"
+        } catch (e: Exception) {
+            "No 1: ${e} }"
+        }
+    }
+
+    fun insertDataQuanLyNgayBatDau(ma_nhan_vien: Int, ma_don: Int, check_in_thuc_te: String, dat_phong_fee: String, tra_phong_fee: String): String {
+        return try {
+
+            var sql = """
+            INSERT INTO QUAN_LY (ma_nhan_vien, ma_don, is_thanh_toan, is_duyet,check_in_thuc_te, check_in_fee, check_out_fee)
+            VALUES ($ma_nhan_vien, '$ma_don', '0', '0', '$check_in_thuc_te', '$dat_phong_fee', '$tra_phong_fee');
+        """
+            db.connect().execute(sql)
+            "Thêm thành công"
+        } catch (e: Exception) {
+            "No 2: ${e.message}"
+        }
+    }
+
+    fun insertDataQuanLyNCaHai(ma_nhan_vien: Int, ma_don: Int, check_in_thuc_te: String, check_out_thuc_te:String, dat_phong_fee: String, tra_phong_fee: String): String {
+        return try {
+            var sql = """
+            INSERT INTO QUAN_LY (ma_nhan_vien, ma_don, is_thanh_toan, is_duyet,check_in_thuc_te,check_out_thuc_te, check_in_fee, check_out_fee)
+            VALUES ($ma_nhan_vien, '$ma_don', '1', '0', '$check_in_thuc_te' , '$check_out_thuc_te', '$dat_phong_fee', '$tra_phong_fee');
+        """
+            db.connect().execute(sql)
+            "Thêm thành công"
+        } catch (e: Exception) {
+            "No 3: ${e.message}"
+        }
+    }
+
+    fun updateThoigianCheckInThuc(ma_don: Int, check_in_thuc_te: String): String {
+        return try {
+            val sql = """
+            UPDATE QUAN_LY
+            SET check_in_thuc_te = '$check_in_thuc_te',
+                is_thanh_toan = '0',
+                is_duyet = '0'
+            WHERE ma_don = $ma_don;
+        """
+            db.connect().execute(sql)
+            "Cập nhật thành công"
+        } catch (e: Exception) {
+            "No 4: ${e.message}"
+        }
+    }
+
+
+    fun insertDataCheckOutThuc(ma_don: Int, check_in_thuc_te: String, check_out_thuc_te: String): String {
+        return try {
+            val sql = """
+            UPDATE QUAN_LY
+            SET is_thanh_toan = '1',
+                is_duyet = '1',
+                check_in_thuc_te = '$check_in_thuc_te',
+                check_out_thuc_te = '$check_out_thuc_te'
+            WHERE ma_don = $ma_don;
+        """
+            db.connect().execute(sql)
+            "Thêm thành công"
+        } catch (e: Exception) {
+            "No 5: ${e.message}"
+        }
+    }
+
+
+    fun hamlaymadon(ma_don: Int): String {
+        return try {
+            var ma_hoa_don = -1
+            db.connect().use { conn ->
+                val sql = """
+            SELECT is_duyet FROM QUAN_LY
+            WHERE ma_don = $ma_don
+            """
+                conn.query(sql).forEach { row ->
+                    val rowMaDon = row.get(0).toString()
+                    if (rowMaDon.isNotEmpty()) {
+                        ma_hoa_don = rowMaDon.toIntOrNull() ?: -1  // Nếu không phải số hợp lệ, gán -1
+                    }
+                }
+            }
+            ma_hoa_don.toString()
+        } catch (e: Exception) {
+            "Lỗi B: ${e.message}"
+        }
+    }
+
+
+    fun hamlaycheckinthuc(ma_don: Int): String {
+        return try {
+            var ma_hoa_don = -1
+            db.connect().use { conn ->
+                val sql = """
+                SELECT * FROM QUAN_LY
+                WHERE ma_don = $ma_don
+            """
+                conn.query(sql).forEach { row ->
+                    ma_hoa_don = row.get(5).toString().toInt()
+                }
+            }
+            ma_hoa_don.toString()
+        } catch (e: Exception) {
+            "No 6: ${e.message}"
+        }
+    }
+
+    fun hamlaycheckoutthuc(ma_don: Int): String {
+        return try {
+            var ma_hoa_don = -1
+            db.connect().use { conn ->
+                val sql = """
+                SELECT * FROM QUAN_LY
+                WHERE ma_don = $ma_don
+            """
+                conn.query(sql).forEach { row ->
+                    ma_hoa_don = row.get(6).toString().toInt()
+                }
+            }
+            ma_hoa_don.toString()
+        } catch (e: Exception) {
+            "No 7: ${e.message}"
+        }
+    }
 }

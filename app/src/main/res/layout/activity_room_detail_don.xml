@@ -221,7 +221,14 @@
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
-
+            <Button
+                android:id="@+id/Luu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#0288D1"
+                android:text="Lưu" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

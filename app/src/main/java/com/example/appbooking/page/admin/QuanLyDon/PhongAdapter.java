@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appbooking.Database.MySQLite;
 import com.example.appbooking.R;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class PhongAdapter extends ArrayAdapter<HashMap<String, String>> {
     Activity context;
     int resource;
     ArrayList<HashMap<String, String>> dataList;
-
+    MySQLite db;
     public PhongAdapter(Activity context, int resource, ArrayList<HashMap<String, String>> dataList) {
         super(context, resource, dataList);
         this.context = context;
@@ -47,12 +48,11 @@ public class PhongAdapter extends ArrayAdapter<HashMap<String, String>> {
             // Tái sử dụng view
             holder = (ViewHolder) convertView.getTag();
         }
-
         // Lấy dữ liệu từ danh sách
         try {
             HashMap<String, String> item = dataList.get(position);
             String tenPhong = item.get("vi_tri");
-            String username = item.get("username");
+            String username = item.get("name");
             String sdt = item.get("sdt");
             String cccd = item.get("cccd");
 
@@ -83,7 +83,6 @@ public class PhongAdapter extends ArrayAdapter<HashMap<String, String>> {
             Toast.makeText(context, "Lỗi hiển thị phòng", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-
         return convertView;
     }
 

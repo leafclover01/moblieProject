@@ -61,7 +61,7 @@ public class PayMentHouse extends AppCompatActivity {
         tvDiscount = findViewById(R.id.tvDiscount);
         tvTotal = findViewById(R.id.tvTotal);
         roomContainer = findViewById(R.id.roomContainer);
-        btnEditCustomerInfo = findViewById(R.id.btnEditCustomerInfo);
+//        btnEditCustomerInfo = findViewById(R.id.btnEditCustomerInfo);
         btnPay = findViewById(R.id.btnPay);
         spnMgg = findViewById(R.id.spnMgg);
 
@@ -70,7 +70,7 @@ public class PayMentHouse extends AppCompatActivity {
         db = new MySQLite();
         TaiKhoan taiKhoan = db.getTaiKhoan(userId);
 
-        String tenKhachHang = taiKhoan.getUsername();
+        String tenKhachHang = taiKhoan.getName() ;
         String cccd = taiKhoan.getCccd();
         String sdt = taiKhoan.getSdt();
         String tenPhong = intent.getStringExtra("tenPhong");

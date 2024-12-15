@@ -107,17 +107,17 @@
             android:textStyle="bold" />
 
         <!-- Buttons -->
-        <Button
-            android:id="@+id/btnEditCustomerInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:padding="16dp"
-            android:backgroundTint="#0288D1"
-            android:textColor="#ffffff"
-            android:text="Chỉnh sửa thông tin" />
+<!--        <Button-->
+<!--            android:id="@+id/btnEditCustomerInfo"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="16dp"-->
+<!--            android:layout_marginLeft="16dp"-->
+<!--            android:layout_marginRight="16dp"-->
+<!--            android:padding="16dp"-->
+<!--            android:backgroundTint="#0288D1"-->
+<!--            android:textColor="#ffffff"-->
+<!--            android:text="Chỉnh sửa thông tin" />-->
 
         <Button
             android:id="@+id/btnPay"

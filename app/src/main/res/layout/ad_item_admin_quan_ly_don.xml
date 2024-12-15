@@ -37,7 +37,7 @@
 
             <!-- TextView hiển thị thông tin chi tiết phòng -->
             <TextView
-                android:text="Loại phòng: "
+                android:text="info: "
                 android:id="@+id/username"
                 android:layout_marginStart="20dp"
                 android:layout_width="wrap_content"

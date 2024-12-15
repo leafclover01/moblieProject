@@ -121,10 +121,10 @@
                             android:id="@+id/bntThoiGianBatDau"
                             android:layout_width="173dp"
                             android:textStyle="bold"
-                            android:textColor="#000000"
+                            android:textColor="#FFFFFF"
                             android:backgroundTint="#0288D1"
                             android:layout_height="wrap_content"
-                            android:text="Ngày bắt đầu" />
+                            android:text="Nhận phòng" />
 
                         <TextView
                             android:id="@+id/tvNgayBatDau"
@@ -146,9 +146,9 @@
                             android:layout_width="165dp"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:textColor="#000000"
+                            android:textColor="#FFFFFF"
                             android:backgroundTint="#0288D1"
-                            android:text="Ngày kết thúc" />
+                            android:text="Trả phòng" />
 
                         <TextView
                             android:id="@+id/tvNgayHetHan"
@@ -170,7 +170,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     android:textStyle="bold"
-                    android:textColor="#000000"
+                    android:textColor="#FFFFFF"
                     android:backgroundTint="#0288D1"
                     android:text="Tạo Mã"
                     android:textSize="20sp" />

@@ -4,6 +4,7 @@ package com.example.appbooking.Database
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import com.example.appbooking.Model.Don
+import com.example.appbooking.Model.HoaDon
 import com.example.appbooking.Model.LoaiPhong
 import com.example.appbooking.Model.Phong
 import com.example.appbooking.Model.RoomRating
@@ -164,7 +165,7 @@ class MySQLite {
                 }
             }
             ma_don?.let {
-                "Thêm thành công, mã đơn: $it"
+                "$it"
             } ?: "Thêm không thành công, không thể lấy mã đơn."
         } catch (e: Exception) {
             "Thêm không thành công: ${e.message}"
@@ -192,8 +193,21 @@ class MySQLite {
             "Thêm không thành công: ${e.message}"
         }
     }
-    fun insertDataHoaDon(ma_don: Int, ngay_thanh_toan: String): String {
 
+    fun insertDataHoaDon_BanDau(ma_don: Int, ngay_thanh_toan: String, tien: Double): String {
+
+        return try {
+            val sql = """
+            INSERT INTO HOA_DON (ma_hoa_don, ma_don, ngay_thanh_toan, so_tien_thanh_toan)
+            VALUES (NULL, $ma_don, '$ngay_thanh_toan', $tien);
+        """
+            db.connect().execute(sql)
+            "Thêm thành công"
+        } catch (e: Exception) {
+            "Thêm không thành công: ${e} }"
+        }
+    }
+    fun insertDataHoaDon(ma_don: Int, ngay_thanh_toan: String): String {
         return try {
             var tien: Any? = tinhGiaPhong(ma_don).get("tongTien")
             val sql = """
@@ -320,8 +334,6 @@ class MySQLite {
         }
         return taiKhoan
     }
-
-
 
     fun layDanhSachTaiKhoan(): ArrayList<TaiKhoan>{
         var list = ArrayList<TaiKhoan>()
@@ -625,7 +637,10 @@ fun layDuLieuPhongCoNguoiDatTuMaPhong(checkIn: String, checkOut: String, maLoaiP
             D.check_in, 
             T.check_out, 
             N.username, 
-            N.id
+            N.id,
+            N.sdt,
+            N.cccd
+           
         FROM PHONG AS P
         LEFT JOIN THUE AS T ON P.ma_phong = T.ma_phong
         LEFT JOIN DON AS D ON D.ma_don = T.ma_don
@@ -652,6 +667,8 @@ fun layDuLieuPhongCoNguoiDatTuMaPhong(checkIn: String, checkOut: String, maLoaiP
             val checkOutDb = row.get(5).toString()
             val username = row.get(6).toString()
             val id = row.get(7).toString()
+            val sdt = row.get(8).toString()
+            val cccd = row.get(9).toString()
 
             resultMap["ma_phong"] = maPhong
             resultMap["vi_tri"] = viTri
@@ -661,6 +678,8 @@ fun layDuLieuPhongCoNguoiDatTuMaPhong(checkIn: String, checkOut: String, maLoaiP
             resultMap["check_out"] = checkOutDb
             resultMap["username"] = username
             resultMap["id"] = id
+            resultMap["sdt"] = sdt
+            resultMap["cccd"] = cccd
 
             ds.add(resultMap)
         }
@@ -683,7 +702,9 @@ fun layDuLieuPhongCoNguoiDat(checkIn: String, checkOut: String): ArrayList<HashM
             D.check_in, 
             T.check_out, 
             N.username, 
-            N.id
+            N.id,
+            N.sdt,
+            N.cccd
         FROM PHONG AS P
         LEFT JOIN THUE AS T ON P.ma_phong = T.ma_phong
         LEFT JOIN DON AS D ON D.ma_don = T.ma_don
@@ -706,6 +727,8 @@ fun layDuLieuPhongCoNguoiDat(checkIn: String, checkOut: String): ArrayList<HashM
             val checkOutDb = row.get(5).toString()
             val username = row.get(6).toString()
             val id = row.get(7).toString()
+            val sdt = row.get(8).toString()
+            val cccd = row.get(9).toString()
 
             val resultMap = HashMap<String, Any>().apply {
                 put("ma_phong", maPhong)
@@ -716,6 +739,8 @@ fun layDuLieuPhongCoNguoiDat(checkIn: String, checkOut: String): ArrayList<HashM
                 put("check_out", checkOutDb)
                 put("username", username)
                 put("id", id)
+                put("sdt", sdt)
+                put("cccd", cccd)
             }
 
             ds.add(resultMap)
@@ -725,5 +750,18 @@ fun layDuLieuPhongCoNguoiDat(checkIn: String, checkOut: String): ArrayList<HashM
     return ds
 }
 
+    fun layDuLieuTienCuaPhongDo(ma_don: Int): String {
+        var ds = ""
+        db.connect().use {conn ->
+            var sql = """
+                    SELECT * from HOA_DON
+                        WHERE ma_don = $ma_don
+            """
+            var rows = conn.query(sql).forEach{ row ->
+                ds = row.get(3).toString()
+            }
+        }
+        return ds
+    }
 
 }

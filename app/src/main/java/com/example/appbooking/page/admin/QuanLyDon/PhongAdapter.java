@@ -51,18 +51,31 @@ public class PhongAdapter extends ArrayAdapter<HashMap<String, String>> {
         // Lấy dữ liệu từ danh sách
         try {
             HashMap<String, String> item = dataList.get(position);
-            String tenPhong = item.get("vi_tri"); // Tên phòng
-            String username = item.get("username"); // Tên người dùng
-            final String maPhong = item.get("ma_phong"); // Mã phòng (ID phòng)
+            String tenPhong = item.get("vi_tri");
+            String username = item.get("username");
+            String sdt = item.get("sdt");
+            String cccd = item.get("cccd");
+
+            String ma_loai_phong = item.get("ma_loai_phong");
+            String ma_don = item.get("ma_don");
+            String check_in = item.get("check_in");
+            String check_out = item.get("check_out");
+            final String maPhong = item.get("ma_phong");
 
             holder.tenPhong.setText(tenPhong);
-            holder.username.setText(username);
+            holder.username.setText(username + " - SDT: " + sdt);
 
-            // Đặt sự kiện click cho nút "Xem Chi Tiết"
             holder.ad_btnEditRoom.setOnClickListener(v -> {
-                // Tạo Intent để mở activity chi tiết phòng
                 Intent intent = new Intent(context, RoomDetailDon.class);
-                intent.putExtra("MA_PHONG", maPhong); // Truyền mã phòng vào Intent
+                intent.putExtra("MA_PHONG", maPhong);
+                intent.putExtra("tenPhong", tenPhong);
+                intent.putExtra("username", username);
+                intent.putExtra("sdt", sdt);
+                intent.putExtra("cccd", cccd);
+                intent.putExtra("ma_loai_phong", ma_loai_phong);
+                intent.putExtra("ma_don", ma_don);
+                intent.putExtra("check_in", check_in);
+                intent.putExtra("check_out", check_out);
                 context.startActivity(intent);
             });
 

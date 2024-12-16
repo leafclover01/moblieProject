@@ -36,6 +36,7 @@ public class QuanLyDonThanhToan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quan_ly_don_thanh_toan);
 
+        // Initialize views
         btnReload = findViewById(R.id.btnReload);
         spinnerFilter = findViewById(R.id.ad_dkLoc);
         lvDanhSachPhong = findViewById(R.id.ad_listDanhSachThue);
@@ -43,24 +44,31 @@ public class QuanLyDonThanhToan extends AppCompatActivity {
         btnSearchExpand = findViewById(R.id.btnSearchExpand);
         searchView = findViewById(R.id.ad_searchView);
 
+        // Initialize database
         db = new MySQLite();
 
+        // Initialize adapter with an empty list
         phongAdapter = new PhongAdapter(this, R.layout.ad_item_admin_quan_ly_don, new ArrayList<>());
         lvDanhSachPhong.setAdapter(phongAdapter);
 
+        // Setup spinner for filtering
         setupFilterSpinner();
 
+        // Reload button event
         btnReload.setOnClickListener(v -> reloadData());
 
+        // Back button event
         btnBack.setOnClickListener(v -> finish());
 
+        // Expand search on icon click
         btnSearchExpand.setOnClickListener(v -> {
             if (searchView.getVisibility() == View.GONE) {
-                searchView.setVisibility(View.VISIBLE);
-                searchView.requestFocus();
+                searchView.setVisibility(View.VISIBLE);  // Show SearchView
+                searchView.requestFocus();  // Focus on the SearchView to type
             }
         });
 
+        // Handle query text change in SearchView
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -77,7 +85,7 @@ public class QuanLyDonThanhToan extends AppCompatActivity {
     }
 
     private void setupFilterSpinner() {
-
+        // Options for the spinner
         List<String> filterOptions = new ArrayList<>();
         filterOptions.add("Đang Thuê");
         filterOptions.add("Standard");
@@ -86,10 +94,12 @@ public class QuanLyDonThanhToan extends AppCompatActivity {
         filterOptions.add("Suite");
         filterOptions.add("Đã Thuê");
 
+        // Set up adapter for spinner
         ArrayAdapter<String> filterAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, filterOptions);
         filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFilter.setAdapter(filterAdapter);
 
+        // Handle spinner item selection
         spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -104,7 +114,6 @@ public class QuanLyDonThanhToan extends AppCompatActivity {
                     int roomTypeCode = getRoomTypeCode(selectedItem);
                     filteredList = db.layDuLieuPhongCoNguoiDatTuMaPhong(roomTypeCode);
                 }
-
                 updateRoomList(filteredList);
             }
 
@@ -157,7 +166,7 @@ public class QuanLyDonThanhToan extends AppCompatActivity {
             int roomTypeCode = getRoomTypeCode(selectedFilter);
             filteredList = db.layDuLieuPhongCoNguoiDatTuMaPhong(roomTypeCode);
         }
-        
+
         ArrayList<HashMap<String, Object>> resultList = new ArrayList<>();
         for (HashMap<String, Object> room : filteredList) {
             Object viTri = room.get("vi_tri");

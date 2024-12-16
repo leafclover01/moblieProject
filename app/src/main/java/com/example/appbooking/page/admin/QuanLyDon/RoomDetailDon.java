@@ -36,7 +36,7 @@ public class RoomDetailDon extends AppCompatActivity {
     private long startTimeInMillis = -1;
     private long endTimeInMillis = -1;
     private int userId;
-    private TextView tvNgayBatDau, tvNgayHetHan;
+    private TextView tvNgayBatDau, tvNgayHetHan, result;
     MySQLite db;
     private ImageButton backButton;
     double giaTien = 0;
@@ -48,16 +48,15 @@ public class RoomDetailDon extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_detail_don);
 
-        // Ánh xạ các view
         roomType = findViewById(R.id.roomType);
         price = findViewById(R.id.price);
         checkToken();
 
         bookedBy = findViewById(R.id.bookedBy);
         bookedAt = findViewById(R.id.bookedAt);
-        bookedOut = findViewById(R.id.bookedOut); // Ngày check-out
-        phone = findViewById(R.id.phone); // Số điện thoại
-        cccd = findViewById(R.id.cccd); // CCCD
+        bookedOut = findViewById(R.id.bookedOut);
+        phone = findViewById(R.id.phone);
+        cccd = findViewById(R.id.cccd);
         bntThoiGianBatDau = findViewById(R.id.bntThoiGianBatDau);
         bntThoiGianKetThuc = findViewById(R.id.bntThoiGianKetThuc);
         backButton = findViewById(R.id.back);
@@ -65,7 +64,7 @@ public class RoomDetailDon extends AppCompatActivity {
         roomName = findViewById(R.id.roomName);
         tvNgayBatDau = findViewById(R.id.tvNgayBatDau);
         tvNgayHetHan = findViewById(R.id.tvNgayHetHan);
-        // Xử lý nút Back
+        result = findViewById(R.id.result);
         backButton.setOnClickListener(view -> finish());
 
         Intent intent = getIntent();
@@ -94,13 +93,24 @@ public class RoomDetailDon extends AppCompatActivity {
         kiemtratontai = Integer.parseInt(db.hamlaymadon(ma_don));
         setupListeners(ma_don, check_in, check_out);
         layThongTinThuc(ma_don);
+        kiem_tra_thanh_toan(ma_don);
     }
 
+    private  void kiem_tra_thanh_toan(Integer ma_don){
+        Integer kiemtrathanhtoan = Integer.parseInt(db.kiemTraThanhToan(ma_don));
+        if(kiemtrathanhtoan == 1){
+            result.setText("Đã Thanh Toán");
+            Luu.setVisibility(View.GONE);
+        }else if(kiemtrathanhtoan == 0){
+            result.setText("Chưa Thanh Toán");
+        }
+    }
     private void setupListeners(Integer ma_don, String bookedAt, String bookedOut) {
         bntThoiGianBatDau.setOnClickListener(v -> pickDateTime(true));
         bntThoiGianKetThuc.setOnClickListener(v -> pickDateTime(false));
         Luu.setOnClickListener(v -> luuduLieu(ma_don, bookedAt, bookedOut));
     }
+
 
     private void pickDateTime(boolean isStartTime) {
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
@@ -195,13 +205,9 @@ public class RoomDetailDon extends AppCompatActivity {
         }
     }
 
-
-
-
     private void luuduLieu(Integer ma_don, String bookedAt, String bookedOut) {
         try {
 
-            // Kiểm tra xem thời gian bắt đầu có hợp lệ hay không
             if (startTimeInMillis != -1) {
                 SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
                 String start = dateTimeFormat.format(new Date(startTimeInMillis));
@@ -210,10 +216,11 @@ public class RoomDetailDon extends AppCompatActivity {
                     if (endTimeInMillis != -1) {
                         String end = dateTimeFormat.format(new Date(endTimeInMillis));
                         String info = db.insertDataQuanLyNCaHai(userId, ma_don, start, end, bookedAt, bookedOut);
-                        Toast.makeText(this, "Đã lưu dữ liệu quản lý ca hai", Toast.LENGTH_SHORT).show();
-                    } else { // Không có thời gian kết thúc
+                        Toast.makeText(this, "Đã thanh toán", Toast.LENGTH_SHORT).show();
+                        kiem_tra_thanh_toan(ma_don);
+                    } else {
                         String info = db.insertDataQuanLyNgayBatDau(userId, ma_don, start, bookedAt, bookedOut);
-                        Toast.makeText(this, "Đã lưu dữ liệu quản lý ngày bắt đầu " + info, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Đã lưu thời gian nhận phòng " + info, Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     db.updateThoigianCheckInThuc(ma_don, start);
@@ -225,14 +232,15 @@ public class RoomDetailDon extends AppCompatActivity {
                                 .setPositiveButton("OK", (dialog, which) -> {
                                     String info = db.insertDataCheckOutThuc(ma_don, bookedAt, bookedOut);
                                     db.updateDataHoaDon(kiemtratontai, ma_don, end);
-                                    Toast.makeText(this, "Đã chốt hóa đơn và lưu dữ liệu check-out", Toast.LENGTH_SHORT).show();
+                                    kiem_tra_thanh_toan(ma_don);
+                                    Toast.makeText(this, "Đã chốt hóa đơn", Toast.LENGTH_SHORT).show();
                                 })
                                 .setNegativeButton("Hủy", (dialog, which) -> {
                                     dialog.dismiss();
                                 })
                                 .show();
                     } else {
-                        Toast.makeText(this, "Chưa có thời gian kết thúc, chỉ cập nhật thời gian check-in", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Chưa có thời gian kết thúc", Toast.LENGTH_SHORT).show();
                     }
 
                 }

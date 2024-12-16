@@ -9,20 +9,15 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import com.example.appbooking.Database.MySQLite
-import com.example.appbooking.Model.ChiTietDanhGia
 import com.example.appbooking.Model.Don
-import com.example.appbooking.Model.TaiKhoan
 import com.example.appbooking.R
+import com.example.appbooking.page.admin.QuanLyDon.RoomDetailDon
 import com.example.appbooking.page.customer.DanhGiaUserFragment
-import tech.turso.libsql.toValue
-import java.text.SimpleDateFormat
-import java.util.Date
-import android.widget.Toast
+import com.example.appbooking.page.customer.XemChiTietDon
+
 class DonAdapter(
     context: Context,
     private val resource: Int,
@@ -63,8 +58,15 @@ class DonAdapter(
                 fragmentTransaction.addToBackStack(null)
                 fragmentTransaction.commit()
         }
+
+        btnChiTiet.setOnClickListener {
+            val intent = Intent(context, XemChiTietDon::class.java)
+            intent.putExtra("ma_don", don.maDon.toString())
+            context.startActivity(intent)
+        }
         return view
     }
+
 
 
 

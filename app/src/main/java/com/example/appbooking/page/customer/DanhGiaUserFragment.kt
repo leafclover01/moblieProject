@@ -26,7 +26,6 @@ class DanhGiaUserFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_danh_gia_user, container, false)
 
-
         val tvMaDon: TextView = view.findViewById(R.id.tvMaDon)
         val sbPhong: SeekBar = view.findViewById(R.id.sbPhong)
         val sbSachSe: SeekBar = view.findViewById(R.id.sbSachSe)

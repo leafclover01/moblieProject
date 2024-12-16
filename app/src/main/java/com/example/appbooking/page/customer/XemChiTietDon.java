@@ -52,8 +52,8 @@ public class XemChiTietDon extends AppCompatActivity {
 
         // Lấy thông tin từ Intent
         Intent intent = getIntent();
-//        ma_don = Integer.parseInt(intent.getStringExtra("ma_don"));
-        ma_don = 2;
+        ma_don = Integer.parseInt(intent.getStringExtra("ma_don"));
+//        ma_don = 2;
 
         // Khởi tạo cơ sở dữ liệu
         db = new MySQLite();

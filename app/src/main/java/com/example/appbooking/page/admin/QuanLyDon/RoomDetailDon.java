@@ -158,36 +158,36 @@ public class RoomDetailDon extends AppCompatActivity {
 
     private void layThongTinThuc(int maDon) {
         try {
-            // Khai báo SimpleDateFormat một lần duy nhất
+
             SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 
-            // Lấy và chuyển đổi giá trị check-in
+
             String checkInString = db.hamlaycheckinthuc(maDon);
             if (!checkInString.equals("-1")) {
-                Date checkInDate = dateTimeFormat.parse(checkInString); // Chuyển chuỗi thành Date
-                startTimeInMillis = checkInDate.getTime(); // Chuyển Date sang millis
+                Date checkInDate = dateTimeFormat.parse(checkInString);
+                startTimeInMillis = checkInDate.getTime();
             } else {
-                startTimeInMillis = -1; // Giá trị mặc định nếu không có dữ liệu
+                startTimeInMillis = -1;
             }
 
-            // Lấy và chuyển đổi giá trị check-out
+
             String checkOutString = db.hamlaycheckoutthuc(maDon);
             if (!checkOutString.equals("-1")) {
-                Date checkOutDate = dateTimeFormat.parse(checkOutString); // Chuyển chuỗi thành Date
-                endTimeInMillis = checkOutDate.getTime(); // Chuyển Date sang millis
+                Date checkOutDate = dateTimeFormat.parse(checkOutString);
+                endTimeInMillis = checkOutDate.getTime();
             } else {
-                endTimeInMillis = -1; // Giá trị mặc định nếu không có dữ liệu
+                endTimeInMillis = -1;
             }
 
-            // Hiển thị thời gian đã lấy (nếu có)
+
             if (startTimeInMillis != -1) {
                 String formattedStartTime = dateTimeFormat.format(new Date(startTimeInMillis));
-                tvNgayBatDau.setText(formattedStartTime); // Đưa vào TextView
+                tvNgayBatDau.setText(formattedStartTime);
             }
 
             if (endTimeInMillis != -1) {
                 String formattedEndTime = dateTimeFormat.format(new Date(endTimeInMillis));
-                tvNgayHetHan.setText(formattedEndTime); // Đưa vào TextView
+                tvNgayHetHan.setText(formattedEndTime);
             }
 
         } catch (Exception e) {

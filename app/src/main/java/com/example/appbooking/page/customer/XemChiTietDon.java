@@ -60,7 +60,6 @@ public class XemChiTietDon extends AppCompatActivity {
 
         // Lấy và hiển thị dữ liệu
         layVaHienThiThongTin(ma_don);
-
         // Kiểm tra trạng thái thanh toán
         kiem_tra_thanh_toan(ma_don);
     }
@@ -99,10 +98,8 @@ public class XemChiTietDon extends AppCompatActivity {
         Integer kiemtrathanhtoan = Integer.parseInt(db.kiemTraThanhToan(ma_don));
         if (kiemtrathanhtoan == 1) {
             result.setText("Đã Thanh Toán");
-        } else if (kiemtrathanhtoan == 0) {
+        } else  {
             result.setText("Chưa Thanh Toán");
-        } else {
-            result.setText("Không xác định trạng thái thanh toán");
         }
     }
 

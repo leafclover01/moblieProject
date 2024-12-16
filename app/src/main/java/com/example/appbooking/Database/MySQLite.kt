@@ -387,7 +387,6 @@ class MySQLite {
         var thueVAT = giaThuePhong*0.1 // thue vat 10%
         var tienGiam:Double = 0.0
 
-
         var tongTien = giaThuePhong + thueVAT - tienGiam
         map["giaThuePhong"] = giaThuePhong.toInt()
         map["thueVAT"] = thueVAT.toInt()
@@ -955,11 +954,9 @@ fun layDuLieuPhongCoNguoiDat(): ArrayList<HashMap<String, Any>> {
         LEFT JOIN TAI_KHOAN AS N ON N.id = D.ma_nguoi_dat
         LEFT JOIN QUAN_LY AS QL ON QL.ma_don = D.ma_don 
         WHERE 
-        T.ma_don IS NOT NULL
-        AND D.ma_don IS NOT NULL
-        AND (QL.ma_don IS NULL)
+            T.ma_don IS NOT NULL
+            AND D.ma_don IS NOT NULL
         AND D.ma_don = $ma_don
-        GROUP BY P.ma_phong;
         """
 
             conn.query(sql).forEach { row ->

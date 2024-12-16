@@ -72,6 +72,7 @@ public class ThongTinMaGiamGia extends AppCompatActivity {
         UuDaiAdapter = new UuDaiAdapters(this, R.layout.lv_magiamgia, listMaUD);
         lvMgg.setAdapter(UuDaiAdapter);
 
+
         // back
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +81,7 @@ public class ThongTinMaGiamGia extends AppCompatActivity {
             }
         });
 
+        // refresh
         imgLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

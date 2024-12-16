@@ -24,24 +24,12 @@ import java.util.Date
 import java.util.Locale
 
 class MySQLite {
-    val writableDatabase: SQLiteDatabase
-        get() {
-            TODO()
-        }
     var db: Database
     init {
-//        db = Libsql.open(
-//            url = "libsql://booking-hotel-haitrn.turso.io",
-//            authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzI2MTkyMTksImlkIjoiMDgzMTMzOTQtZmM5NS00NTlhLWI1YTktODQ0ODlhMzQ5OTg1In0.WjpH3E9Kj1zJ2EjDecqib53VpjbGBe1ynstH9Iorvonqo8jqfKvNLYb7Lpa9rk_2CGnaZZqAjotpFDKvPzuMBg"
-//        )
         db = Libsql.open(
             url = "libsql://booking-hotel-haitrn.turso.io",
             authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzMyMzE0ODQsImlkIjoiMDgzMTMzOTQtZmM5NS00NTlhLWI1YTktODQ0ODlhMzQ5OTg1In0.MrDrfaRdKQm6-ODnqMHKpsMWRPTQx3DWdvs2SFzJxj8lblklkjnz9Ppg9lbl4DNpY8hDn1eZaRC0Gz4p3yIcAQ"
         )
-//        db = Libsql.open(
-//            url = "libsql://booking-haitrn.turso.io",
-//            authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3MzI4NDIwMzMsImlkIjoiMDk1NjVhODgtNTRmOS00NzNlLWIyNGEtYmFlZmJlYTlkNzAzIn0.wSCsJk9vlk0TBgZa4ZTKk2Be2ow6_m11FVT0681fR1-VTmpnCpkkS7jnhlh9ANLk94hMrTjitPK1Wd-2iiRCCQ"
-//        )
     }
     fun insertDataTaiKhoan(username: String, password: String, name: String, email: String, sdt: String, cccd: String, address: String, role: Int, tenAnh: String): String {
         val query = "Select * from TAI_KHOAN where username = '$username';"
@@ -539,7 +527,7 @@ class MySQLite {
                 RIGHT JOIN DON AS D ON D.ma_don = DG.ma_don
                 JOIN THUE AS T ON D.ma_don = T.ma_don
                 JOIN PHONG AS P ON P.ma_phong = T.ma_phong
-                JOIN LOAI_PHONG AS L ON L.ma_loai_phong = P.ma_loai_phong
+                Right JOIN LOAI_PHONG AS L ON L.ma_loai_phong = P.ma_loai_phong
                 GROUP BY L.ma_loai_phong, L.ten;
             """
             val rows = conn.query(sql)

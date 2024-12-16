@@ -25,6 +25,7 @@ import com.example.appbooking.Model.TaiKhoan;
 import com.example.appbooking.page.DashboardActivity;
 import com.example.appbooking.page.admin.homeAdmin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,9 +60,7 @@ public class MainActivity extends AppCompatActivity {
         db = new MySQLite();
         sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        editor.clear().apply();
-
-        // Kiểm tra người dùng đã đăng nhập chưa
+        // Chuyen trang khi da danh nhap truoc do
         int userId_kt = sharedPreferences.getInt("userId", -1);
         String username_kt = sharedPreferences.getString("username", "Guest");
         int role_kt = sharedPreferences.getInt("role", -1);
@@ -74,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                 tk_name = row.get(0).toString();
             }
             if(tk_name.equals(username_kt)){
-                // Điều hướng theo role khi người dùng đã đăng nhập
                 if (role_kt == 0) {
                     Intent intentAdmin = new Intent(MainActivity.this, homeAdmin.class);
                     startActivity(intentAdmin);

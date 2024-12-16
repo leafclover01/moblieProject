@@ -303,13 +303,6 @@
                         android:textStyle="bold"
                         android:layout_marginEnd="8dp" />
 
-                    <TextView
-                        android:id="@+id/tvDescription"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tuyệt vời · 7.996 đánh giá"
-                        android:textSize="14sp"
-                        android:textColor="#666666" />
                 </LinearLayout>
 
                 <!-- Hạng mục -->
@@ -337,7 +330,7 @@
                         android:layout_weight="1"
                         android:text="Nhân viên phục vụ"
                         android:textSize="14sp"
-                        android:textColor="#000000" />
+                        android:textColor="#00AA00" />
 
                     <ProgressBar
                         android:layout_width="0dp"
@@ -353,6 +346,7 @@
                         android:layout_height="wrap_content"
                         android:text="9,2"
                         android:textSize="14sp"
+                        android:id="@+id/tvPhucVu"
                         android:layout_marginStart="8dp"
                         android:textColor="#000000" />
                 </LinearLayout>
@@ -369,7 +363,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Thoải mái ↑"
+                        android:text="Sạch sẽ"
                         android:textSize="14sp"
                         android:textColor="#00AA00" />
 
@@ -387,6 +381,7 @@
                         android:layout_height="wrap_content"
                         android:text="9,2"
                         android:textSize="14sp"
+                        android:id="@+id/tvSachSe"
                         android:layout_marginStart="8dp"
                         android:textColor="#000000" />
                 </LinearLayout>
@@ -403,7 +398,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="WiFi miễn phí ↑"
+                        android:text="Chất lượng phòng"
                         android:textSize="14sp"
                         android:textColor="#00AA00" />
 
@@ -421,6 +416,42 @@
                         android:layout_height="wrap_content"
                         android:text="9,3"
                         android:textSize="14sp"
+                        android:id="@+id/tvCLPhong"
+                        android:layout_marginStart="8dp"
+                        android:textColor="#000000" />
+                </LinearLayout>
+
+                <!-- Dòng hạng mục 4 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tiện nghi"
+                        android:textSize="14sp"
+                        android:textColor="#00AA00" />
+
+                    <ProgressBar
+                        android:layout_width="0dp"
+                        android:layout_height="8dp"
+                        android:layout_weight="2"
+                        android:progress="93"
+                        android:progressTint="#00AA00"
+                        android:indeterminate="false"
+                        android:max="100" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="9,3"
+                        android:textSize="14sp"
+                        android:id="@+id/tvTienNghi"
                         android:layout_marginStart="8dp"
                         android:textColor="#000000" />
                 </LinearLayout>

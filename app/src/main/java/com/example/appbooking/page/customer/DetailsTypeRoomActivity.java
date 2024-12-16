@@ -1,5 +1,6 @@
 package com.example.appbooking.page.customer;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 //import com.bumptech.glide.Glide;
 import com.example.appbooking.Database.MySQLite;
+import com.example.appbooking.Model.RoomRating;
 import com.example.appbooking.Model.TienNghi;
 import com.example.appbooking.R;
 import com.example.appbooking.Model.Phong;
@@ -31,7 +33,7 @@ import java.util.Locale;
 //import androidx.recyclerview.widget.GridLayoutManager;
 public class DetailsTypeRoomActivity extends AppCompatActivity {
     //    private ImageView imageLoaiPhong;
-    private TextView tenLoaiPhong, giaLoaiPhong, soNguoiToiDa, moTa, moTaChiTiet;
+    TextView tenLoaiPhong, giaLoaiPhong, soNguoiToiDa, moTa, moTaChiTiet, tvTitle, tvScore, tvPhucVu, tvSachSe, tvTienNghi, tvCLPhong;
     private Button btnCheckIn, btnCheckOut, btnChonThoiGian;
     private RecyclerView recyclerViewPhongTrong;
 
@@ -44,7 +46,8 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
     private RecyclerView recyclerViewTienNghi;
     private TienNghiAdapter tienNghiAdapter;
     private ArrayList<TienNghi> dsTienNghi = new ArrayList<>();
-
+    private ArrayList<RoomRating> list = new ArrayList<>();
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +65,14 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         recyclerViewPhongTrong = findViewById(R.id.recyclerViewPhongTrong);
         btnNext = findViewById(R.id.btnNext);
         moTaChiTiet = findViewById(R.id.moTaChiTiet);
+        tvTitle = findViewById(R.id.tvTitle);
+        tvScore = findViewById(R.id.tvScore);
+        tvPhucVu = findViewById(R.id.tvPhucVu);
+        tvSachSe = findViewById(R.id.tvSachSe);
+        tvTienNghi = findViewById(R.id.tvTienNghi);
+        tvCLPhong = findViewById(R.id.tvCLPhong);
         ImageButton btnBack = findViewById(R.id.btn_back);
+
         // button quay lại
         btnBack.setOnClickListener(view -> {
             // Quay lại màn hình trước đó
@@ -118,6 +128,17 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         recyclerViewTienNghi.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerViewTienNghi.setAdapter(tienNghiAdapter);
 
+//
+        list = db1.getThongKe();
+        list.forEach(e -> {
+            if (Integer.parseInt(e.getMaLoaiPhong()) == maLoaiPhong) {
+                tvCLPhong.setText(String.format("%.2f", e.getAvgDanhGiaChatLuongPhong()));
+                tvScore.setText(String.format("%.2f", (e.getAvgDanhGiaChatLuongPhong() + e.getAvgDanhGiaSachSe() + e.getAvgDanhGiaNhanVienPhucVu() + e.getAvgDanhGiaTienNghi())/4));
+                tvPhucVu.setText(String.format("%.2f", e.getAvgDanhGiaNhanVienPhucVu()));
+                tvSachSe.setText(String.format("%.2f", e.getAvgDanhGiaSachSe()));
+                tvTienNghi.setText(String.format("%.2f", e.getAvgDanhGiaTienNghi()));
+            }
+        });
 
 
 

@@ -50,7 +50,7 @@ buildscript {
     }
     dependencies {
         // Gradle plugin compatible with compileSdk 35
-        classpath("com.android.tools.build:gradle:8.7.2")
+        classpath("com.android.tools.build:gradle:8.5.2")
     }
 }
 

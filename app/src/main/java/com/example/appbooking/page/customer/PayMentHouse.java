@@ -123,12 +123,12 @@ public class PayMentHouse extends AppCompatActivity {
             }
         });
 
-        btnEditCustomerInfo.setOnClickListener(view -> {
-            Intent editIntent = new Intent(PayMentHouse.this, EditCustomerInfoActivity.class);
-            editIntent.putExtra("customerName", tenKhachHang);
-            editIntent.putExtra("customerContact", cccd);
-            startActivityForResult(editIntent, 1);
-        });
+//        btnEditCustomerInfo.setOnClickListener(view -> {
+//            Intent editIntent = new Intent(PayMentHouse.this, EditCustomerInfoActivity.class);
+//            editIntent.putExtra("customerName", tenKhachHang);
+//            editIntent.putExtra("customerContact", cccd);
+//            startActivityForResult(editIntent, 1);
+//        });
 
         btnPay.setOnClickListener(view -> {
             Toast.makeText(PayMentHouse.this, "Đang xử lý thanh toán...", Toast.LENGTH_SHORT).show();

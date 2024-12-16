@@ -105,7 +105,12 @@
             android:layout_margin="16dp"
             android:text="Tổng thanh toán"
             android:textStyle="bold" />
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:textStyle="bold"
+                    android:text=" Bằng cách thanh toán, bạn đồng ý với các điều khoản và chính sách của chúng tôi." />
         <!-- Buttons -->
 <!--        <Button-->
 <!--            android:id="@+id/btnEditCustomerInfo"-->

@@ -596,7 +596,7 @@ fun layDuLieuPhongCoNguoiDatTuMaPhong( maLoaiPhong: Int): ArrayList<HashMap<Stri
         WHERE 
             T.ma_don IS NOT NULL
             AND D.ma_don IS NOT NULL
-            AND QL.is_thanh_toan = 0
+            AND (QL.ma_don IS NULL OR QL.is_thanh_toan = 0)
         AND P.ma_loai_phong = $maLoaiPhong
         GROUP BY P.ma_phong;
 
@@ -660,7 +660,7 @@ fun layDuLieuPhongCoNguoiDat(): ArrayList<HashMap<String, Any>> {
         WHERE 
         T.ma_don IS NOT NULL
         AND D.ma_don IS NOT NULL
-        AND QL.is_thanh_toan = 0
+        AND (QL.ma_don IS NULL OR QL.is_thanh_toan = 0)
         GROUP BY P.ma_phong;
         """
 
@@ -846,6 +846,26 @@ fun layDuLieuPhongCoNguoiDat(): ArrayList<HashMap<String, Any>> {
         }
     }
 
+    fun kiemTraThanhToan(ma_don: Int) : String {
+        return try {
+            var hoa_don = -1
+            db.connect().use { conn ->
+                val sql = """
+            SELECT is_thanh_toan FROM QUAN_LY
+            WHERE ma_don = $ma_don
+            """
+                conn.query(sql).forEach { row ->
+                    val rowMaDon = row.get(0).toString()
+                    if (rowMaDon.isNotEmpty()) {
+                        hoa_don = rowMaDon.toIntOrNull() ?: 0
+                    }
+                }
+            }
+            hoa_don.toString()
+        } catch (e: Exception) {
+            "Lỗi B: ${e.message}"
+        }
+    }
 
     fun hamlaymadon(ma_don: Int): String {
         return try {
@@ -858,7 +878,7 @@ fun layDuLieuPhongCoNguoiDat(): ArrayList<HashMap<String, Any>> {
                 conn.query(sql).forEach { row ->
                     val rowMaDon = row.get(0).toString()
                     if (rowMaDon.isNotEmpty()) {
-                        ma_hoa_don = rowMaDon.toIntOrNull() ?: -1  // Nếu không phải số hợp lệ, gán -1
+                        ma_hoa_don = rowMaDon.toIntOrNull() ?: -1
                     }
                 }
             }

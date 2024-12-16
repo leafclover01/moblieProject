@@ -114,7 +114,6 @@ public class QuanLyDonThanhToan extends AppCompatActivity {
                     int roomTypeCode = getRoomTypeCode(selectedItem);
                     filteredList = db.layDuLieuPhongCoNguoiDatTuMaPhong(roomTypeCode);
                 }
-
                 updateRoomList(filteredList);
             }
 
@@ -168,7 +167,6 @@ public class QuanLyDonThanhToan extends AppCompatActivity {
             filteredList = db.layDuLieuPhongCoNguoiDatTuMaPhong(roomTypeCode);
         }
 
-        // Apply query filter
         ArrayList<HashMap<String, Object>> resultList = new ArrayList<>();
         for (HashMap<String, Object> room : filteredList) {
             Object viTri = room.get("vi_tri");

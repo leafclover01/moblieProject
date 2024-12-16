@@ -945,5 +945,66 @@ fun layDuLieuPhongCoNguoiDat(): ArrayList<HashMap<String, Any>> {
         }
     }
 
+    fun layDuLieuPhong(ma_don: Int): ArrayList<HashMap<String, Any>> {
+        val ds = ArrayList<HashMap<String, Any>>()
+
+        db.connect().use { conn ->
+            val sql = """
+        SELECT 
+            P.ma_phong, 
+            P.vi_tri, 
+            P.ma_loai_phong, 
+            D.ma_don, 
+            D.check_in,
+            T.check_out,
+            N.name, 
+            N.id,
+            N.sdt,
+            N.cccd
+        FROM PHONG AS P
+        LEFT JOIN THUE AS T ON P.ma_phong = T.ma_phong
+        LEFT JOIN DON AS D ON D.ma_don = T.ma_don
+        LEFT JOIN TAI_KHOAN AS N ON N.id = D.ma_nguoi_dat
+        LEFT JOIN QUAN_LY AS QL ON QL.ma_don = D.ma_don 
+        WHERE 
+        T.ma_don IS NOT NULL
+        AND D.ma_don IS NOT NULL
+        AND (QL.ma_don IS NULL)
+        AND D.ma_don = $ma_don
+        GROUP BY P.ma_phong;
+        """
+
+            conn.query(sql).forEach { row ->
+                val maPhong = row.get(0).toString().toInt()
+                val viTri = row.get(1).toString()
+                val maLoaiPhong = row.get(2).toString().toInt()
+                val maDon = row.get(3).toString()
+                val checkInDb = row.get(4).toString()
+                val checkOutDb = row.get(5).toString()
+                val name = row.get(6).toString()
+                val id = row.get(7).toString()
+                val sdt = row.get(8).toString()
+                val cccd = row.get(9).toString()
+
+                val resultMap = HashMap<String, Any>().apply {
+                    put("ma_phong", maPhong)
+                    put("vi_tri", viTri)
+                    put("ma_loai_phong", maLoaiPhong)
+                    put("ma_don", maDon)
+                    put("check_in", checkInDb)
+                    put("check_out", checkOutDb)
+                    put("name", name)
+                    put("id", id)
+                    put("sdt", sdt)
+                    put("cccd", cccd)
+                }
+
+                ds.add(resultMap)
+            }
+        }
+
+        return ds
+    }
+
 
 }

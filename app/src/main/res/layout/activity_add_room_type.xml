@@ -141,7 +141,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="40dp"
             android:textStyle="bold"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:backgroundTint="#0288D1"
             android:text="Lưu"
             android:layout_width="match_parent"

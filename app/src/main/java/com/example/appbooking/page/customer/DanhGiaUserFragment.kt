@@ -51,10 +51,6 @@ class DanhGiaUserFragment : Fragment() {
                 .replace(R.id.fragment_container, HistoryFragment())
                 .commit()
         }
-
-
-
-
         return view
     }
     fun getCurrentDateTime(): String {

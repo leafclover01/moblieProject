@@ -72,11 +72,20 @@ public class ThongTinMaGiamGia extends AppCompatActivity {
         UuDaiAdapter = new UuDaiAdapters(this, R.layout.lv_magiamgia, listMaUD);
         lvMgg.setAdapter(UuDaiAdapter);
 
+
         // back
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        // refresh
+        imgLoad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onResume();
             }
         });
 
@@ -91,7 +100,6 @@ public class ThongTinMaGiamGia extends AppCompatActivity {
         filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnMgg.setAdapter(filterAdapter);
 
-        // Thiết lập sự kiện cho Spinner
         // Thiết lập sự kiện cho Spinner
         spnMgg.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -119,6 +127,7 @@ public class ThongTinMaGiamGia extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
                 // Không làm gì nếu không có gì được chọn
             }
+
         });
 
 

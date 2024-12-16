@@ -22,6 +22,7 @@ import androidx.appcompat.app.AlertDialog;
 import com.example.appbooking.Database.MySQLite;
 import com.example.appbooking.Model.UuDai;
 import com.example.appbooking.R;
+import com.example.appbooking.page.admin.QuanLyMaGiamGia.Component.Chitietmauudai;
 import com.example.appbooking.page.admin.QuanLyMaGiamGia.Component.SuaMaGiamGia;
 import com.example.appbooking.page.admin.QuanLyMaGiamGia.Component.TaoMaGiamGia;
 import com.example.appbooking.page.admin.QuanLyMaGiamGia.Component.ThongTinMaGiamGia;
@@ -87,6 +88,22 @@ public class UuDaiAdapters extends ArrayAdapter {
             tvTrangThai.setTextColor(Color.GRAY);
         }
 
+        // Xử lý sự kiện khi nhấn vào toàn bộ item
+        customView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent view = new Intent(context, Chitietmauudai.class);
+                view.putExtra("tenMa", uuDai.getTenMa());
+                view.putExtra("maGiamGia", uuDai.getMaUuDai());
+                view.putExtra("giamGia", uuDai.getGiam());
+                view.putExtra("ngayBatDau", uuDai.getNgayBatDau() != null ? uuDai.getNgayBatDau().getTime() : null);
+                view.putExtra("ngayHetHan", uuDai.getNgayHetHan() != null ? uuDai.getNgayHetHan().getTime() : null);
+                view.putExtra("trangThai", uuDai.getNgayHetHan() != null && uuDai.getNgayHetHan().compareTo(new Date()) > 0 ? "Còn Hạn" : "Hết Hạn");
+                context.startActivity(view);
+            }
+        });
+
+
 
         // Xử lý edit
         imEdit.setOnClickListener(new View.OnClickListener() {
@@ -115,50 +132,47 @@ public class UuDaiAdapters extends ArrayAdapter {
                 Toast.makeText(context, "Đã sao chép mã: " + maGiamGia, Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
         return  customView;
     }
 
-    ArrayList<UuDai> getall(String sql){
-        ArrayList<UuDai> listMa = new ArrayList<>();
-        try{
-            List<List<Object>> list = db.executeQuery(sql);
-            for (List<Object> row : list) {
-                UuDai uuDai = new UuDai();
-                uuDai.setMaNhanVien(Integer.parseInt(row.get(0).toString()));
-                uuDai.setMaUuDai(Integer.parseInt(row.get(1).toString()));
-                uuDai.setTenMa(row.get(2).toString());
-                try {
-                    Date ngayBatDau = row.get(3) != null ? dateFormat.parse(row.get(3).toString()) : null;
-                    uuDai.setNgayBatDau(ngayBatDau);
-                } catch (ParseException e) {
-                    uuDai.setNgayBatDau(null);
-                }
-                try {
-                    Date ngayBatDau = row.get(4) != null ? dateFormat.parse(row.get(4).toString()) : null;
-                    uuDai.setNgayHetHan(ngayBatDau);
-                } catch (ParseException e) {
-                    uuDai.setNgayHetHan(null);
-                }
-                uuDai.setGiam(Double.parseDouble(row.get(5).toString()));
-                uuDai.setDieuKienVeGia(Integer.parseInt(row.get(6).toString()));
-                listMa.add(uuDai);
-            }
-            return listMa;
-        }catch(Exception e){
-            return null;
-        }
-    }
+//    ArrayList<UuDai> getall(String sql){
+//        ArrayList<UuDai> listMa = new ArrayList<>();
+//        try{
+//            List<List<Object>> list = db.executeQuery(sql);
+//            for (List<Object> row : list) {
+//                UuDai uuDai = new UuDai();
+//                uuDai.setMaNhanVien(Integer.parseInt(row.get(0).toString()));
+//                uuDai.setMaUuDai(Integer.parseInt(row.get(1).toString()));
+//                uuDai.setTenMa(row.get(2).toString());
+//                try {
+//                    Date ngayBatDau = row.get(3) != null ? dateFormat.parse(row.get(3).toString()) : null;
+//                    uuDai.setNgayBatDau(ngayBatDau);
+//                } catch (ParseException e) {
+//                    uuDai.setNgayBatDau(null);
+//                }
+//                try {
+//                    Date ngayBatDau = row.get(4) != null ? dateFormat.parse(row.get(4).toString()) : null;
+//                    uuDai.setNgayHetHan(ngayBatDau);
+//                } catch (ParseException e) {
+//                    uuDai.setNgayHetHan(null);
+//                }
+//                uuDai.setGiam(Double.parseDouble(row.get(5).toString()));
+//                uuDai.setDieuKienVeGia(Integer.parseInt(row.get(6).toString()));
+//                listMa.add(uuDai);
+//            }
+//            return listMa;
+//        }catch(Exception e){
+//            return null;
+//        }
+//    }
 
-    public void updateData(ArrayList<UuDai> newList) {
-        if (newList != null && !newList.equals(this.listMaUuDai)) {
-            this.listMaUuDai.clear();
-            this.listMaUuDai.addAll(newList);
-            notifyDataSetChanged();
-        }
-    }
+//    public void updateData(ArrayList<UuDai> newList) {
+//        if (newList != null && !newList.equals(this.listMaUuDai)) {
+//            this.listMaUuDai.clear();
+//            this.listMaUuDai.addAll(newList);
+//            notifyDataSetChanged();
+//        }
+//    }
 
 
 }

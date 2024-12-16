@@ -79,6 +79,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
         String moTaChiTietPhong = getIntent().getStringExtra("moTaChiTiet");
         String imageResource = getIntent().getStringExtra("imageResource"); // cái này đổi thành String để nhận
         String viTri = getIntent().getStringExtra("viTri");
+        int maLoaiPhong = getIntent().getIntExtra("maloaiphong", 1);
 //         Toast.makeText(this, imageResource + "", Toast.LENGTH_SHORT).show();
         // Nhận tiện nghi từ Intent
         ArrayList<String> tienNghiList = intent.getStringArrayListExtra("tienNghi");
@@ -105,7 +106,7 @@ public class DetailsTypeRoomActivity extends AppCompatActivity {
             } else {
                 // Sử dụng thời gian đã được thêm giờ
 
-                ArrayList<Phong> dsPhongTrong = db1.layDuLieuPhongKhongCoNguoiDat(timeCheckIn, timeCheckOut, 1); // Ví dụ mã loại phòng = "1"
+                ArrayList<Phong> dsPhongTrong = db1.layDuLieuPhongKhongCoNguoiDat(timeCheckIn, timeCheckOut, maLoaiPhong); // Ví dụ mã loại phòng = "1"
                 loadRoomList(dsPhongTrong);
 //                Toast.makeText(this, dsPhongTrong.toString(), Toast.LENGTH_SHORT).show();
             }

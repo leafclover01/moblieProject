@@ -38,17 +38,16 @@ public class PhongAdapter extends ArrayAdapter<HashMap<String, String>> {
             holder = new ViewHolder();
             convertView = inflater.inflate(resource, parent, false);
 
-            // Ánh xạ các view
             holder.tenPhong = convertView.findViewById(R.id.tenPhong);
-            holder.username = convertView.findViewById(R.id.username); // User ID
-            holder.ad_btnEditRoom = convertView.findViewById(R.id.ad_btnEditRoom); // Ánh xạ nút "Xem Chi Tiết"
+            holder.username = convertView.findViewById(R.id.username);
+            holder.ad_btnEditRoom = convertView.findViewById(R.id.ad_btnEditRoom);
 
             convertView.setTag(holder);
         } else {
-            // Tái sử dụng view
+
             holder = (ViewHolder) convertView.getTag();
         }
-        // Lấy dữ liệu từ danh sách
+
         try {
             HashMap<String, String> item = dataList.get(position);
             String tenPhong = item.get("vi_tri");
@@ -86,14 +85,12 @@ public class PhongAdapter extends ArrayAdapter<HashMap<String, String>> {
         return convertView;
     }
 
-    // Phương thức cập nhật dữ liệu và làm mới ListView
     public void updateData(ArrayList<HashMap<String, String>> newData) {
         dataList.clear();
         dataList.addAll(newData);
         notifyDataSetChanged();
     }
 
-    // ViewHolder để lưu trữ các view con
     private static class ViewHolder {
         TextView tenPhong;
         TextView username;

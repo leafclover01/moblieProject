@@ -32,7 +32,6 @@ public class XemChiTietDon extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xem_chi_tiet_don_user);
 
-        // Ánh xạ các thành phần giao diện
         roomType = findViewById(R.id.roomType);
         roomName = findViewById(R.id.roomName);
         price = findViewById(R.id.price);
@@ -44,23 +43,18 @@ public class XemChiTietDon extends AppCompatActivity {
         result = findViewById(R.id.result);
         backButton = findViewById(R.id.back);
 
-        // Xử lý nút quay lại
         backButton.setOnClickListener(view -> finish());
 
-        // Kiểm tra token người dùng
         checkToken();
 
-        // Lấy thông tin từ Intent
         Intent intent = getIntent();
         ma_don = Integer.parseInt(intent.getStringExtra("ma_don"));
 //        ma_don = 2;
 
-        // Khởi tạo cơ sở dữ liệu
+
         db = new MySQLite();
 
-        // Lấy và hiển thị dữ liệu
         layVaHienThiThongTin(ma_don);
-        // Kiểm tra trạng thái thanh toán
         kiem_tra_thanh_toan(ma_don);
     }
 
@@ -80,7 +74,6 @@ public class XemChiTietDon extends AppCompatActivity {
         String sdtValue = phong.get("sdt").toString();
         String cccdValue = phong.get("cccd").toString();
 
-        // Cập nhật giao diện
         roomName.setText(viTri);
         bookedBy.setText("Người đặt: " + nguoiDat);
         bookedAt.setText("Ngày nhận phòng: " + checkIn);
@@ -88,13 +81,11 @@ public class XemChiTietDon extends AppCompatActivity {
         phone.setText("Số điện thoại: " + sdtValue);
         cccd.setText("CCCD: " + cccdValue);
 
-        // Lấy giá tiền
         giaTien = Double.parseDouble(db.layDuLieuTienCuaPhongDo(ma_don));
         price.setText("Giá cần thanh toán: " + giaTien);
     }
 
     private void kiem_tra_thanh_toan(Integer ma_don) {
-        // Lấy trạng thái thanh toán từ cơ sở dữ liệu
         Integer kiemtrathanhtoan = Integer.parseInt(db.kiemTraThanhToan(ma_don));
         if (kiemtrathanhtoan == 1) {
             result.setText("Đã Thanh Toán");

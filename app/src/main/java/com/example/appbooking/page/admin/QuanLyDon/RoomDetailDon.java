@@ -148,7 +148,7 @@ public class RoomDetailDon extends AppCompatActivity {
                         endTimeInMillis = selectedEndTime;
                         tvNgayHetHan.setText(selectedDateTime);
                         SimpleDateFormat now = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
-                        String currentTime = now.format(calendar.getTime()); // Định dạng thời gian hiện tại
+                        String currentTime = now.format(calendar.getTime());
                         db.updateDataHoaDon(kiemtratontai, ma_don, currentTime);
                         giaTien = Double.parseDouble(db.layDuLieuTienCuaPhongDo((ma_don)));
                         price.setText("Gía cần thanh toán: " + giaTien);
@@ -170,7 +170,6 @@ public class RoomDetailDon extends AppCompatActivity {
         try {
 
             SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
-
 
             String checkInString = db.hamlaycheckinthuc(maDon);
             if (!checkInString.equals("-1")) {

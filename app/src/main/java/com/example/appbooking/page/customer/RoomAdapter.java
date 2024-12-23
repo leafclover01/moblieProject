@@ -1,5 +1,6 @@
 package com.example.appbooking.page.customer;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     }
 
     @Override
-    public void onBindViewHolder(RoomViewHolder holder, int position) {
+    public void onBindViewHolder(RoomViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Phong phong = danhSachPhong.get(position);
         holder.textViewTenPhong.setText("MSP: " + phong.getMaPhong());
         holder.textViewGiaPhong.setText("Phòng: " + phong.getViTri());

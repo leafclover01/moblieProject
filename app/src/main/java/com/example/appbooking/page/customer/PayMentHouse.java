@@ -54,18 +54,16 @@ public class PayMentHouse extends AppCompatActivity {
         checkToken();
         setContentView(R.layout.activity_payment);
 
-        // Bind views
         tvCustomerName = findViewById(R.id.tvCustomerName);
         tvCustomerCCCD = findViewById(R.id.tvCustomerCCCD);
         tvCustomerSdt = findViewById(R.id.tvCustomerSdt);
         tvDiscount = findViewById(R.id.tvDiscount);
         tvTotal = findViewById(R.id.tvTotal);
         roomContainer = findViewById(R.id.roomContainer);
-//        btnEditCustomerInfo = findViewById(R.id.btnEditCustomerInfo);
+
         btnPay = findViewById(R.id.btnPay);
         spnMgg = findViewById(R.id.spnMgg);
 
-        // Get data from Intent
         Intent intent = getIntent();
         db = new MySQLite();
         TaiKhoan taiKhoan = db.getTaiKhoan(userId);
@@ -79,17 +77,15 @@ public class PayMentHouse extends AppCompatActivity {
         String timeCheckIn = intent.getStringExtra("timeCheckIn");
         String timeCheckOut = intent.getStringExtra("timeCheckOut");
 
-        // Display customer and room information
         tvCustomerName.setText("Tên khách hàng: " + (tenKhachHang != null ? tenKhachHang : "Không rõ"));
         tvCustomerCCCD.setText("CCCD: "+  cccd);
         roomContainer.setText(tenPhong + "\n\n" + "Nhận phòng: " + timeCheckIn + "\n\n" + "Trả phòng: " + timeCheckOut + "\n\n" + giaPhong);
         tvCustomerSdt.setText("Số điện thoại: " + sdt);
 
-        // Fetch active discount data
         listMaUD = new ArrayList<>();
         listMaUD = getall("SELECT * FROM UU_DAI WHERE ngay_het_han >= strftime('%Y/%m/%d %H:%M', datetime('now', '+7 hours')) AND dieu_kien_ve_gia <" + parsePriceString(giaPhong));
 
-        // Populate Spinner with active discount codes
+
         List<String> discountNames = new ArrayList<>();
         for (UuDai discount : listMaUD) {
             discountNames.add(discount.getTenMa());
@@ -101,7 +97,7 @@ public class PayMentHouse extends AppCompatActivity {
 
         double subtotal = parsePriceString(giaPhong);
         tvDiscount.setText("không có mã giảm%");
-        total = subtotal; // Tính giảm giá dựa trên phần trăm
+        total = subtotal;
         tvTotal.setText("Tổng thanh toán: " + total + " VND");
         spnMgg.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -112,7 +108,7 @@ public class PayMentHouse extends AppCompatActivity {
                         double subtotal = parsePriceString(giaPhong);
                         double discount = selectedDiscount.getGiam();
                         maUuDai = selectedDiscount.getMaUuDai();
-                        total = subtotal - (subtotal * discount / 100); // Tính giảm giá dựa trên phần trăm
+                        total = subtotal - (subtotal * discount / 100);
                         tvTotal.setText("Tổng thanh toán: " + total + " VND");
                 }
             }
@@ -160,13 +156,10 @@ public class PayMentHouse extends AppCompatActivity {
     }
 
     private double parsePriceString(String priceString) {
-        // Loại bỏ tất cả các ký tự không phải số
         String numericString = priceString.replaceAll("[^0-9]", "");
         try {
-            // Chuyển đổi chuỗi số thành double
             return Double.parseDouble(numericString);
         } catch (NumberFormatException e) {
-            // Nếu không thể chuyển đổi, trả về 0.0
             return 0.0;
         }
     }
@@ -218,11 +211,9 @@ public class PayMentHouse extends AppCompatActivity {
         String currentTime = getCurrentTimeFormatted();
 
         try {
-            // Insert the payment into the database
             Integer result = Integer.valueOf(db.insertDataDon(maUser, currentTime, checkIn));
             int maDon = 0;
 
-            // Validate the order ID (maDon)
             try {
                 maDon = Integer.parseInt(String.valueOf(result));
             } catch (NumberFormatException e) {
@@ -230,7 +221,6 @@ public class PayMentHouse extends AppCompatActivity {
                 return;
             }
 
-            // Convert room number (maPhong) to integer
             int maPhongInt = 0;
             try {
                 maPhongInt = Integer.parseInt(maPhong);
@@ -243,7 +233,6 @@ public class PayMentHouse extends AppCompatActivity {
                 showErrorToast("Lỗi khi thêm dữ liệu vào bảng ApMa!");
                 return;
             }
-            // Insert the room rental information into the database
             String insertResult = db.insertDataThue(maDon, maPhongInt, checkOut);
             if (!"Thêm thành công".equals(insertResult)) {
                 showErrorToast("Lỗi khi thêm dữ liệu vào bảng THUE!");
@@ -256,10 +245,8 @@ public class PayMentHouse extends AppCompatActivity {
                 return;
             }
 
-            // Show a success message after successful payment processing
             Toast.makeText(this, "Thanh toán thành công!", Toast.LENGTH_SHORT).show();
 
-            // Navigate to the DashboardActivity
             Intent intent = new Intent(PayMentHouse.this, DashboardActivity.class);
             startActivity(intent);
 
